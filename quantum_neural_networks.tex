@@ -242,17 +242,17 @@ The tensor product of four $2\times 1$ vectors is a $16\times 1$ vector, which i
     \sin(\frac{x_4}{2})\sin(\frac{x_3}{2})\sin(\frac{x_2}{2})\sin(\frac{x_1}{2})
 \end{bmatrix}\]
 If we look each qubit individually, the encoding is a $2\times 2$ matrix. However, if we look the encoding holistically on the entire 4 qubit system, it's a $2^4\times2^4=16\times 16$ matrix, which is also a tensor product of all four rotation matrices:
-\[\begin{bmatrix}\cos(\frac{x_1}{2})&-i\sin(\frac{x_1}{2})\\-i\sin(\frac{x_1}{2})&\cos(\frac{x_1}{2})\end{bmatrix}\otimes
-\begin{bmatrix}\cos(\frac{x_2}{2})&-i\sin(\frac{x_2}{2})\\-i\sin(\frac{x_2}{2})&\cos(\frac{x_2}{2})\end{bmatrix}\otimes
+\[\begin{bmatrix}\cos(\frac{x_4}{2})&-i\sin(\frac{x_4}{2})\\-i\sin(\frac{x_4}{2})&\cos(\frac{x_4}{2})\end{bmatrix}\otimes
 \begin{bmatrix}\cos(\frac{x_3}{2})&-i\sin(\frac{x_3}{2})\\-i\sin(\frac{x_3}{2})&\cos(\frac{x_3}{2})\end{bmatrix}\otimes
-\begin{bmatrix}\cos(\frac{x_4}{2})&-i\sin(\frac{x_4}{2})\\-i\sin(\frac{x_4}{2})&\cos(\frac{x_4}{2})\end{bmatrix}\]
+\begin{bmatrix}\cos(\frac{x_2}{2})&-i\sin(\frac{x_2}{2})\\-i\sin(\frac{x_2}{2})&\cos(\frac{x_2}{2})\end{bmatrix}\otimes
+\begin{bmatrix}\cos(\frac{x_1}{2})&-i\sin(\frac{x_1}{2})\\-i\sin(\frac{x_1}{2})&\cos(\frac{x_1}{2})\end{bmatrix}\]
 
 This makes sense becuase with 4 qubits, the quantum state is in $\mathbb{C}^2\otimes\mathbb{C}^2\otimes\mathbb{C}^2\otimes\mathbb{C}^2=\mathbb{C}^{16}$ and the operation shall also be a $16\times 16$ matrix as follows. To make it readable, let's define:
 \[c_j=\cos\left(\frac{x_j}{2}\right),\qquad s_j=\sin\left(\frac{x_j}{2}\right),\qquad j=1,2,3,4.\]
 
 \[
 U =
-R_x(x_1)\otimes R_x(x_2)\otimes R_x(x_3)\otimes R_x(x_4)
+R_x(x_4)\otimes R_x(x_3)\otimes R_x(x_2)\otimes R_x(x_1)
 \]
 The matrix is as follows:
 \begin{equation}
@@ -829,6 +829,7 @@ Then, applying CNOT on the third and fourth qubits is equivalent to applying $CN
 \end{equation*}
 And the resulting statevector is:
 \begin{equation}
+\ket{q_3q_2q_1q_0}=
 \begin{bmatrix}
 \cos\left(\frac{\theta_1+x_1}{2}\right)
 \cos\left(\frac{\theta_2+x_2}{2}\right)
@@ -956,24 +957,110 @@ Now, let's look at the 4-qubit system. Before the entanglment layer, the probabi
 \begin{equation*}
 \begin{aligned}
     \text{assume}\quad\alpha_{j}=\frac{\theta_j+x_j}{2}\\
-    &P(\ket{q_3}=\ket{0})=&\cos^2(\alpha_4)(\cos^2(\alpha_1)\cos^2(\alpha_2)\cos^2(\alpha_3)+\\
+    &P(\ket{q_3}=\ket{0})=\cos^2(\alpha_4)[\cos^2(\alpha_1)\cos^2(\alpha_2)\cos^2(\alpha_3)+\\
     &\sin^2(\alpha_1)\cos^2(\alpha_2)\cos^2(\alpha_3)+\\
     &\cos^2(\alpha_1)\sin^2(\alpha_2)\cos^2(\alpha_3)+\\
     &\sin^2(\alpha_1)\sin^2(\alpha_2)\cos^2(\alpha_3)+\\
     &\cos^2(\alpha_1)\cos^2(\alpha_2)\sin^2(\alpha_3)+\\
     &\sin^2(\alpha_1)\cos^2(\alpha_2)\sin^2(\alpha_3)+\\
     &\cos^2(\alpha_1)\sin^2(\alpha_2)\sin^2(\alpha_3)+\\
-    &\sin^2(\alpha_1)\sin^2(\alpha_2)\sin^2(\alpha_3))\\
+    &\sin^2(\alpha_1)\sin^2(\alpha_2)\sin^2(\alpha_3)]\\
     &=\cos^2(\alpha_4)(\cos^2(\alpha_1)+\sin^2(\alpha_1))(\cos^2(\alpha_2)+\sin^2(\alpha_2))(\cos^2(\alpha_3)+\sin^2(\alpha_3))\\
     &=\cos^2(\alpha_4)=\cos^2(\frac{\theta_4+x_4}{2})
 \end{aligned}
 \end{equation*}
-As you can see, without CNOT/entanglement layer, regardless how many rotation gate you add to the fourth qubit $q_3$ (this also applied to other qubits), the probability amplitude for each qubit is just a function of its encoding input $x_4$ and the parameters of the rotation gate in its own path $\theta_4$. Mathmatically, it's $P(\ket{q_3}=\ket{0})=f(\theta_4,x_4)$ The information will never be propagated across the lines. However, after the first entanglement layer, according to Eq.~\ref{4state_3}, the the probability amplitude of $\ket{q_3}=\ket{0}$ becomes:
-
-
+As you can see, without CNOT/entanglement layer, regardless how many rotation gate you add to the fourth qubit $q_3$ (this also applied to other qubits), the probability amplitude for each qubit is just a function of its encoding input $x_4$ and the parameters of the rotation gate in its own path $\theta_4$. Mathmatically, it's $P(\ket{q_3}=\ket{0})=f(\theta_4,x_4)$ The information will never be propagated across the lines. However, after the first entanglement layer, according to Eq.~\ref{4state_3}, the the probability amplitude of $\ket{q_3}=\ket{0}$ becomes as follows:
+First, let:
+\[\alpha_i=\frac{\theta_i+x_i}{2},\quad c_i=\cos(\alpha_i),\quad s_i=\sin(\alpha_i)\]
+\begin{equation*}
+\begin{aligned}
+P(\ket{q_3}=\ket{0})=c^2_1c^2_2c^2_3c^2_4+
+s^2_1s^2_2c^2_3c^2_4+
+c^2_1s^2_2s^2_3c^2_4+
+s^2_1c^2_2s^2_3c^2_4+\\
+c^2_1c^2_2s^2_3s^2_4+
+s^2_1s^2_2s^2_3s^2_4+
+c^2_1s^2_2c^2_3s^2_4+
+s^2_1c^2_2c^2_3s^2_4
+\end{aligned}
+\end{equation*}
+To simplify this, let: 
+\[A=c_1^2c_2^2+s_1^2s_2^2,\quad B=c_1^2s_2^2+s_1^2c_2^2\]
+Using double-angle formulae:
+\[\cos^2(x)=\frac{1+\cos(2x)}{2},\quad \sin^2(x)=\frac{1-\cos(2x)}{2}\]
+\[\begin{aligned}
+A&=\frac{(1+\cos(2\alpha_1))(1+\cos(2\alpha_2))}{4}+\frac{(1-\cos(2\alpha_1))(1-\cos(2\alpha_2))}{4}\\
+&=\frac{1}{2}[1+\cos(2\alpha_1)\cos(2\alpha_2)]    
+\end{aligned}
+\]
+Similarily,
+\[B=\frac{1}{2}[1-\cos(2\alpha_1)\cos(2\alpha_2)]\]
+Now, the $P(\ket{q_3}=\ket{0})$ can be rewriten in terms of $A,B$:
+\begin{equation}
+P(\ket{q_3}=\ket{0})=c^2_4(c^2_3A+s^2_3B)+s^2_4(s^2_3A+c^2_3B)
+\end{equation}
+Let's look at each term one by one:
+\[
+\begin{aligned}
+c^2_3A+s^2_3B&=\frac{1}{2}[\cos^2(\alpha_3)+\cos^2(\alpha_3)\cos(2\alpha_1)\cos(2\alpha_2)]+
+\frac{1}{2}[\sin^2(\alpha_3)-\sin^2(\alpha_3)\cos(2\alpha_1)\cos(2\alpha_2)]\\
+&=\frac{1}{2}[\cos^2(\alpha_3)+\cos^2(\alpha_3)\cos(2\alpha_1)\cos(2\alpha_2)+\sin^2(\alpha_3)-\sin^2(\alpha_3)\cos(2\alpha_1)\cos(2\alpha_2)]\\
+&=\frac{1}{2}[1+\cos^2(2\alpha_3)\cos^2(2\alpha_2)\cos^2(2\alpha_1)]
+\end{aligned}
+\]
+Similarily, 
+\[s^2_3A+c^2_3B=\frac{1}{2}[1-\cos^2(2\alpha_3)\cos^2(2\alpha_2)\cos^2(2\alpha_1)]\]
+Now, we have
+\begin{equation}
+\begin{aligned}   
+P(\ket{q_3}=\ket{0})=&\frac{1}{2}[\cos^2(\alpha_4)+\cos^2(\alpha_4)\cos^2(2\alpha_3)\cos^2(2\alpha_2)\cos^2(2\alpha_1)]+\\
+&\frac{1}{2}[\cos^2(\alpha_4)-\cos^2(\alpha_4)\cos^2(2\alpha_3)\cos^2(2\alpha_2)\cos^2(2\alpha_1)]\\
+=&\frac{1}{2}[1+\cos(2\alpha_4)\cos(2\alpha_3)\cos(2\alpha_2)\cos(2\alpha_1)]\\
+=&\frac{1}{2}[1+\cos(\theta_4+x_4)\cos(\theta_3+x_3)\cos(\theta_2+x_2)\cos(\theta_1+x_1)]\\
+=&\frac{1}{2}[1+\prod_{j=1}^{4}\cos(\theta_j+x_j)]
+\end{aligned}
+\end{equation}
+If we look back at, it's clear that
+\begin{equation}
+\begin{aligned}
+P_{\text{before}}(\ket{q_3}=\ket{0})&=\cos^2(\frac{\theta_4+x_4}{2})\\
+P_{\text{after}}(\ket{q_3}=\ket{0})&=\frac{1}{2}[1+\prod_{j=1}^{4}\cos(\theta_j+x_j)]
+\end{aligned}
+\end{equation}
+Now, you can clearly see what magic the entanglment layer has done. If you measure $q_3$ before entanglment, its probability amplitude is determined by only $\theta_4,x_4$ whereas after entanglment it's determined by all the inputs and parameters. As said before, after entanglment, the statevector cannot be rewritten into tensor product of statevector of each single qubit. Therefore, all the computation after this point will be holistic, meaning that we need to do $(2^n\times2^n)\times(2^n\times1)$ matrix-vector calculation at each layer, which is a big challenge for classical computer. Imagine if you have 30 qubits, the dimension is 1,073,741,924. None of the CPUs, GPUs, or TPUs has enough RAM to do this calculation. However, it can be easily done by a qunatum computer, in fact IBM machines such as Nighthawk or Heron family offer ~120 qubits and this number will be increasing in the next couple of years. In terms of large matrix calculation, the quantum advantage is clear. \\
+Alright, let's keep watching how this quantum neural network evolve. As Figure~\ref{fig:hidden_2} shows, another rotation layer is applied after entanglement layer, as the second hidden layer. The rotation gates are parametrized as $\theta_6,\theta_7,\theta_8,\theta_9$ respectively. 
+\begin{figure}[htbp]
+    \centering\includegraphics[width=0.5\textwidth]{figures/hidden_2.png}
+    \caption[short]{Quantum Neural Network with 2 hidden layers}
+    \label{fig:hidden_2}
+\end{figure}
+The operation matrix of this layer is then:
+\begin{equation}
+\begin{aligned}
+U_{hidden}&=R_x(\theta_5)\otimes R_x(\theta_6)\otimes R_x(\theta_7)\otimes R_x(\theta_8)\\
+&=\begin{bmatrix}\cos(\frac{\theta_5}{2})&-i\sin(\frac{\theta_5}{2})\\-i\sin(\frac{\theta_5}{2})&\cos(\frac{\theta_5}{2})\end{bmatrix}\otimes
+\begin{bmatrix}\cos(\frac{\theta_6}{2})&-i\sin(\frac{\theta_6}{2})\\-i\sin(\frac{\theta_6}{2})&\cos(\frac{\theta_6}{2})\end{bmatrix}
+\\[6pt]&{}\otimes
+\begin{bmatrix}\cos(\frac{\theta_7}{2})&-i\sin(\frac{\theta_7}{2})\\-i\sin(\frac{\theta_7}{2})&\cos(\frac{\theta_7}{2})\end{bmatrix}\otimes
+\begin{bmatrix}\cos(\frac{\theta_8}{2})&-i\sin(\frac{\theta_8}{2})\\-i\sin(\frac{\theta_8}{2})&\cos(\frac{\theta_8}{2})\end{bmatrix}
+\end{aligned}
+\end{equation}
+The statevector then undergoes:
+\begin{equation}
+U_{hidden}\times\ket{q_3q_2q_1q_0}
+\end{equation}
 
 
 \subsection{Output Layer: Measurement}
+
+
+\section{Fourier Analysis of Quanutm Neural Networks and Expressivity}
+
+\subsection{Basics of Fourier Series and Fourier Transform}
+
+\subsection{Quantum Neural Network as a Partial Fourer Series}
+
+\subsection{Expressivity}
 
 
 \end{document}

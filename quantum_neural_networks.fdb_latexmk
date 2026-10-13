@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1791820870.83534 "/Users/yixiangwang/Desktop/CMU/Quantum_AI/QML/qnn/quantum_neural_networks.tex" "quantum_neural_networks.pdf" "quantum_neural_networks" 1791820871.81395 0
-  "/Users/yixiangwang/Desktop/CMU/Quantum_AI/QML/qnn/quantum_neural_networks.tex" 1791820870.66193 48431 bff3d8f012fe0b44755392b6c35fcb32 ""
+["pdflatex"] 1791860699.72534 "/Users/yixiangwang/Desktop/CMU/Quantum_AI/QML/qnn/quantum_neural_networks.tex" "quantum_neural_networks.pdf" "quantum_neural_networks" 1791860700.84946 0
+  "/Users/yixiangwang/Desktop/CMU/Quantum_AI/QML/qnn/quantum_neural_networks.tex" 1791860699.55081 53316 37d4a8099a5f251b98b251bb24c7e2d8 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc" 1254269338 2375 baa924870cfb487815765f9094cf3728 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc" 1202520719 3486 c7eadf5dcc57b3b2d11736679f6636ba ""
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc" 1202520719 2405 5dcf2c1b967ee25cc46c58cd52244aed ""
@@ -246,10 +246,11 @@
   "figures/encode.png" 1791218783.16308 82567 ffa4b51597fd9b57af14f1264363a48a ""
   "figures/entangle.png" 1791342463.11654 23089 6d50cc31ccb5e53388a860c09930728c ""
   "figures/hidden_1.png" 1791306863.75666 17140 ae77688185fd12cf27f4930732e3b7e5 ""
+  "figures/hidden_2.png" 1791834144.55036 27572 b61bc12d6881c011843a6c349ac37c0b ""
   "figures/qnn.png" 1790549597.32332 42845 5d07e1aef1a6ff4414a378524e17276b ""
-  "quantum_neural_networks.aux" 1791820871.75265 4141 13c1ae7a9f9082910c5cabfec70bb738 "pdflatex"
-  "quantum_neural_networks.out" 1791820871.75322 1489 c493800bda8728a2ef8ae3456d4e1185 "pdflatex"
-  "quantum_neural_networks.tex" 1791820870.66193 48431 bff3d8f012fe0b44755392b6c35fcb32 ""
+  "quantum_neural_networks.aux" 1791860700.77518 4981 8d3c368cdab64da22c53de27320585d6 "pdflatex"
+  "quantum_neural_networks.out" 1791860700.77591 2601 ca8e21675187b484349afb6fa41a581c "pdflatex"
+  "quantum_neural_networks.tex" 1791860699.55081 53316 37d4a8099a5f251b98b251bb24c7e2d8 ""
   (generated)
   "quantum_neural_networks.aux"
   "quantum_neural_networks.log"

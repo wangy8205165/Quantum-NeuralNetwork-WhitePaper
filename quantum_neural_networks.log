@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.22)  12 OCT 2026 12:01
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.22)  12 OCT 2026 23:04
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -973,19 +973,19 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has b
                    \relax 
 l.108 ...matrix}0\\0\\0\\1\end{bmatrix}=\ket{11}\]
                                                    [1{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}]
-<figures/bell.png, id=60, 282.05376pt x 174.6525pt>
+<figures/bell.png, id=76, 282.05376pt x 174.6525pt>
 File: figures/bell.png Graphic file (type png)
 <use figures/bell.png>
 Package pdftex.def Info: figures/bell.png  used on input line 127.
 (pdftex.def)             Requested size: 234.8775pt x 145.44122pt.
  [2 <./figures/bell.png>]
-<figures/qnn.png, id=69, 984.67876pt x 368.37625pt>
+<figures/qnn.png, id=85, 984.67876pt x 368.37625pt>
 File: figures/qnn.png Graphic file (type png)
 <use figures/qnn.png>
 Package pdftex.def Info: figures/qnn.png  used on input line 145.
 (pdftex.def)             Requested size: 375.80544pt x 140.59148pt.
  [3 <./figures/qnn.png>] [4]
-<figures/encode.png, id=89, 541.02126pt x 402.50375pt>
+<figures/encode.png, id=105, 541.02126pt x 402.50375pt>
 File: figures/encode.png Graphic file (type png)
 <use figures/encode.png>
 Package pdftex.def Info: figures/encode.png  used on input line 212.
@@ -999,49 +999,60 @@ Overfull \hbox (47.43842pt too wide) detected at line 248
  []
 
 [6] [7]
-<figures/hidden_1.png, id=113, 282.05376pt x 304.13625pt>
+<figures/hidden_1.png, id=129, 282.05376pt x 304.13625pt>
 File: figures/hidden_1.png Graphic file (type png)
 <use figures/hidden_1.png>
 Package pdftex.def Info: figures/hidden_1.png  used on input line 423.
 (pdftex.def)             Requested size: 93.94957pt x 101.30269pt.
  [8]
-<figures/cnot.png, id=120, 347.2975pt x 174.6525pt>
+<figures/cnot.png, id=136, 347.2975pt x 174.6525pt>
 File: figures/cnot.png Graphic file (type png)
 <use figures/cnot.png>
 Package pdftex.def Info: figures/cnot.png  used on input line 440.
 (pdftex.def)             Requested size: 140.92793pt x 70.87245pt.
  [9 <./figures/hidden_1.png> <./figures/cnot.png>]
-<figures/entangle.png, id=132, 476.78125pt x 304.13625pt>
+<figures/entangle.png, id=148, 476.78125pt x 304.13625pt>
 File: figures/entangle.png Graphic file (type png)
 <use figures/entangle.png>
 Package pdftex.def Info: figures/entangle.png  used on input line 509.
 (pdftex.def)             Requested size: 140.92793pt x 89.89575pt.
  [10 <./figures/entangle.png>] [11] [12] [13] [14]
-Overfull \hbox (215.06677pt too wide) detected at line 970
+Overfull \hbox (29.98312pt too wide) detected at line 971
 [][]
  []
 
-[15] [16] (./quantum_neural_networks.aux)
+[15]
+Overfull \hbox (17.06538pt too wide) detected at line 1010
+[][]
+ []
+
+[16]
+<figures/hidden_2.png, id=197, 541.02126pt x 304.13625pt>
+File: figures/hidden_2.png Graphic file (type png)
+<use figures/hidden_2.png>
+Package pdftex.def Info: figures/hidden_2.png  used on input line 1033.
+(pdftex.def)             Requested size: 234.8775pt x 132.03368pt.
+ [17] [18 <./figures/hidden_2.png>] (./quantum_neural_networks.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
 Package rerunfilecheck Info: File `quantum_neural_networks.out' has not changed.
-(rerunfilecheck)             Checksum: C493800BDA8728A2EF8AE3456D4E1185;1489.
+(rerunfilecheck)             Checksum: CA8E21675187B484349AFB6FA41A581C;2601.
  ) 
 Here is how much of TeX's memory you used:
- 37297 strings out of 467525
- 764505 string characters out of 5418982
+ 37330 strings out of 467525
+ 765015 string characters out of 5418982
  1268293 words of memory out of 5000000
- 65453 multiletter control sequences out of 15000+600000
- 687447 words of font info for 139 fonts, out of 8000000 for 9000
+ 65466 multiletter control sequences out of 15000+600000
+ 687813 words of font info for 143 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  84i,13n,108p,1999b,1083s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmbx8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmex10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmmi12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmmi6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmr12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmr17.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmr6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmr8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmsy6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on quantum_neural_networks.pdf (17 pages, 390371 bytes).
+Output written on quantum_neural_networks.pdf (19 pages, 422524 bytes).
 PDF statistics:
- 263 PDF objects out of 1000 (max. 8388607)
- 199 compressed objects within 2 object streams
- 50 named destinations out of 1000 (max. 500000)
- 32875 words of extra memory for PDF output out of 35830 (max. 10000000)
+ 300 PDF objects out of 1000 (max. 8388607)
+ 231 compressed objects within 3 object streams
+ 62 named destinations out of 1000 (max. 500000)
+ 32912 words of extra memory for PDF output out of 35830 (max. 10000000)
 

@@ -460,6 +460,11 @@ INPUT ./figures/entangle.png
 INPUT ./figures/entangle.png
 INPUT ./figures/entangle.png
 INPUT ./figures/entangle.png
+INPUT ./figures/hidden_2.png
+INPUT ./figures/hidden_2.png
+INPUT ./figures/hidden_2.png
+INPUT ./figures/hidden_2.png
+INPUT ./figures/hidden_2.png
 INPUT quantum_neural_networks.aux
 INPUT ./quantum_neural_networks.out
 INPUT ./quantum_neural_networks.out
