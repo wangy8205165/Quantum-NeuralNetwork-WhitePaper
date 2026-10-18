@@ -467,7 +467,7 @@ U_{entangle}&=CNOT_{q_1\rightarrow q_2}\otimes I\\
 \end{aligned}
 \end{equation*}
 Then, we apply this matrix on  the statevector:
-\begin{equation*}
+\begin{equation}
 \begin{bmatrix}1&0&0&0&0&0&0&0\\0&1&0&0&0&0&0&0\\0&0&0&0&0&0&1&0\\0&0&0&0&0&0&0&1\\
 0&0&0&0&1&0&0&0\\0&0&0&0&0&1&0&0\\0&0&1&0&0&0&0&0\\0&0&0&1&0&0&0&0\end{bmatrix}\times
 \begin{bmatrix}
@@ -489,7 +489,8 @@ i\sin(\frac{\theta_3+x_3}{2})\sin(\frac{\theta_2+x_2}{2})\sin(\frac{\theta_1+x_1
 -i\cos(\frac{\theta_3+x_3}{2})\sin(\frac{\theta_2+x_2}{2})\cos(\frac{\theta_1+x_1}{2})\\[6pt]
 -i\cos(\frac{\theta_3+x_3}{2})\cos(\frac{\theta_2+x_2}{2})\sin(\frac{\theta_1+x_1}{2})
 \end{bmatrix}
-\end{equation*}
+\label{eq:cnot2}
+\end{equation}
 If you look carefully, What happens is that compare with Eq.~\ref{eq:cnot1}, swapping happens as follows:
 \begin{equation*}
     3\leftrightarrow7,\quad 4\leftrightarrow8
@@ -534,9 +535,117 @@ f_{NN}&=f(\sigma(W^TX+b))\\
 \end{aligned}
 \label{eq:nnfunc}
 \end{equation}
-Now, let's look at the 3-qubit system. Before the entanglment layer, the probability of observing the fourth qubit $\ket{q_3}=\ket{0}$ can be derived from Eq.~\ref{eq:statevector-hidden1} as follows:
+Now, let's look at the 3-qubit system. Before the entanglment layer, the probability of observing the fourth qubit $\ket{q_2}=\ket{0}$ can be derived from Eq.~\ref{eq:statevector-hidden1} as follows:
+\begin{equation}
+\begin{aligned}
+\text{Let} \alpha_j&=\frac{x_j+\theta_j}{2},\quad j=1,2,3\\
+P(q_2=0)&=|\psi_{000}|^2+|\psi_{001}|^2+|\psi_{010}|^2+|\psi_{011}|^2\\
+&=\cos^2(\alpha_3)\cos^2(\alpha_2)\cos^2(\alpha_1)+
+\cos^2(\alpha_3)\cos^2(\alpha_2)\sin^2(\alpha_1)\\
+&+\cos^2(\alpha_3)\sin^2(\alpha_2)\cos^2(\alpha_1)+
+\cos^2(\alpha_3)\sin^2(\alpha_2)\sin^2(\alpha_1)\\
+&=\cos^2(\alpha_3)[\cos^2(\alpha_2)(\cos^2(\alpha_1)+\sin^2(\alpha_1))+\sin^2(\alpha_2)(\cos^2(\alpha_1)+\sin^2(\alpha_1))]\\
+&=\cos^2(\alpha_3)\\
+&=\cos^2(\frac{\theta_3+x_3}{2})
+\end{aligned}
+\end{equation}
+
+As you can see, without CNOT (entanglement) layer, regardless how many rotation gate you add to the third qubit $q_2$ (this also applied to other qubits), the probability amplitude for each qubit is just a function of its encoding input $x_3$ and the parameters of the rotation gate in its own path $\theta_3$. Mathmatically, it's $P(q_2=0)=f(\theta_3,x_3)$ The information will never be propagated across the lines. However, after the first entanglement layer, according to Eq.~\ref{eq:cnot2}, the the probability amplitude of $\ket{q_3}=\ket{0}$ becomes as follows:
+\begin{equation}
+\begin{aligned}
+P(q_2=0)&=\cos^2(\alpha_3)\cos^2(\alpha_2)\cos^2(\alpha_1)+
+\cos^2(\alpha_3)\sin^2(\alpha_2)\sin^2(\alpha_1)\\
+&+\sin^2(\alpha_3)\sin^2(\alpha_2)\cos^2(\alpha_1)
++\sin^2(\alpha_3)\cos^2(\alpha_2)\sin^2(\alpha_1)\\
+&=\cos^2(\alpha_3)[\cos^2(\alpha_2)\cos^2(\alpha_1)+\sin^2(\alpha_2)\sin^2(\alpha_1)]\\
+&+\sin^2(\alpha_3)[\sin^2(\alpha_2)\cos^2(\alpha_1)+\cos^2(\alpha_2)\sin^2(\alpha_1)]\\
+&=\frac{\cos^2(\alpha_3)}{2}[1+\cos(2\alpha_2)\cos(2\alpha_1)]+\frac{\cos^2(\alpha_3)}{2}[1-\cos(2\alpha_2)\cos(2\alpha_1)]\\
+&=\frac{1}{2}[1+\cos(2\alpha_3)\cos(2\alpha_2)\cos(2\alpha_1)]\\
+&=\frac{1}{2}[1+\cos(\theta_3+x_3)\cos(\theta_2+x_2)\cos(\theta_1+x_1)]\\
+&=\frac{1}{2}[1+\prod_{j=1}^{3}\cos(\theta_j+x_j)]
+\end{aligned}
+\end{equation}
+If we look back at, it's clear that
+\begin{equation}
+\begin{aligned}
+P_{\text{before}}(q_2=0)&=\cos^2(\frac{\theta_3+x_3}{2})\\
+P_{\text{after}}(q_2=0)&=\frac{1}{2}[1+\prod_{j=1}^{3}\cos(\theta_j+x_j)]
+\end{aligned}
+\end{equation}
+Now, you can clearly see what magic the entanglment layer has done. If you measure $q_3$ before entanglment, its probability amplitude is determined by only $\theta_4,x_4$ whereas after entanglment it's determined by all the inputs and parameters. As said before, after entanglment, the statevector cannot be rewritten into tensor product of statevector of each single qubit. Therefore, all the computation after this point will be holistic, meaning that we need to do $(2^n\times2^n)\times(2^n\times1)$ matrix-vector calculation at each layer, which is a big challenge for classical computer. Imagine if you have 30 qubits, the dimension is 1,073,741,924. None of the CPUs, GPUs, or TPUs has enough RAM to do this calculation. However, it can be easily done by a qunatum computer, in fact IBM machines such as Nighthawk or Heron family offer ~120 qubits and this number will be increasing in the next couple of years. In terms of large matrix calculation, the quantum advantage is clear. \\
+Alright, let's keep watching how this quantum neural network evolve. As Figure~\ref{fig:hidden3_2} shows, another rotation layer is applied after entanglement layer, as the second hidden layer. The rotation gates are parametrized as $\theta_4,\theta_5,\theta_6$ respectively. 
+\begin{figure}[htbp]
+    \centering\includegraphics[width=0.5\textwidth]{figures/hidden3_2.png}
+    \caption[short]{Quantum Neural Network with 2 hidden layers}
+    \label{fig:hidden3_2}
+\end{figure}
+The operation matrix of this layer is then:
+\begin{equation*}
+\begin{aligned}
+U_{hidden}&=R_x(\theta_6)\otimes R_x(\theta_5)\otimes R_x(\theta_4)\\
+&=\begin{bmatrix}\cos(\frac{\theta_6}{2})&-i\sin(\frac{\theta_6}{2})\\-i\sin(\frac{\theta_6}{2})&\cos(\frac{\theta_6}{2})\end{bmatrix}\otimes
+\begin{bmatrix}\cos(\frac{\theta_5}{2})&-i\sin(\frac{\theta_5}{2})\\-i\sin(\frac{\theta_5}{2})&\cos(\frac{\theta_5}{2})\end{bmatrix}\otimes
+\begin{bmatrix}\cos(\frac{\theta_4}{2})&-i\sin(\frac{\theta_4}{2})\\-i\sin(\frac{\theta_4}{2})&\cos(\frac{\theta_4}{2})\end{bmatrix}\\
+&=\begin{bmatrix}
+c_6c_5c_4 & -ic_6c_5s_4 & -ic_6s_5c_4 & -c_6s_5s_4 & -is_6c_5c_4 & -s_6c_5s_4 & -s_6s_5c_4 & is_6s_5s_4\\
+-ic_6c_5s_4 & c_6c_5c_4 & -c_6s_5s_4 & -ic_6s_5c_4 & -s_6c_5s_4 & -is_6c_5c_4 & is_6s_5s_4 & -s_6s_5c_4\\
+-ic_6s_5c_4 & -c_6s_5s_4 & c_6c_5c_4 & -ic_6c_5s_4 & -s_6s_5c_4 & is_6s_5s_4 & -is_6c_5c_4 & -s_6c_5s_4\\
+-c_6s_5s_4 & -ic_6s_5c_4 & -ic_6c_5s_4 & c_6c_5c_4 & is_6s_5s_4 & -s_6s_5c_4 & -s_6c_5s_4 & -is_6c_5c_4\\
+-is_6c_5c_4 & -s_6c_5s_4 & -s_6s_5c_4 & is_6s_5s_4 & c_6c_5c_4 & -ic_6c_5s_4 & -ic_6s_5c_4 & -c_6s_5s_4\\
+-s_6c_5s_4 & -is_6c_5c_4 & is_6s_5s_4 & -s_6s_5c_4 & -ic_6c_5s_4 & c_6c_5c_4 & -c_6s_5s_4 & -ic_6s_5c_4\\
+-s_6s_5c_4 & is_6s_5s_4 & -is_6c_5c_4 & -s_6c_5s_4 & -ic_6s_5c_4 & -c_6s_5s_4 & c_6c_5c_4 & -ic_6c_5s_4\\
+is_6s_5s_4 & -s_6s_5c_4 & -s_6c_5s_4 & -is_6c_5c_4 & -c_6s_5s_4 & -ic_6s_5c_4 & -ic_6c_5s_4 & c_6c_5c_4
+\end{bmatrix}  
+\end{aligned}  
+\end{equation*}
+The new statevector becomes:
+\begin{equation}
+U_{hidden}\times
+\begin{bmatrix}
+\cos(\frac{\theta_3+x_3}{2})\cos(\frac{\theta_2+x_2}{2})\cos(\frac{\theta_1+x_1}{2})\\[6pt]
+-\cos(\frac{\theta_3+x_3}{2})\sin(\frac{\theta_2+x_2}{2})\sin(\frac{\theta_1+x_1}{2})\\[6pt]
+-\sin(\frac{\theta_3+x_3}{2})\sin(\frac{\theta_2+x_2}{2})\cos(\frac{\theta_1+x_1}{2})\\[6pt]
+-\sin(\frac{\theta_3+x_3}{2})\cos(\frac{\theta_2+x_2}{2})\sin(\frac{\theta_1+x_1}{2})\\[6pt]
+-i\sin(\frac{\theta_3+x_3}{2})\cos(\frac{\theta_2+x_2}{2})\cos(\frac{\theta_1+x_1}{2})\\[6pt]
+i\sin(\frac{\theta_3+x_3}{2})\sin(\frac{\theta_2+x_2}{2})\sin(\frac{\theta_1+x_1}{2})\\[6pt]
+-i\cos(\frac{\theta_3+x_3}{2})\sin(\frac{\theta_2+x_2}{2})\cos(\frac{\theta_1+x_1}{2})\\[6pt]
+-i\cos(\frac{\theta_3+x_3}{2})\cos(\frac{\theta_2+x_2}{2})\sin(\frac{\theta_1+x_1}{2})
+\end{bmatrix}
+\end{equation}
+Firstly, let's define:
+\begin{equation*}
+\begin{aligned}
+C_1&=\cos(\frac{\theta_1+x_1}{2}),\quad S_1=\sin(\frac{\theta_1+x_1}{2})\\
+C_2&=\cos(\frac{\theta_2+x_2}{2}),\quad S_2=\sin(\frac{\theta_2+x_2}{2})\\
+C_3&=\cos(\frac{\theta_3+\theta_6+x_3}{2}),\quad S_3=\sin(\frac{\theta_3+\theta_6+x_3}{2})\\
+c_j&=\cos(\frac{\theta_j}{2}),\quad s_j=\sin(\frac{\theta_j}{2})
+\end{aligned}
+\end{equation*}
+\begin{equation}
+\ket{q_2q_1q_0}=
+\begin{bmatrix}
+C_3c_5(c_4C_2C_1+is_4S_2S_1)+S_3s_5(ic_4S_2C_1+s_4C_2S_1)\\[7pt]
+C_3c_5(-is_4C_2C_1-c_4S_2S_1)+S_3s_5(s_4S_2C_1+ic_4C_2S_1)\\[7pt]
+C_3s_5(-ic_4C_2C_1+s_4S_2S_1)+S_3c_5(-c_4S_2C_1+is_4C_2S_1)\\[7pt]
+C_3s_5(-s_4C_2C_1+ic_4S_2S_1)+S_3c_5(is_4S_2C_1-c_4C_2S_1)\\[7pt]
+S_3c_5(-ic_4C_2C_1+s_4S_2S_1)+C_3s_5(-c_4S_2C_1+is_4C_2S_1)\\[7pt]
+S_3c_5(-s_4C_2C_1+ic_4S_2S_1)+C_3s_5(is_4S_2C_1-c_4C_2S_1)\\[7pt]
+S_3s_5(-c_4C_2C_1-is_4S_2S_1)+C_3c_5(-ic_4S_2C_1-s_4C_2S_1)\\[7pt]
+S_3s_5(is_4C_2C_1+c_4S_2S_1)+C_3c_5(-s_4S_2C_1-ic_4C_2S_1)
+\end{bmatrix}
+\end{equation}
 
 
+\subsection{Output Layer: Measurement}
+
+
+\section{Fourier Analysis of Quanutm Neural Networks and Expressivity}
+
+\subsection{Basics of Fourier Series and Fourier Transform}
+
+\subsection{Quantum Neural Network as a Partial Fourer Series}
+
+\subsection{Expressivity}
 
 
 \end{document}
