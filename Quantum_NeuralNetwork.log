@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.22)  26 OCT 2026 00:18
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.22)  26 OCT 2026 00:45
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1029,27 +1029,27 @@ Overfull \hbox (9.42567pt too wide) detected at line 601
 [][][][][][]
  []
 
-[14 <./figures/hidden3_2.png>] [15] [16] [17] [18] [19] [20] (./Quantum_NeuralNetwork.aux)
+[14 <./figures/hidden3_2.png>] [15] [16] [17] [18] [19] [20] [21] (./Quantum_NeuralNetwork.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
 Package rerunfilecheck Info: File `Quantum_NeuralNetwork.out' has not changed.
-(rerunfilecheck)             Checksum: 7796650253D0173DABC9B2DDBFFA7D4F;3420.
+(rerunfilecheck)             Checksum: 40FCF06FC71A72A382F7DEB4C1C75B56;3486.
  ) 
 Here is how much of TeX's memory you used:
- 37373 strings out of 467525
- 765666 string characters out of 5418982
+ 37406 strings out of 467525
+ 766257 string characters out of 5418982
  1235285 words of memory out of 5000000
- 65476 multiletter control sequences out of 15000+600000
- 687821 words of font info for 143 fonts, out of 8000000 for 9000
+ 65493 multiletter control sequences out of 15000+600000
+ 692879 words of font info for 152 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  84i,13n,108p,1997b,1083s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmbx8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmex10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmmi12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmmi6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmr12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmr17.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmr6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmr8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmsy6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on Quantum_NeuralNetwork.pdf (21 pages, 345998 bytes).
+</usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmbx8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmex10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmmi12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmmi6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmr12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmr17.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmr6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmr8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmri12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmsy6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on Quantum_NeuralNetwork.pdf (22 pages, 366226 bytes).
 PDF statistics:
- 361 PDF objects out of 1000 (max. 8388607)
- 290 compressed objects within 3 object streams
- 95 named destinations out of 1000 (max. 500000)
- 32944 words of extra memory for PDF output out of 35830 (max. 10000000)
+ 367 PDF objects out of 1000 (max. 8388607)
+ 293 compressed objects within 3 object streams
+ 94 named destinations out of 1000 (max. 500000)
+ 34992 words of extra memory for PDF output out of 35830 (max. 10000000)
 

@@ -612,6 +612,7 @@ i\sin(\frac{\theta_3+x_3}{2})\sin(\frac{\theta_2+x_2}{2})\sin(\frac{\theta_1+x_1
 -i\cos(\frac{\theta_3+x_3}{2})\sin(\frac{\theta_2+x_2}{2})\cos(\frac{\theta_1+x_1}{2})\\[6pt]
 -i\cos(\frac{\theta_3+x_3}{2})\cos(\frac{\theta_2+x_2}{2})\sin(\frac{\theta_1+x_1}{2})
 \end{bmatrix}
+\label{eq:statevector2}
 \end{equation}
 Firstly, let's define:
 \begin{equation*}
@@ -634,15 +635,31 @@ S_3c_5(-s_4C_2C_1+ic_4S_2S_1)+C_3s_5(is_4S_2C_1-c_4C_2S_1)\\[7pt]
 S_3s_5(-c_4C_2C_1-is_4S_2S_1)+C_3c_5(-ic_4S_2C_1-s_4C_2S_1)\\[7pt]
 S_3s_5(is_4C_2C_1+c_4S_2S_1)+C_3c_5(-s_4S_2C_1-ic_4C_2S_1)
 \end{bmatrix}
-\label{eq:statevector2}
+\label{eq:statevector3}
 \end{equation}
 
-As the depth of the QNN increases through the addition of rotation and CNOT layers, the evolution of the quantum statevector can be mathematically represented as a sequence of alternating permutation matrices and parameterized rotation matrices defined by the rotation matrix in Eq.~\ref{eq:rotationunitary} and applied to the statevector in Eq.~\ref{eq:statevector2}.
+However, as the circuit depth increases, manually deriving the statevector quickly becomes computationally intractable. This naturally raises an important question: can we abstract these increasingly complex expressions into a more compact mathematical representation that allows us to analyze the QNN systematically?
 
-However, manually calculating this seems impossible. Can we abstract this into a mathmatical representation so that it's easier for us to analyze. Yes! We can and in fact a QNN can be represented as \textbf{Finite Fourier Series}:
+Fortunately, the answer is yes! In fact, under the data-encoding schemes considered here, the output of a QNN can be represented as a \textbf{finite Fourier series}.
+
+To understand why, let us revisit Eq.~\ref{eq:statevector3}. A closer examination reveals that each probability amplitude consists of combinations of sine and cosine functions. By applying standard trigonometric identities, these expressions can be rewritten in the general form
+\begin{equation}
+    a_j(x,\theta)
+    = \sum_{\alpha\in\Lambda}
+    \left[
+        A_{j,\alpha}(\theta)\cos(\alpha x)
+        + B_{j,\alpha}(\theta)\sin(\alpha x)
+    \right]
+\end{equation}
+
+where $\Lambda$ denotes a finite set of frequencies, and $A_{j,\alpha}(\theta)$ and $B_{j,\alpha}(\theta)$ are coefficients determined by the trainable parameters.
+
+This is precisely the structure of a finite trigonometric series! More importantly, since the QNN output is obtained through the expectation value of an observable, it can also be expressed as a finite Fourier series:
 
 \begin{equation}
-    f(x)=\sum_{\omega\in\Omega}c_{\omega}(\theta)e^{i\omega x}
+    f_{\theta}(x)
+    = \sum_{\omega\in\Omega}
+    c_{\omega}(\theta)e^{i\omega x}
 \end{equation}
 
 Here, $\Omega$ denotes the set of accessible frequencies. Unlike classical neural networks with learnable frequencies, such as SIREN, the accessible frequency spectrum of a QNN is primarily determined by its data-encoding strategy and circuit architecture. In particular, both circuit depth, characterized by the number of data-reuploading layers, and circuit width, characterized by the number of qubits involved in data encoding, can influence the accessible frequency spectrum. We will explore these relationships in greater detail in the following sections.
@@ -651,63 +668,7 @@ Furthermore, $\omega \in \Omega$ represents an individual frequency component, w
 
 This naturally raises an intriguing question: \textbf{Is a predetermined frequency spectrum a fundamental limitation of QNNs, or could it actually become an advantage?} We will investigate this question in the following sections.
 
-
-\subsection{Output Layer: Measurement}
-In end, we need to measure the results. What happens in the evolution of the quantum circuits discussed above are not observable! Once we observe, the entire quantum system collapse. Of course, we can observe that if each qubit collapses to 0 or 1. But how do we know the probability amplitude of each qubit? A common way is to measure the expected value of an Observable $\mathcal{O}$.
-In QNN, after encoding layer and multiple rotation and entangling layers, the statevector is:
-\begin{equation}
-    \ket{\psi(x,\theta)}=U(x,\theta)\ket{0}^{\otimes n}
-\end{equation}
-Yes, all the complex operation is just a unitary matrix. To measure the observable:
-\begin{equation}
-    f_{\theta}(x)=\bra{\psi(\theta,x)}\mathcal{O}\ket{\psi(\theta,x)}=\bra{0}U^{\dagger}(\theta,x)\mathcal{O}U(\theta,x)\ket{0}
-\end{equation}
-The most common measurement is the Pauli-Z expected value:
-\begin{equation}
-    O=Z=\begin{bmatrix}1&0\\0&-1\end{bmatrix}
-\end{equation}
-If a qubit's state is $\ket{\psi}=\alpha\ket{0}+\beta\ket{1}$ where $|\alpha|^2+|\beta|^2=1$. According to Born Rule:
-\begin{equation*}
-    P(0)=|\alpha|^2, \quad P(1)=|\beta|^2
-\end{equation*}
-Since eigenvalues of Pauli-Z are +1 and -1, so the expected value is
-\begin{equation}
-    \braket{Z}=\bra{\psi}Z\ket{\psi}=|\alpha|^2-|\beta|^2=P(0)-P(1)=2P(0)-1
-\end{equation}
-Since $-1<\braket{Z}<1$, the closer $\braket{Z}$ is to -1, the higher probability $\ket{0}$ will be measured. However, on real quantum hardware, the probability amplitude, which is the expected value cannot be measured directly. We must repeatly run circuit to estimate $\braket{Z}$:
-\begin{equation}
-    \hat{\braket{Z}}=\frac{N_0-N_1}{N}
-\end{equation}
-In multi-qubit system, such as the 3-qubit one demonstrated above, we have a $8\times1$ statevector:
-\begin{equation}
-    \ket{\psi}=\begin{bmatrix}
-        a_{000}\\a_{001}\\a_{010}\\a_{011}\\a_{100}\\a_{101}\\a_{110}\\a_{111}
-    \end{bmatrix}
-\end{equation}
-where
-\begin{equation}
-    \sum_{i,j,k\in\{0,1\}}|a_{ijk}|^2=1
-\end{equation}
-To measure the first qubit, we can define
-\begin{equation}
-    \mathcal{O}_1=I\otimes I\otimes Z
-\end{equation}
-Thus, 
-\begin{equation}
-\begin{aligned}
-\braket{Z_1}&=\bra{\psi}\mathcal{O}_1\ket{\psi}\\
-&=|a_{000}|^2-|a_{001}|^2+|a_{010}|^2-|a_{011}|^2+|a_{100}|^2-|a_{101}|^2+|a_{110}|^2-|a_{111}|^2
-\end{aligned}
-\end{equation}
-Of course, we can measure the other two qubits use slightly different observables:
-\begin{equation}
-\mathcal{O}_2=I\otimes Z\otimes I, \quad \mathcal{O}_3=Z\otimes I\otimes I
-\end{equation}
-The final measurement is also a vector:
-\begin{equation}
-    \mathbf{f}_{\theta}(x)=\begin{bmatrix}        \braket{Z_1}\\\braket{Z_2}\\\braket{Z_3}    \end{bmatrix}
-\end{equation}
-There are many other measurement such as Pauli-X, Pauli-Y, and Mulit-Qubit Correlation, which will not be expanded here.  
+This remarkable connection allows us to study the expressive power of QNNs through their accessible frequency spectra and trainable Fourier coefficients, rather than explicitly tracking the exponentially growing quantum statevector.
 
 \subsection{Output Layer: Quantum Measurement}
 
@@ -874,6 +835,191 @@ In summary, quantum measurement provides the essential bridge between the quantu
 \section{Fourier Analysis of Quanutm Neural Networks and Expressivity}
 
 \subsection{Basics of Fourier Series and Fourier Transform}
+Fourier analysis provides a powerful mathematical framework
+for representing and analyzing functions in terms of their
+frequency components. The fundamental idea is that a
+function can be decomposed into a combination of oscillatory
+basis functions, such as sines, cosines, or complex
+exponentials. Instead of examining a function solely in
+its original domain, Fourier analysis allows us to study
+its behavior in the frequency domain.
+
+Two fundamental tools in Fourier analysis are the
+\textit{Fourier series} and the \textit{Fourier transform}.
+Although closely related, they serve different purposes
+and apply to different classes of functions.
+
+\textbf{Fourier Series}
+
+A Fourier series represents a periodic function as an
+infinite sum of sinusoidal components with different
+frequencies, amplitudes, and phases.
+
+For a periodic function $f(x)$ with period $T$, its
+Fourier series can be expressed in complex exponential
+form as
+
+\begin{equation}
+    f(x)=\sum_{k=-\infty}^{\infty}
+    c_k e^{ik\omega_0 x}
+    \label{eq:fourier_series}
+\end{equation}
+
+where $\omega_0=2\pi/T$ is the fundamental angular
+frequency, $k\in\mathbb{Z}$ is the harmonic index,
+and $c_k$ denotes the Fourier coefficient associated
+with frequency $k\omega_0$.
+
+Each Fourier coefficient can be calculated by projecting
+the original function onto its corresponding complex
+exponential basis:
+
+\begin{equation}
+    c_k=\frac{1}{T}\int_0^T
+    f(x)e^{-ik\omega_0 x}\,dx
+    \label{eq:fourier_coefficients}
+\end{equation}
+
+These coefficients describe the contribution of each
+frequency component to the original function. In
+particular, $|c_k|$ determines its magnitude, while
+the complex phase of $c_k$ determines its phase shift.
+
+According to Euler's formula,
+
+\begin{equation}
+    e^{i\omega x}
+    =\cos(\omega x)+i\sin(\omega x)
+\end{equation}
+
+the complex exponential representation is equivalent
+to expressing a real-valued periodic function as a
+sum of sine and cosine functions.
+
+Importantly, different frequencies capture different
+levels of variation in a function. Low-frequency
+components describe slowly varying patterns, whereas
+high-frequency components represent rapid oscillations
+and fine-grained details.
+
+In practical applications, Fourier series are often
+approximated using a finite number of frequency
+components. More generally, a finite trigonometric
+expansion can be written as
+
+\begin{equation}
+    f(x)=\sum_{\omega\in\Omega}
+    c_{\omega}e^{i\omega x}
+    \label{eq:finite_fourier_series}
+\end{equation}
+
+where $\Omega$ is a finite set of frequencies.
+Unlike the conventional Fourier series, the
+frequencies in this generalized representation
+are not necessarily integer multiples of a
+common fundamental frequency.
+
+\textbf{Fourier Transform}
+
+While Fourier series decompose periodic functions
+into discrete harmonics, the Fourier transform
+extends frequency-domain analysis to nonperiodic
+functions.
+
+For a sufficiently well-behaved function $f(x)$,
+the continuous Fourier transform is defined as
+
+\begin{equation}
+    \hat{f}(\omega)
+    =\int_{-\infty}^{\infty}
+    f(x)e^{-i\omega x}\,dx
+    \label{eq:fourier_transform}
+\end{equation}
+
+where $\omega\in\mathbb{R}$ represents the angular
+frequency and $\hat{f}(\omega)$ describes the
+frequency-domain representation of $f(x)$.
+
+The original function can be reconstructed using
+the inverse Fourier transform:
+
+\begin{equation}
+    f(x)=\frac{1}{2\pi}
+    \int_{-\infty}^{\infty}
+    \hat{f}(\omega)e^{i\omega x}\,d\omega
+    \label{eq:inverse_fourier_transform}
+\end{equation}
+
+The key distinction is that the Fourier series uses
+a discrete set of frequencies, whereas the Fourier
+transform is defined over a continuous frequency
+variable. Nevertheless, both share the same
+fundamental principle: a function can be understood
+through its frequency components and their
+corresponding coefficients.
+
+From a function-approximation perspective, the
+frequency spectrum reveals which oscillatory patterns
+are present in a function. This perspective is
+particularly useful when studying the expressive
+power of machine learning models.
+
+\subsection{Connection to Quantum Neural Networks}
+
+The significance of Fourier analysis becomes apparent
+when examining the mathematical representation of
+Quantum Neural Networks (QNNs).
+
+As discussed previously, the output of a variational
+QNN is typically defined through the expectation
+value of an observable:
+
+\begin{equation}
+    f_{\theta}(x)=
+    \langle 0|
+    U^{\dagger}(x,\theta)
+    \mathcal{O}
+    U(x,\theta)
+    |0\rangle
+\end{equation}
+
+For the finite-dimensional quantum circuits with
+data-encoding operations considered in this paper,
+this expectation-value function can be expressed
+as a finite Fourier series:
+
+\begin{equation}
+    f_{\theta}(x)=
+    \sum_{\omega\in\Omega}
+    c_{\omega}(\theta)e^{i\omega x}
+    \label{eq:qnn_fourier_representation}
+\end{equation}
+
+Here, $\Omega$ denotes the set of accessible
+frequencies, while $c_{\omega}(\theta)$ represents
+the Fourier coefficients controlled by the
+trainable circuit parameters.
+
+Unlike conventional Fourier approximations,
+where the selected frequencies may be chosen
+or optimized for a particular task, the
+accessible frequencies of a QNN with a fixed
+data-encoding scheme are determined by its
+encoding operations and circuit architecture.
+The trainable parameters primarily control
+the corresponding Fourier coefficients,
+subject to constraints imposed by the circuit.
+
+Therefore, Fourier analysis provides a natural
+framework for investigating two fundamental
+aspects of QNN expressivity: which frequencies
+a quantum circuit can represent, and how
+flexibly it can adjust their coefficients.
+
+In the following section, we will examine
+how these properties emerge from quantum
+data encoding and how circuit depth and width
+influence the accessible frequency spectrum.
 
 \subsection{Quantum Neural Network as a Finite Fourer Series}
 
