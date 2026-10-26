@@ -81,7 +81,144 @@ Classical machine learning has gained huge success in recent years especially de
 
 On the other hand, a new paradigm of computing started to shine on the stage -- quantum computing. 
 
-\section{Classical Neural Networks}
+\section{Review of Classical Neural Networks}
+\label{sec:classical_nn}
+
+Before exploring Quantum Neural Networks (QNNs), it is essential to understand their classical counterparts. At their core, neural networks are parameterized mathematical models designed to approximate complex functions from data. Among the various architectures, the Multilayer Perceptron (MLP) is one of the most fundamental and widely studied. Despite its relatively simple structure, the MLP provides the theoretical foundation for understanding the expressive power of neural networks.
+
+\subsection{Architecture of Multilayer Perceptrons}
+
+An MLP is a feedforward neural network consisting of an input layer, one or more hidden layers, and an output layer, as illustrated in Fig.~\ref{fig:mlps}. Each layer consists of multiple neurons, which perform affine transformations followed by nonlinear activation functions.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figures/mlps.png}
+    \caption{Architecture of a Multilayer Perceptron (MLP), consisting of an input layer, hidden layers, and an output layer.}
+    \label{fig:mlps}
+\end{figure}
+
+Mathematically, the output of the $l$-th hidden layer can be expressed as
+
+\begin{equation}
+    \mathbf{h}^{(l)}
+    =\sigma\left(
+    W^{(l)}\mathbf{h}^{(l-1)}
+    +\mathbf{b}^{(l)}
+    \right)
+    \label{eq:mlp_layer}
+\end{equation}
+
+where $\mathbf{h}^{(0)}=\mathbf{x}$ denotes the input vector, $W^{(l)}$ and $\mathbf{b}^{(l)}$ are the trainable weight matrix and bias vector, respectively, and $\sigma$ is a nonlinear activation function. Common choices include Sigmoid, Tanh, and Rectified Linear Unit (ReLU).
+
+By composing multiple layers, an MLP constructs a parameterized mapping from the input space to the output space. Let $A^{(l)}(\mathbf{h})=W^{(l)}\mathbf{h} +\mathbf{b}^{(l)}$ denote the affine transformation at layer $l$. An MLP with $L$ affine layers and a linear output layer can then be represented as
+
+\begin{equation}
+    f_{\theta}(\mathbf{x})
+    =
+    A^{(L)}\circ\sigma\circ
+    A^{(L-1)}\circ\cdots\circ
+    \sigma\circ A^{(1)}(\mathbf{x})
+    \label{eq:mlp_composition}
+\end{equation}
+
+where $\theta$ represents all trainable parameters and $\circ$ denotes function composition.
+
+An important observation is that the nonlinear activation function is essential. Without nonlinearities, any composition of affine transformations remains an affine transformation, regardless of the number of layers. Therefore, nonlinear activations are what enable MLPs to represent functions beyond simple linear mappings.
+
+\subsection{MLPs as Function Approximators}
+
+The fundamental objective of an MLP is to approximate an unknown target function $f^*(\mathbf{x})$ using a parameterized function $f_{\theta}(\mathbf{x})$.
+
+To understand how this works, consider a single-hidden-layer MLP with a scalar output:
+
+\begin{equation}
+    f_{\theta}(\mathbf{x})
+    =\sum_{j=1}^{m}
+    a_j\sigma(\mathbf{w}_j^T\mathbf{x}+b_j)+c
+    \label{eq:mlp_function_approx}
+\end{equation}
+
+where $m$ is the number of hidden neurons, $\mathbf{w}_j$ and $b_j$ determine the transformation applied by the $j$-th neuron, and $a_j$ controls its contribution to the final output.
+
+This expression reveals a fundamental principle: an MLP approximates a complex function by combining multiple simpler nonlinear functions. Each hidden neuron generates a parameterized basis-like function, and the output layer constructs a weighted combination of these functions.
+
+For example, consider the ReLU activation:
+
+\begin{equation}
+    \sigma(x)=\max(0,x)
+\end{equation}
+
+Each ReLU neuron introduces a piecewise-linear component. By combining sufficiently many such components, an MLP can construct increasingly complex piecewise-linear functions that approximate nonlinear target functions, as illustrated in Fig.~\ref{fig:relu}.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figures/relu.png}
+    \caption{Illustration of function approximation using ReLU-based MLPs. Increasing the number of hidden neurons provides greater flexibility to approximate a nonlinear target function.}
+    \label{fig:relu}
+\end{figure}
+
+Given a training dataset $\mathcal{D}=\{(\mathbf{x}_i,y_i)\}_{i=1}^{N}$, the network learns its parameters by minimizing a loss function. For example, in regression tasks, the Mean Squared Error (MSE) objective is
+
+\begin{equation}
+    \theta^*
+    =\arg\min_{\theta}
+    \frac{1}{N}\sum_{i=1}^{N}
+    \left(f_{\theta}(\mathbf{x}_i)-y_i\right)^2
+    \label{eq:mlp_training}
+\end{equation}
+
+In practice, the parameters are typically optimized through gradient-based methods using backpropagation.
+
+\subsection{Universal Approximation Theorem}
+
+A natural question arises: how complex a function can an MLP approximate?
+
+One of the most important theoretical results in neural network research is the Universal Approximation Theorem (UAT), established through a series of foundational works \cite{cybenko1989approximation,leshno1993multilayer}.
+
+In particular, consider a continuous target function $f^*:K\rightarrow\mathbb{R}$, where $K\subset\mathbb{R}^d$ is compact. For any approximation tolerance $\epsilon>0$, there exists a single-hidden-layer ReLU network with sufficiently many hidden neurons such that
+
+\begin{equation}
+    \boxed{
+    \sup_{\mathbf{x}\in K}
+    \left|f^*(\mathbf{x})
+    -f_{\theta}(\mathbf{x})\right|
+    <\epsilon
+    }
+    \label{eq:universal_approximation}
+\end{equation}
+
+In other words, even an MLP with only one hidden layer can approximate any continuous function on a compact domain to arbitrary accuracy, provided that sufficient hidden neurons are available.
+
+This theorem establishes the remarkable expressive potential of neural networks. However, several important distinctions must be made.
+
+First, the theorem guarantees the \emph{existence} of suitable parameters, but does not guarantee that a training algorithm can efficiently discover them. Second, it does not specify how many neurons or parameters are required to achieve a desired approximation accuracy. Finally, approximation capability does not necessarily imply good generalization to unseen data.
+
+Although a single hidden layer is theoretically sufficient for universal approximation, deeper architectures may represent certain functions more efficiently by exploiting their compositional structure.
+
+\subsection{Beyond MLPs: Toward Quantum Neural Networks}
+
+Modern deep learning has extended the basic principles of MLPs into numerous specialized architectures. Convolutional Neural Networks (CNNs) exploit spatial structure, recurrent architectures such as RNNs, LSTMs, and GRUs model sequential dependencies, Transformers leverage attention mechanisms, and Graph Neural Networks (GNNs) incorporate graph structure. Despite their architectural differences, these models share the fundamental objective of learning parameterized functions from data.
+
+This naturally leads to an intriguing question: can quantum computers also serve as function approximators?
+
+While classical MLPs construct functions through compositions of affine transformations and nonlinear activations, variational QNNs construct functions through quantum data encoding, parameterized unitary transformations, and measurements. A typical QNN output can be expressed as
+
+\begin{equation}
+    f_{\theta}(\mathbf{x})
+    =
+    \bra{0}^{\otimes n}
+    U^{\dagger}(\mathbf{x},\theta)
+    \mathcal{O}
+    U(\mathbf{x},\theta)
+    \ket{0}^{\otimes n}
+    \label{eq:qnn_function_approx}
+\end{equation}
+
+where $U(\mathbf{x},\theta)$ represents the parameterized quantum circuit and $\mathcal{O}$ denotes a measurement observable.
+
+Thus, both MLPs and QNNs can be viewed as parameterized function approximators, yet they rely on fundamentally different computational mechanisms. This raises several important questions: How do QNNs represent functions? What determines their expressive power? And how does their function approximation capability compare with that of classical MLPs?
+
+These questions motivate the following investigation into the mathematical representation and expressive properties of Quantum Neural Networks.
 
 
 \section{Quantum Neural Networks}
@@ -835,29 +972,15 @@ In summary, quantum measurement provides the essential bridge between the quantu
 \section{Fourier Analysis of Quanutm Neural Networks and Expressivity}
 
 \subsection{Basics of Fourier Series and Fourier Transform}
-Fourier analysis provides a powerful mathematical framework
-for representing and analyzing functions in terms of their
-frequency components. The fundamental idea is that a
-function can be decomposed into a combination of oscillatory
-basis functions, such as sines, cosines, or complex
-exponentials. Instead of examining a function solely in
-its original domain, Fourier analysis allows us to study
-its behavior in the frequency domain.
+Fourier analysis provides a powerful mathematical framework for representing and analyzing functions in terms of their frequency components. The fundamental idea is that a function can be decomposed into a combination of oscillatory basis functions, such as sines, cosines, or complex exponentials. Instead of examining a function solely in its original domain, Fourier analysis allows us to study its behavior in the frequency domain.
 
-Two fundamental tools in Fourier analysis are the
-\textit{Fourier series} and the \textit{Fourier transform}.
-Although closely related, they serve different purposes
-and apply to different classes of functions.
+Two fundamental tools in Fourier analysis are the \textit{Fourier series} and the \textit{Fourier transform}. Although closely related, they serve different purposes and apply to different classes of functions.
 
 \textbf{Fourier Series}
 
-A Fourier series represents a periodic function as an
-infinite sum of sinusoidal components with different
-frequencies, amplitudes, and phases.
+A Fourier series represents a periodic function as an infinite sum of sinusoidal components with different frequencies, amplitudes, and phases.
 
-For a periodic function $f(x)$ with period $T$, its
-Fourier series can be expressed in complex exponential
-form as
+For a periodic function $f(x)$ with period $T$, its Fourier series can be expressed in complex exponential form as
 
 \begin{equation}
     f(x)=\sum_{k=-\infty}^{\infty}
@@ -865,14 +988,9 @@ form as
     \label{eq:fourier_series}
 \end{equation}
 
-where $\omega_0=2\pi/T$ is the fundamental angular
-frequency, $k\in\mathbb{Z}$ is the harmonic index,
-and $c_k$ denotes the Fourier coefficient associated
-with frequency $k\omega_0$.
+where $\omega_0=2\pi/T$ is the fundamental angular frequency, $k\in\mathbb{Z}$ is the harmonic index, and $c_k$ denotes the Fourier coefficient associated with frequency $k\omega_0$.
 
-Each Fourier coefficient can be calculated by projecting
-the original function onto its corresponding complex
-exponential basis:
+Each Fourier coefficient can be calculated by projecting the original function onto its corresponding complex exponential basis:
 
 \begin{equation}
     c_k=\frac{1}{T}\int_0^T
@@ -880,10 +998,7 @@ exponential basis:
     \label{eq:fourier_coefficients}
 \end{equation}
 
-These coefficients describe the contribution of each
-frequency component to the original function. In
-particular, $|c_k|$ determines its magnitude, while
-the complex phase of $c_k$ determines its phase shift.
+These coefficients describe the contribution of each frequency component to the original function. In particular, $|c_k|$ determines its magnitude, while the complex phase of $c_k$ determines its phase shift.
 
 According to Euler's formula,
 
@@ -892,20 +1007,11 @@ According to Euler's formula,
     =\cos(\omega x)+i\sin(\omega x)
 \end{equation}
 
-the complex exponential representation is equivalent
-to expressing a real-valued periodic function as a
-sum of sine and cosine functions.
+the complex exponential representation is equivalent to expressing a real-valued periodic function as a sum of sine and cosine functions.
 
-Importantly, different frequencies capture different
-levels of variation in a function. Low-frequency
-components describe slowly varying patterns, whereas
-high-frequency components represent rapid oscillations
-and fine-grained details.
+Importantly, different frequencies capture different levels of variation in a function. Low-frequency components describe slowly varying patterns, whereas high-frequency components represent rapid oscillations and fine-grained details.
 
-In practical applications, Fourier series are often
-approximated using a finite number of frequency
-components. More generally, a finite trigonometric
-expansion can be written as
+In practical applications, Fourier series are often approximated using a finite number of frequency components. More generally, a finite trigonometric expansion can be written as
 
 \begin{equation}
     f(x)=\sum_{\omega\in\Omega}
@@ -913,21 +1019,13 @@ expansion can be written as
     \label{eq:finite_fourier_series}
 \end{equation}
 
-where $\Omega$ is a finite set of frequencies.
-Unlike the conventional Fourier series, the
-frequencies in this generalized representation
-are not necessarily integer multiples of a
-common fundamental frequency.
+where $\Omega$ is a finite set of frequencies. Unlike the conventional Fourier series, thefrequencies in this generalized representation are not necessarily integer multiples of a common fundamental frequency.
 
 \textbf{Fourier Transform}
 
-While Fourier series decompose periodic functions
-into discrete harmonics, the Fourier transform
-extends frequency-domain analysis to nonperiodic
-functions.
+While Fourier series decompose periodic functions into discrete harmonics, the Fourier transform extends frequency-domain analysis to nonperiodic functions.
 
-For a sufficiently well-behaved function $f(x)$,
-the continuous Fourier transform is defined as
+For a sufficiently well-behaved function $f(x)$, the continuous Fourier transform is defined as
 
 \begin{equation}
     \hat{f}(\omega)
@@ -936,12 +1034,9 @@ the continuous Fourier transform is defined as
     \label{eq:fourier_transform}
 \end{equation}
 
-where $\omega\in\mathbb{R}$ represents the angular
-frequency and $\hat{f}(\omega)$ describes the
-frequency-domain representation of $f(x)$.
+where $\omega\in\mathbb{R}$ represents the angular frequency and $\hat{f}(\omega)$ describes the frequency-domain representation of $f(x)$.
 
-The original function can be reconstructed using
-the inverse Fourier transform:
+The original function can be reconstructed using the inverse Fourier transform:
 
 \begin{equation}
     f(x)=\frac{1}{2\pi}
@@ -950,29 +1045,14 @@ the inverse Fourier transform:
     \label{eq:inverse_fourier_transform}
 \end{equation}
 
-The key distinction is that the Fourier series uses
-a discrete set of frequencies, whereas the Fourier
-transform is defined over a continuous frequency
-variable. Nevertheless, both share the same
-fundamental principle: a function can be understood
-through its frequency components and their
-corresponding coefficients.
+The key distinction is that the Fourier series uses a discrete set of frequencies, whereas the Fourier transform is defined over a continuous frequency variable. Nevertheless, both share the same fundamental principle: a function can be understood through its frequency components and their corresponding coefficients.
 
-From a function-approximation perspective, the
-frequency spectrum reveals which oscillatory patterns
-are present in a function. This perspective is
-particularly useful when studying the expressive
-power of machine learning models.
+From a function-approximation perspective, the frequency spectrum reveals which oscillatory patterns are present in a function. This perspective is particularly useful when studying the expressive power of machine learning models.
 
 \subsection{Connection to Quantum Neural Networks}
+The significance of Fourier analysis becomes apparent when examining the mathematical representation of Quantum Neural Networks (QNNs).
 
-The significance of Fourier analysis becomes apparent
-when examining the mathematical representation of
-Quantum Neural Networks (QNNs).
-
-As discussed previously, the output of a variational
-QNN is typically defined through the expectation
-value of an observable:
+As discussed previously, the output of a variational QNN is typically defined through the expectation value of an observable:
 
 \begin{equation}
     f_{\theta}(x)=
@@ -983,10 +1063,7 @@ value of an observable:
     |0\rangle
 \end{equation}
 
-For the finite-dimensional quantum circuits with
-data-encoding operations considered in this paper,
-this expectation-value function can be expressed
-as a finite Fourier series:
+For the finite-dimensional quantum circuits with data-encoding operations considered in this paper, this expectation-value function can be expressed as a finite Fourier series:
 
 \begin{equation}
     f_{\theta}(x)=
@@ -995,31 +1072,13 @@ as a finite Fourier series:
     \label{eq:qnn_fourier_representation}
 \end{equation}
 
-Here, $\Omega$ denotes the set of accessible
-frequencies, while $c_{\omega}(\theta)$ represents
-the Fourier coefficients controlled by the
-trainable circuit parameters.
+Here, $\Omega$ denotes the set of accessible frequencies, while $c_{\omega}(\theta)$ represents the Fourier coefficients controlled by the trainable circuit parameters.
 
-Unlike conventional Fourier approximations,
-where the selected frequencies may be chosen
-or optimized for a particular task, the
-accessible frequencies of a QNN with a fixed
-data-encoding scheme are determined by its
-encoding operations and circuit architecture.
-The trainable parameters primarily control
-the corresponding Fourier coefficients,
-subject to constraints imposed by the circuit.
+Unlike conventional Fourier approximations, where the selected frequencies may be chosen or optimized for a particular task, the accessible frequencies of a QNN with a fixed data-encoding scheme are determined by its encoding operations and circuit architecture. The trainable parameters primarily control the corresponding Fourier coefficients, subject to constraints imposed by the circuit.
 
-Therefore, Fourier analysis provides a natural
-framework for investigating two fundamental
-aspects of QNN expressivity: which frequencies
-a quantum circuit can represent, and how
-flexibly it can adjust their coefficients.
+Therefore, Fourier analysis provides a natural framework for investigating two fundamental aspects of QNN expressivity: which frequencies a quantum circuit can represent, and how flexibly it can adjust their coefficients.
 
-In the following section, we will examine
-how these properties emerge from quantum
-data encoding and how circuit depth and width
-influence the accessible frequency spectrum.
+In the following section, we will examine how these properties emerge from quantum data encoding and how circuit depth and width influence the accessible frequency spectrum.
 
 \subsection{Quantum Neural Network as a Finite Fourer Series}
 

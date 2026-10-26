@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1792989957.86811 "/Users/yixiangwang/Desktop/CMU/Quantum_AI/QML/qnn/Quantum_NeuralNetwork.tex" "Quantum_NeuralNetwork.pdf" "Quantum_NeuralNetwork" 1792989958.87536 0
-  "/Users/yixiangwang/Desktop/CMU/Quantum_AI/QML/qnn/Quantum_NeuralNetwork.tex" 1792989956.74772 54579 82e539d8d435125ddb124d0e29e7e100 ""
+["pdflatex"] 1793043624.26691 "/Users/yixiangwang/Desktop/CMU/Quantum_AI/QML/qnn/Quantum_NeuralNetwork.tex" "Quantum_NeuralNetwork.pdf" "Quantum_NeuralNetwork" 1793043626.1713 0
+  "/Users/yixiangwang/Desktop/CMU/Quantum_AI/QML/qnn/Quantum_NeuralNetwork.tex" 1793043622.03473 62723 fa6418640c8fbf6fe86f53377d6863b0 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc" 1254269338 2375 baa924870cfb487815765f9094cf3728 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc" 1202520719 3486 c7eadf5dcc57b3b2d11736679f6636ba ""
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc" 1202520719 2405 5dcf2c1b967ee25cc46c58cd52244aed ""
@@ -243,16 +243,18 @@
   "/usr/local/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1788970897 5573038 b99aad5e4898a9034e953632f940512b ""
   "/usr/local/texlive/2026/texmf-var/web2c/pdftex/pdflatex.fmt" 1774209607 3636776 dc5fa9b6b1453b9d196cd42edf876004 ""
   "/usr/local/texlive/2026/texmf.cnf" 1774209515 577 648cd9f92f9c0eac486f4c71c85cfbbe ""
-  "Quantum_NeuralNetwork.aux" 1792989958.80661 7256 83a8d7285831b22263f7864870eac79f "pdflatex"
-  "Quantum_NeuralNetwork.out" 1792989958.80734 3486 40fcf06fc71a72a382f7deb4c1c75b56 "pdflatex"
-  "Quantum_NeuralNetwork.tex" 1792989956.74772 54579 82e539d8d435125ddb124d0e29e7e100 ""
+  "Quantum_NeuralNetwork.aux" 1793043626.10633 10129 0e76f7c328c08e953f5b3e783eaa79a1 "pdflatex"
+  "Quantum_NeuralNetwork.out" 1793043626.10708 4523 add296642d53a05b616db4026194ad5e "pdflatex"
+  "Quantum_NeuralNetwork.tex" 1793043622.03473 62723 fa6418640c8fbf6fe86f53377d6863b0 ""
   "figures/bell.png" 1791325615.48404 6512 7c698f8355998718c3079de3f1ec50b0 ""
   "figures/cnot.png" 1791336303.76098 10485 d31c5bbf06f5eee72405815eb24baa7c ""
   "figures/encode_3.png" 1791861858.86115 9634 71c277ebb115b903a8f242a5b13e32c6 ""
   "figures/entangle3.png" 1791865573.81477 16558 b50f0e24a582f16f274ac52040eaee39 ""
   "figures/hidden3_1.png" 1791863781.72282 12920 a0c8f3531169c9503e0283ae843fb320 ""
   "figures/hidden3_2.png" 1792007321.88506 19832 60c75cb6a6076c6f080d0ba232bd818d ""
+  "figures/mlps.png" 1793043613.8253 977229 b27af0f0de01ef1a8f998482eee0fee2 ""
   "figures/qnn_3.png" 1791861240.16704 32819 e346d3341d9919eb6ca490776c00c8e2 ""
+  "figures/relu.png" 1793042933.74681 1072681 8a8dee1a59511555e71e9029931f1af2 ""
   (generated)
   "Quantum_NeuralNetwork.aux"
   "Quantum_NeuralNetwork.log"

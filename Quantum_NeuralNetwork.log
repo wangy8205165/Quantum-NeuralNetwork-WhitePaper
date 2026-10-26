@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.22)  26 OCT 2026 00:45
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.22)  26 OCT 2026 15:40
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -963,7 +963,13 @@ Package hyperref Info: Link coloring ON on input line 60.
 
  [1
 
-{/usr/local/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}] (/usr/local/texlive/2026/texmf-dist/tex/latex/microtype/mt-msa.cfg
+{/usr/local/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}]
+<figures/mlps.png, id=95, 3067.46pt x 2188.175pt>
+File: figures/mlps.png Graphic file (type png)
+<use figures/mlps.png>
+Package pdftex.def Info: figures/mlps.png  used on input line 95.
+(pdftex.def)             Requested size: 234.8775pt x 167.54509pt.
+ (/usr/local/texlive/2026/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 ) (/usr/local/texlive/2026/texmf-dist/tex/latex/microtype/mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
@@ -971,85 +977,101 @@ File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.108 ...matrix}0\\0\\0\\1\end{bmatrix}=\ket{11}\]
-                                                   [1{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}]
-<figures/bell.png, id=92, 282.05376pt x 174.6525pt>
+l.109 \end{equation}
+                     [1{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc} <./figures/mlps.png>]
+<figures/relu.png, id=105, 1955.305pt x 1650.165pt>
+File: figures/relu.png Graphic file (type png)
+<use figures/relu.png>
+Package pdftex.def Info: figures/relu.png  used on input line 155.
+(pdftex.def)             Requested size: 234.8775pt x 198.21269pt.
+ [2{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}]
+
+LaTeX Warning: Citation `cybenko1989approximation' on page 3 undefined on input line 176.
+
+
+LaTeX Warning: Citation `leshno1993multilayer' on page 3 undefined on input line 176.
+
+[3 <./figures/relu.png>] [4]
+<figures/bell.png, id=138, 282.05376pt x 174.6525pt>
 File: figures/bell.png Graphic file (type png)
 <use figures/bell.png>
-Package pdftex.def Info: figures/bell.png  used on input line 127.
+Package pdftex.def Info: figures/bell.png  used on input line 264.
 (pdftex.def)             Requested size: 234.8775pt x 145.44122pt.
- [2 <./figures/bell.png>]
-<figures/qnn_3.png, id=101, 920.43875pt x 304.13625pt>
+<figures/qnn_3.png, id=140, 920.43875pt x 304.13625pt>
 File: figures/qnn_3.png Graphic file (type png)
 <use figures/qnn_3.png>
-Package pdftex.def Info: figures/qnn_3.png  used on input line 145.
+Package pdftex.def Info: figures/qnn_3.png  used on input line 282.
 (pdftex.def)             Requested size: 375.80544pt x 124.1769pt.
- [3 <./figures/qnn_3.png>] [4]
-<figures/encode_3.png, id=121, 217.81375pt x 238.8925pt>
+ [5] [6 <./figures/bell.png> <./figures/qnn_3.png>] [7]
+<figures/encode_3.png, id=168, 217.81375pt x 238.8925pt>
 File: figures/encode_3.png Graphic file (type png)
 <use figures/encode_3.png>
-Package pdftex.def Info: figures/encode_3.png  used on input line 211.
+Package pdftex.def Info: figures/encode_3.png  used on input line 348.
 (pdftex.def)             Requested size: 93.94957pt x 103.0389pt.
- [5 <./figures/encode_3.png>] [6] [7]
-<figures/hidden3_1.png, id=145, 282.05376pt x 238.8925pt>
+ [8 <./figures/encode_3.png>] [9] [10]
+<figures/hidden3_1.png, id=189, 282.05376pt x 238.8925pt>
 File: figures/hidden3_1.png Graphic file (type png)
 <use figures/hidden3_1.png>
-Package pdftex.def Info: figures/hidden3_1.png  used on input line 350.
+Package pdftex.def Info: figures/hidden3_1.png  used on input line 487.
 (pdftex.def)             Requested size: 140.92793pt x 119.3621pt.
- [8 <./figures/hidden3_1.png>]
-<figures/cnot.png, id=153, 347.2975pt x 174.6525pt>
+ [11 <./figures/hidden3_1.png>]
+<figures/cnot.png, id=197, 347.2975pt x 174.6525pt>
 File: figures/cnot.png Graphic file (type png)
 <use figures/cnot.png>
-Package pdftex.def Info: figures/cnot.png  used on input line 369.
+Package pdftex.def Info: figures/cnot.png  used on input line 506.
 (pdftex.def)             Requested size: 140.92793pt x 70.87245pt.
- [9 <./figures/cnot.png>]
-<figures/entangle3.png, id=165, 411.5375pt x 238.8925pt>
+ [12 <./figures/cnot.png>]
+<figures/entangle3.png, id=210, 411.5375pt x 238.8925pt>
 File: figures/entangle3.png Graphic file (type png)
 <use figures/entangle3.png>
-Package pdftex.def Info: figures/entangle3.png  used on input line 426.
+Package pdftex.def Info: figures/entangle3.png  used on input line 563.
 (pdftex.def)             Requested size: 140.92793pt x 81.8056pt.
 
-Overfull \hbox (59.69354pt too wide) detected at line 458
+Overfull \hbox (59.69354pt too wide) detected at line 595
 [][][][][][]
  []
 
-[10 <./figures/entangle3.png>]
-Overfull \hbox (54.36029pt too wide) detected at line 493
+[13 <./figures/entangle3.png>]
+Overfull \hbox (54.36029pt too wide) detected at line 630
 [][][][][] \OMS/lmsy/m/n/12 ^^B [] \OT1/lmr/m/n/12 = []
  []
 
-[11] [12]
-<figures/hidden3_2.png, id=199, 476.78125pt x 238.8925pt>
+[14] [15]
+<figures/hidden3_2.png, id=242, 476.78125pt x 238.8925pt>
 File: figures/hidden3_2.png Graphic file (type png)
 <use figures/hidden3_2.png>
-Package pdftex.def Info: figures/hidden3_2.png  used on input line 578.
+Package pdftex.def Info: figures/hidden3_2.png  used on input line 715.
 (pdftex.def)             Requested size: 234.8775pt x 117.68896pt.
- [13]
-Overfull \hbox (9.42567pt too wide) detected at line 601
+ [16]
+Overfull \hbox (9.42567pt too wide) detected at line 738
 [][][][][][]
  []
 
-[14 <./figures/hidden3_2.png>] [15] [16] [17] [18] [19] [20] [21] (./Quantum_NeuralNetwork.aux)
+[17 <./figures/hidden3_2.png>] [18] [19] [20] [21] [22] [23] [24] (./Quantum_NeuralNetwork.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
+
+
+LaTeX Warning: There were undefined references.
+
 Package rerunfilecheck Info: File `Quantum_NeuralNetwork.out' has not changed.
-(rerunfilecheck)             Checksum: 40FCF06FC71A72A382F7DEB4C1C75B56;3486.
+(rerunfilecheck)             Checksum: ADD296642D53A05B616DB4026194AD5E;4523.
  ) 
 Here is how much of TeX's memory you used:
- 37406 strings out of 467525
- 766257 string characters out of 5418982
- 1235285 words of memory out of 5000000
- 65493 multiletter control sequences out of 15000+600000
- 692879 words of font info for 152 fonts, out of 8000000 for 9000
+ 37466 strings out of 467525
+ 767297 string characters out of 5418982
+ 1235287 words of memory out of 5000000
+ 65529 multiletter control sequences out of 15000+600000
+ 693237 words of font info for 156 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  84i,13n,108p,1997b,1083s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmbx8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmex10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmmi12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmmi6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmr12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmr17.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmr6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmr8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmri12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmsy6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on Quantum_NeuralNetwork.pdf (22 pages, 366226 bytes).
+Output written on Quantum_NeuralNetwork.pdf (25 pages, 1865235 bytes).
 PDF statistics:
- 367 PDF objects out of 1000 (max. 8388607)
- 293 compressed objects within 3 object streams
- 94 named destinations out of 1000 (max. 500000)
- 34992 words of extra memory for PDF output out of 35830 (max. 10000000)
+ 415 PDF objects out of 1000 (max. 8388607)
+ 334 compressed objects within 4 object streams
+ 110 named destinations out of 1000 (max. 500000)
+ 35034 words of extra memory for PDF output out of 35830 (max. 10000000)
 
