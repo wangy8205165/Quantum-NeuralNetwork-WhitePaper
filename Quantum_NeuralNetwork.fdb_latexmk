@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex Quantum_NeuralNetwork"] 1793046017.07114 "Quantum_NeuralNetwork.aux" "Quantum_NeuralNetwork.bbl" "Quantum_NeuralNetwork" 1793046109.95785 0
+["bibtex Quantum_NeuralNetwork"] 1793046017.07114 "Quantum_NeuralNetwork.aux" "Quantum_NeuralNetwork.bbl" "Quantum_NeuralNetwork" 1793046421.69132 0
   "./reference.bib" 1793044324.82257 5899 e1ce90011979625ab35607e146b327ce ""
   "/usr/local/texlive/2026/texmf-dist/bibtex/bst/base/unsrt.bst" 1292289607 18030 1376b4b231b50c66211e47e42eda2875 ""
-  "Quantum_NeuralNetwork.aux" 1793046109.77273 15404 3d208ed623bec7a742e78259c34906cf "pdflatex"
+  "Quantum_NeuralNetwork.aux" 1793046421.49542 15404 3d208ed623bec7a742e78259c34906cf "pdflatex"
   (generated)
   "Quantum_NeuralNetwork.bbl"
   "Quantum_NeuralNetwork.blg"
   (rewritten before read)
-["pdflatex"] 1793046107.39198 "/Users/yixiangwang/Desktop/CMU/Quantum_AI/QML/qnn/Quantum_NeuralNetwork.tex" "Quantum_NeuralNetwork.pdf" "Quantum_NeuralNetwork" 1793046109.95798 0
-  "/Users/yixiangwang/Desktop/CMU/Quantum_AI/QML/qnn/Quantum_NeuralNetwork.tex" 1793046107.20695 73132 23ef98ed974b5a3b0562c81442c140ea ""
+["pdflatex"] 1793046419.04964 "/Users/yixiangwang/Desktop/CMU/Quantum_AI/QML/qnn/Quantum_NeuralNetwork.tex" "Quantum_NeuralNetwork.pdf" "Quantum_NeuralNetwork" 1793046421.69145 0
+  "/Users/yixiangwang/Desktop/CMU/Quantum_AI/QML/qnn/Quantum_NeuralNetwork.tex" 1793046418.85479 73132 3319af243a15762c9a9e3eadf56408ed ""
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc" 1254269338 2375 baa924870cfb487815765f9094cf3728 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc" 1202520719 3486 c7eadf5dcc57b3b2d11736679f6636ba ""
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc" 1202520719 2405 5dcf2c1b967ee25cc46c58cd52244aed ""
@@ -251,10 +251,10 @@
   "/usr/local/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1788970897 5573038 b99aad5e4898a9034e953632f940512b ""
   "/usr/local/texlive/2026/texmf-var/web2c/pdftex/pdflatex.fmt" 1774209607 3636776 dc5fa9b6b1453b9d196cd42edf876004 ""
   "/usr/local/texlive/2026/texmf.cnf" 1774209515 577 648cd9f92f9c0eac486f4c71c85cfbbe ""
-  "Quantum_NeuralNetwork.aux" 1793046109.77273 15404 3d208ed623bec7a742e78259c34906cf "pdflatex"
+  "Quantum_NeuralNetwork.aux" 1793046421.49542 15404 3d208ed623bec7a742e78259c34906cf "pdflatex"
   "Quantum_NeuralNetwork.bbl" 1793046017.13228 3688 70c89b679f31e5d40c4b37c84c961a72 "bibtex Quantum_NeuralNetwork"
-  "Quantum_NeuralNetwork.out" 1793046109.7736 5525 dad4113aeac5a8db2e07bd86e34454af "pdflatex"
-  "Quantum_NeuralNetwork.tex" 1793046107.20695 73132 23ef98ed974b5a3b0562c81442c140ea ""
+  "Quantum_NeuralNetwork.out" 1793046421.49636 5525 dad4113aeac5a8db2e07bd86e34454af "pdflatex"
+  "Quantum_NeuralNetwork.tex" 1793046418.85479 73132 3319af243a15762c9a9e3eadf56408ed ""
   "figures/bell.png" 1791325615.48404 6512 7c698f8355998718c3079de3f1ec50b0 ""
   "figures/bloch.png" 1793045676.05741 509430 387a1d4bffa8bf8b0e98e4aba0176397 ""
   "figures/cnot.png" 1791336303.76098 10485 d31c5bbf06f5eee72405815eb24baa7c ""

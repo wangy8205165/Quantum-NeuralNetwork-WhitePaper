@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.22)  26 OCT 2026 16:21
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.22)  26 OCT 2026 16:26
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -988,54 +988,54 @@ Package pdftex.def Info: figures/relu.png  used on input line 158.
 <figures/bloch.png, id=181, 3854.4pt x 4081.2475pt>
 File: figures/bloch.png Graphic file (type png)
 <use figures/bloch.png>
-Package pdftex.def Info: figures/bloch.png  used on input line 300.
+Package pdftex.def Info: figures/bloch.png  used on input line 273.
 (pdftex.def)             Requested size: 187.89914pt x 198.90552pt.
  [5 <./figures/bloch.png>] [6]
 <figures/bell.png, id=205, 282.05376pt x 174.6525pt>
 File: figures/bell.png Graphic file (type png)
 <use figures/bell.png>
-Package pdftex.def Info: figures/bell.png  used on input line 535.
+Package pdftex.def Info: figures/bell.png  used on input line 441.
 (pdftex.def)             Requested size: 234.8775pt x 145.44122pt.
  [7] [8 <./figures/bell.png>]
 <figures/qnn_3.png, id=232, 920.43875pt x 304.13625pt>
 File: figures/qnn_3.png Graphic file (type png)
 <use figures/qnn_3.png>
-Package pdftex.def Info: figures/qnn_3.png  used on input line 686.
+Package pdftex.def Info: figures/qnn_3.png  used on input line 540.
 (pdftex.def)             Requested size: 375.80544pt x 124.1769pt.
  [9 <./figures/qnn_3.png>] [10]
 <figures/encode_3.png, id=256, 217.81375pt x 238.8925pt>
 File: figures/encode_3.png Graphic file (type png)
 <use figures/encode_3.png>
-Package pdftex.def Info: figures/encode_3.png  used on input line 752.
+Package pdftex.def Info: figures/encode_3.png  used on input line 606.
 (pdftex.def)             Requested size: 93.94957pt x 103.0389pt.
  [11 <./figures/encode_3.png>] [12] [13]
 <figures/hidden3_1.png, id=281, 282.05376pt x 238.8925pt>
 File: figures/hidden3_1.png Graphic file (type png)
 <use figures/hidden3_1.png>
-Package pdftex.def Info: figures/hidden3_1.png  used on input line 895.
+Package pdftex.def Info: figures/hidden3_1.png  used on input line 749.
 (pdftex.def)             Requested size: 140.92793pt x 119.3621pt.
  [14]
 <figures/cnot.png, id=290, 347.2975pt x 174.6525pt>
 File: figures/cnot.png Graphic file (type png)
 <use figures/cnot.png>
-Package pdftex.def Info: figures/cnot.png  used on input line 915.
+Package pdftex.def Info: figures/cnot.png  used on input line 769.
 (pdftex.def)             Requested size: 140.92793pt x 70.87245pt.
  [15 <./figures/hidden3_1.png> <./figures/cnot.png>]
 
-LaTeX Warning: Reference `eq:entangle' on page 16 undefined on input line 948.
+LaTeX Warning: Reference `eq:entangle' on page 16 undefined on input line 802.
 
 <figures/entangle3.png, id=300, 411.5375pt x 238.8925pt>
 File: figures/entangle3.png Graphic file (type png)
 <use figures/entangle3.png>
-Package pdftex.def Info: figures/entangle3.png  used on input line 972.
+Package pdftex.def Info: figures/entangle3.png  used on input line 826.
 (pdftex.def)             Requested size: 140.92793pt x 81.8056pt.
 
-Overfull \hbox (59.69354pt too wide) detected at line 1004
+Overfull \hbox (59.69354pt too wide) detected at line 858
 [][][][][][]
  []
 
 [16 <./figures/entangle3.png>]
-Overfull \hbox (54.36029pt too wide) detected at line 1039
+Overfull \hbox (54.36029pt too wide) detected at line 893
 [][][][][] \OMS/lmsy/m/n/12 ^^B [] \OT1/lmr/m/n/12 = []
  []
 
@@ -1043,10 +1043,10 @@ Overfull \hbox (54.36029pt too wide) detected at line 1039
 <figures/hidden3_2.png, id=336, 476.78125pt x 238.8925pt>
 File: figures/hidden3_2.png Graphic file (type png)
 <use figures/hidden3_2.png>
-Package pdftex.def Info: figures/hidden3_2.png  used on input line 1124.
+Package pdftex.def Info: figures/hidden3_2.png  used on input line 978.
 (pdftex.def)             Requested size: 234.8775pt x 117.68896pt.
  [19]
-Overfull \hbox (9.42567pt too wide) detected at line 1147
+Overfull \hbox (9.42567pt too wide) detected at line 1001
 [][][][][][]
  []
 

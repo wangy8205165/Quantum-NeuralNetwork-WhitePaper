@@ -229,28 +229,11 @@ These questions motivate the following investigation into the mathematical repre
 \subsection{Basics of Quantum Computing}
 \label{sec:quantum_basics}
 
-Quantum computing is built upon the principles of quantum
-mechanics, which provide a fundamentally different
-computational framework from classical computing.
-Unlike classical computers, which process information
-using binary bits, quantum computers manipulate quantum
-bits, or qubits, through unitary transformations and
-quantum measurements. This section introduces the
-essential concepts of quantum computing, including
-quantum states, quantum gates, tensor products,
-entanglement, and measurement. These concepts form
-the mathematical foundation of Quantum Neural Networks
-(QNNs). The following discussion is based on the
-standard quantum computing formalism presented in
-\cite[Chaps.~2 and~4]{nielsen2010quantum}.
+Quantum computing is built upon the principles of quantum mechanics, which provide a fundamentally different computational framework from classical computing. Unlike classical computers, which process information using binary bits, quantum computers manipulate quantum bits, or qubits, through unitary transformations and quantum measurements. This section introduces the essential concepts of quantum computing, including quantum states, quantum gates, tensor products, entanglement, and measurement. These concepts form the mathematical foundation of Quantum Neural Networks (QNNs). The following discussion is based on the standard quantum computing formalism presented in \cite[Chaps.~2 and~4]{nielsen2010quantum}.
 
 \subsubsection{Qubits and Quantum States}
 
-In classical computing, a bit can take one of two
-possible values, either 0 or 1. In contrast, a qubit
-can exist in a superposition of two computational
-basis states, denoted by $\ket{0}$ and $\ket{1}$.
-The general state of a single qubit is expressed as
+In classical computing, a bit can take one of two possible values, either 0 or 1. In contrast, a qubit can exist in a superposition of two computational basis states, denoted by $\ket{0}$ and $\ket{1}$. The general state of a single qubit is expressed as
 
 \begin{equation}
     \ket{\psi}=\alpha\ket{0}+\beta\ket{1},
@@ -258,8 +241,7 @@ The general state of a single qubit is expressed as
     \label{eq:qubit_state}
 \end{equation}
 
-where $\alpha,\beta\in\mathbb{C}$ are complex
-probability amplitudes. In vector notation,
+where $\alpha,\beta\in\mathbb{C}$ are complex probability amplitudes. In vector notation,
 
 \begin{equation}
     \ket{0}=
@@ -272,17 +254,9 @@ probability amplitudes. In vector notation,
     \begin{bmatrix}\alpha\\\beta\end{bmatrix}
 \end{equation}
 
-According to the Born rule, the probabilities of
-measuring $\ket{0}$ and $\ket{1}$ are
-$|\alpha|^2$ and $|\beta|^2$, respectively.
-Importantly, the probability amplitudes also
-contain phase information, which plays a crucial
-role in quantum interference.
+According to the Born rule, the probabilities of measuring $\ket{0}$ and $\ket{1}$ are $|\alpha|^2$ and $|\beta|^2$, respectively. Importantly, the probability amplitudes also contain phase information, which plays a crucial role in quantum interference.
 
-Ignoring an unobservable global phase, any pure
-single-qubit state can be represented geometrically
-on the Bloch sphere, as illustrated in
-Fig.~\ref{fig:bloch}:
+Ignoring an unobservable global phase, any pure single-qubit state can be represented geometrically on the Bloch sphere, as illustrated in Fig.~\ref{fig:bloch}:
 
 \begin{equation}
     \ket{\psi}
@@ -292,8 +266,7 @@ Fig.~\ref{fig:bloch}:
     \label{eq:bloch_state}
 \end{equation}
 
-where $\vartheta$ and $\varphi$ represent the
-polar and azimuthal angles, respectively.
+where $\vartheta$ and $\varphi$ represent the polar and azimuthal angles, respectively.
 
 \begin{figure}[htbp]
     \centering
@@ -305,9 +278,7 @@ polar and azimuthal angles, respectively.
     \label{fig:bloch}
 \end{figure}
 
-For a system containing $n$ qubits, the quantum
-state belongs to a $2^n$-dimensional Hilbert
-space and can be expressed as
+For a system containing $n$ qubits, the quantum state belongs to a $2^n$-dimensional Hilbert space and can be expressed as
 
 \begin{equation}
     \ket{\psi}
@@ -317,29 +288,15 @@ space and can be expressed as
     \label{eq:multi_qubit_state}
 \end{equation}
 
-where $\ket{j}$ denotes the computational basis
-state corresponding to the binary representation
-of $j$.
+where $\ket{j}$ denotes the computational basis state corresponding to the binary representation of $j$.
 
-Throughout this paper, we adopt the
-\textit{little-endian convention}, in which the
-computational basis is ordered as
-$\ket{q_{n-1}\cdots q_1q_0}$, with $q_0$ being
-the least significant bit.
+Throughout this paper, we adopt the \textit{little-endian convention}, in which the computational basis is ordered as $\ket{q_{n-1}\cdots q_1q_0}$, with $q_0$ being the least significant bit.
 
-Although the dimension of the quantum state
-space grows exponentially with the number of
-qubits, this does not automatically imply an
-exponential computational advantage, since
-extracting information from a quantum state
-is constrained by quantum measurement.
+Although the dimension of the quantum state space grows exponentially with the number of qubits, this does not automatically imply an exponential computational advantage, since extracting information from a quantum state is constrained by quantum measurement.
 
 \subsubsection{Quantum Gates and Unitary Operations}
 
-Quantum states are manipulated through quantum
-gates, which are mathematically represented by
-unitary matrices. A quantum gate $U$ transforms
-an initial state $\ket{\psi}$ into
+Quantum states are manipulated through quantum gates, which are mathematically represented by unitary matrices. A quantum gate $U$ transforms an initial state $\ket{\psi}$ into
 
 \begin{equation}
     \ket{\psi'}=U\ket{\psi},
@@ -347,18 +304,9 @@ an initial state $\ket{\psi}$ into
     \label{eq:unitary_gate}
 \end{equation}
 
-where $U^\dagger$ is the conjugate transpose
-of $U$. The unitary condition ensures that
-the normalization of the quantum state is
-preserved throughout the evolution of an
-ideal quantum circuit.
+where $U^\dagger$ is the conjugate transpose of $U$. The unitary condition ensures that the normalization of the quantum state is preserved throughout the evolution of an ideal quantum circuit.
 
-Several fundamental single-qubit gates are
-widely used in quantum computing. For example,
-the Pauli-X gate acts similarly to a classical
-NOT gate, while the Hadamard gate transforms
-computational basis states into equal
-superpositions:
+Several fundamental single-qubit gates are widely used in quantum computing. For example, the Pauli-X gate acts similarly to a classical NOT gate, while the Hadamard gate transforms computational basis states into equal superpositions:
 
 \begin{equation}
     X=
@@ -380,10 +328,7 @@ In particular,
     \left(\ket{0}+\ket{1}\right)
 \end{equation}
 
-Another important class of gates is the
-rotation gates, which rotate quantum states
-around different axes of the Bloch sphere.
-They can be expressed as
+Another important class of gates is the rotation gates, which rotate quantum states around different axes of the Bloch sphere. They can be expressed as
 
 \begin{equation}
     R_{\nu}(\theta)
@@ -392,9 +337,7 @@ They can be expressed as
     \label{eq:rotation_gate}
 \end{equation}
 
-where $\sigma_{\nu}$ denotes the corresponding
-Pauli operator. For example, the rotation
-around the X-axis is
+where $\sigma_{\nu}$ denotes the corresponding Pauli operator. For example, the rotation around the X-axis is
 
 \begin{equation}
     R_x(\theta)=
@@ -407,41 +350,20 @@ around the X-axis is
     \label{eq:rx_gate}
 \end{equation}
 
-Rotation gates are particularly important
-in QNNs because their rotation angles can
-encode classical input features or represent
-trainable model parameters.
+Rotation gates are particularly important in QNNs because their rotation angles can encode classical input features or represent trainable model parameters.
 
-When multiple qubits are involved, the
-combined state space is constructed using
-the tensor product. If independent
-single-qubit gates $U_0,U_1,\ldots,U_{n-1}$
-act on their respective qubits, the overall
-operation is represented, under our
-little-endian convention, as
+When multiple qubits are involved, the combined state space is constructed using the tensor product. If independent single-qubit gates $U_0,U_1,\ldots,U_{n-1}$ act on their respective qubits, the overall operation is represented, under our little-endian convention, as
 
 \begin{equation}
     U=U_{n-1}\otimes\cdots\otimes U_1\otimes U_0
     \label{eq:tensor_product_gates}
 \end{equation}
 
-The tensor product provides a systematic
-way to construct multi-qubit operations
-from individual gates. However, not all
-multi-qubit operations can be decomposed
-into tensor products of single-qubit gates.
-Such operations are essential for generating
-quantum entanglement.
+The tensor product provides a systematic way to construct multi-qubit operations from individual gates. However, not all multi-qubit operations can be decomposed into tensor products of single-qubit gates. Such operations are essential for generating quantum entanglement.
 
 \subsubsection{Multi-Qubit Gates and Entanglement}
 
-One of the most fundamental multi-qubit
-gates is the Controlled-NOT (CNOT) gate,
-which operates on two qubits: a control
-qubit and a target qubit. The target is
-flipped if and only if the control is in
-state $\ket{1}$. Its action on computational
-basis states is defined as
+One of the most fundamental multi-qubit gates is the Controlled-NOT (CNOT) gate, which operates on two qubits: a control qubit and a target qubit. The target is flipped if and only if the control is in state $\ket{1}$. Its action on computational basis states is defined as
 
 \begin{equation}
     \ket{c,t}
@@ -452,10 +374,7 @@ basis states is defined as
 
 where $\oplus$ denotes modulo-2 addition.
 
-For a two-qubit system following the
-little-endian convention $\ket{q_1q_0}$,
-if $q_1$ is the control and $q_0$ is
-the target, the corresponding matrix is
+For a two-qubit system following the little-endian convention $\ket{q_1q_0}$, if $q_1$ is the control and $q_0$ is the target, the corresponding matrix is
 
 \begin{equation}
     \mathrm{CNOT}_{q_1\rightarrow q_0}
@@ -469,13 +388,9 @@ the target, the corresponding matrix is
     \label{eq:cnot_10}
 \end{equation}
 
-For example,
-$\mathrm{CNOT}_{q_1\rightarrow q_0}
-\ket{10}=\ket{11}$.
+For example, $\mathrm{CNOT}_{q_1\rightarrow q_0} \ket{10}=\ket{11}$.
 
-Conversely, if $q_0$ is the control
-and $q_1$ is the target, the matrix
-becomes
+Conversely, if $q_0$ is the control and $q_1$ is the target, the matrix becomes
 
 \begin{equation}
     \mathrm{CNOT}_{q_0\rightarrow q_1}
@@ -489,21 +404,14 @@ becomes
     \label{eq:cnot_01}
 \end{equation}
 
-Notice that reversing the control and
-target qubits changes the matrix
-representation. For instance,
+Notice that reversing the control and target qubits changes the matrix representation. For instance,
 
 \begin{equation}
     \mathrm{CNOT}_{q_0\rightarrow q_1}
     \ket{01}=\ket{11}
 \end{equation}
 
-Beyond conditional bit flipping, the CNOT
-gate plays a crucial role in creating
-quantum entanglement. Consider two qubits
-initially prepared in $\ket{00}$.
-As illustrated in Fig.~\ref{fig:bell},
-we first apply a Hadamard gate to $q_0$:
+Beyond conditional bit flipping, the CNOT gate plays a crucial role in creating quantum entanglement. Consider two qubits initially prepared in $\ket{00}$. As illustrated in Fig.~\ref{fig:bell}, we first apply a Hadamard gate to $q_0$:
 
 \begin{equation}
 \begin{aligned}
@@ -514,9 +422,7 @@ we first apply a Hadamard gate to $q_0$:
 \end{aligned}
 \end{equation}
 
-Next, applying a CNOT gate with $q_0$
-as the control and $q_1$ as the target
-produces
+Next, applying a CNOT gate with $q_0$ as the control and $q_1$ as the target produces
 
 \begin{equation}
 \begin{aligned}
@@ -540,16 +446,9 @@ produces
     \label{fig:bell}
 \end{figure}
 
-The resulting Bell state is entangled,
-meaning that it cannot be expressed as
-the tensor product of two individual
-single-qubit states. Measuring both
-qubits in the computational basis
-produces either $\ket{00}$ or $\ket{11}$,
-each with probability $1/2$.
+The resulting Bell state is entangled, meaning that it cannot be expressed as the tensor product of two individual single-qubit states. Measuring both qubits in the computational basis produces either $\ket{00}$ or $\ket{11}$, each with probability $1/2$.
 
-More generally, for an arbitrary
-two-qubit pure state
+More generally, for an arbitrary two-qubit pure state
 
 \begin{equation}
     \ket{\psi}
@@ -557,8 +456,7 @@ two-qubit pure state
     +c\ket{10}+d\ket{11}
 \end{equation}
 
-entanglement can be determined by
-examining the coefficient matrix
+entanglement can be determined by examining the coefficient matrix
 
 \begin{equation}
     A=
@@ -567,9 +465,7 @@ examining the coefficient matrix
     \end{bmatrix}
 \end{equation}
 
-The state is separable if and only if
-$A$ has rank one, or equivalently,
-its determinant vanishes:
+The state is separable if and only if $A$ has rank one, or equivalently, its determinant vanishes:
 
 \begin{equation}
     \boxed{
@@ -581,31 +477,15 @@ its determinant vanishes:
     \label{eq:entangle2}
 \end{equation}
 
-This criterion applies specifically
-to two-qubit pure states. For the Bell
-state in Eq.~\ref{eq:bell_state},
-$ad-bc=1/2\neq0$, confirming that
-the state is entangled.
+This criterion applies specifically to two-qubit pure states. For the Bell state in Eq.~\ref{eq:bell_state}, $ad-bc=1/2\neq0$, confirming that the state is entangled.
 
-Entangling gates such as CNOT are
-important building blocks of QNNs,
-as they enable quantum circuits to
-establish interactions among qubits
-that cannot be generated by independent
-single-qubit operations alone.
+Entangling gates such as CNOT are important building blocks of QNNs, as they enable quantum circuits to establish interactions among qubits that cannot be generated by independent single-qubit operations alone.
 
 \subsubsection{Quantum Measurement and Connection to QNNs}
 
-Unlike classical computation, where the
-values of computational variables can
-generally be accessed directly, extracting
-information from a quantum system requires
-measurement.
+Unlike classical computation, where the values of computational variables can generally be accessed directly, extracting information from a quantum system requires measurement.
 
-For a single qubit
-$\ket{\psi}=\alpha\ket{0}+\beta\ket{1}$,
-a computational-basis measurement yields
-either 0 or 1, with probabilities
+For a single qubit $\ket{\psi}=\alpha\ket{0}+\beta\ket{1}$, a computational-basis measurement yields either 0 or 1, with probabilities
 
 \begin{equation}
     P(0)=|\alpha|^2,
@@ -613,16 +493,9 @@ either 0 or 1, with probabilities
     P(1)=|\beta|^2
 \end{equation}
 
-A single measurement does not reveal the
-underlying complex probability amplitudes.
-Instead, repeated preparation and measurement
-of the same quantum state allow us to
-estimate measurement probabilities and
-expectation values statistically.
+A single measurement does not reveal the underlying complex probability amplitudes. Instead, repeated preparation and measurement of the same quantum state allow us to estimate measurement probabilities and expectation values statistically.
 
-In particular, the expectation value
-of a Hermitian observable $\mathcal{O}$
-for a quantum state $\ket{\psi}$ is
+In particular, the expectation value of a Hermitian observable $\mathcal{O}$ for a quantum state $\ket{\psi}$ is
 
 \begin{equation}
     \langle\mathcal{O}\rangle
@@ -630,22 +503,11 @@ for a quantum state $\ket{\psi}$ is
     \label{eq:observable_expectation}
 \end{equation}
 
-This provides a natural mechanism for
-converting quantum information into
-classical numerical outputs.
+This provides a natural mechanism for converting quantum information into classical numerical outputs.
 
-The concepts introduced in this section
-form the foundation of variational QNNs.
-In a typical QNN, classical input data
-$\mathbf{x}$ are encoded into quantum
-states, trainable quantum gates transform
-these states, entangling operations
-introduce interactions among qubits,
-and quantum measurements produce
-classical outputs.
+The concepts introduced in this section form the foundation of variational QNNs. In a typical QNN, classical input data $\mathbf{x}$ are encoded into quantum states, trainable quantum gates transform these states, entangling operations introduce interactions among qubits, and quantum measurements produce classical outputs.
 
-Mathematically, such a model can be
-expressed as
+Mathematically, such a model can be expressed as
 
 \begin{equation}
     \ket{\psi(\mathbf{x},\theta)}
@@ -665,17 +527,9 @@ with the corresponding output function
     \label{eq:qnn_basics_output}
 \end{equation}
 
-where $\theta$ denotes the trainable
-circuit parameters.
+where $\theta$ denotes the trainable circuit parameters.
 
-Thus, quantum states, unitary operations,
-entanglement, and measurement collectively
-provide the building blocks for constructing
-parameterized quantum models. The following
-section examines how these principles are
-combined to form Quantum Neural Networks
-and how quantum circuits can be used
-for function approximation.
+Thus, quantum states, unitary operations, entanglement, and measurement collectively provide the building blocks for constructing parameterized quantum models. The following section examines how these principles are combined to form Quantum Neural Networks and how quantum circuits can be used for function approximation.
 
 
 
