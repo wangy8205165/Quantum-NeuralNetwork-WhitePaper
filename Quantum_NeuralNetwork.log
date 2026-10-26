@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.22)  14 OCT 2026 16:41
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.22)  26 OCT 2026 00:18
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -973,37 +973,37 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has b
                    \relax 
 l.108 ...matrix}0\\0\\0\\1\end{bmatrix}=\ket{11}\]
                                                    [1{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}]
-<figures/bell.png, id=84, 282.05376pt x 174.6525pt>
+<figures/bell.png, id=92, 282.05376pt x 174.6525pt>
 File: figures/bell.png Graphic file (type png)
 <use figures/bell.png>
 Package pdftex.def Info: figures/bell.png  used on input line 127.
 (pdftex.def)             Requested size: 234.8775pt x 145.44122pt.
  [2 <./figures/bell.png>]
-<figures/qnn_3.png, id=93, 920.43875pt x 304.13625pt>
+<figures/qnn_3.png, id=101, 920.43875pt x 304.13625pt>
 File: figures/qnn_3.png Graphic file (type png)
 <use figures/qnn_3.png>
 Package pdftex.def Info: figures/qnn_3.png  used on input line 145.
 (pdftex.def)             Requested size: 375.80544pt x 124.1769pt.
  [3 <./figures/qnn_3.png>] [4]
-<figures/encode_3.png, id=113, 217.81375pt x 238.8925pt>
+<figures/encode_3.png, id=121, 217.81375pt x 238.8925pt>
 File: figures/encode_3.png Graphic file (type png)
 <use figures/encode_3.png>
 Package pdftex.def Info: figures/encode_3.png  used on input line 211.
 (pdftex.def)             Requested size: 93.94957pt x 103.0389pt.
  [5 <./figures/encode_3.png>] [6] [7]
-<figures/hidden3_1.png, id=137, 282.05376pt x 238.8925pt>
+<figures/hidden3_1.png, id=145, 282.05376pt x 238.8925pt>
 File: figures/hidden3_1.png Graphic file (type png)
 <use figures/hidden3_1.png>
 Package pdftex.def Info: figures/hidden3_1.png  used on input line 350.
 (pdftex.def)             Requested size: 140.92793pt x 119.3621pt.
  [8 <./figures/hidden3_1.png>]
-<figures/cnot.png, id=145, 347.2975pt x 174.6525pt>
+<figures/cnot.png, id=153, 347.2975pt x 174.6525pt>
 File: figures/cnot.png Graphic file (type png)
 <use figures/cnot.png>
 Package pdftex.def Info: figures/cnot.png  used on input line 369.
 (pdftex.def)             Requested size: 140.92793pt x 70.87245pt.
  [9 <./figures/cnot.png>]
-<figures/entangle3.png, id=157, 411.5375pt x 238.8925pt>
+<figures/entangle3.png, id=165, 411.5375pt x 238.8925pt>
 File: figures/entangle3.png Graphic file (type png)
 <use figures/entangle3.png>
 Package pdftex.def Info: figures/entangle3.png  used on input line 426.
@@ -1019,37 +1019,37 @@ Overfull \hbox (54.36029pt too wide) detected at line 493
  []
 
 [11] [12]
-<figures/hidden3_2.png, id=191, 476.78125pt x 238.8925pt>
+<figures/hidden3_2.png, id=199, 476.78125pt x 238.8925pt>
 File: figures/hidden3_2.png Graphic file (type png)
 <use figures/hidden3_2.png>
 Package pdftex.def Info: figures/hidden3_2.png  used on input line 578.
 (pdftex.def)             Requested size: 234.8775pt x 117.68896pt.
  [13]
-Overfull \hbox (9.42567pt too wide) detected at line 600
-[][]
+Overfull \hbox (9.42567pt too wide) detected at line 601
+[][][][][][]
  []
 
-[14 <./figures/hidden3_2.png>] [15] [16] (./Quantum_NeuralNetwork.aux)
+[14 <./figures/hidden3_2.png>] [15] [16] [17] [18] [19] [20] (./Quantum_NeuralNetwork.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
 Package rerunfilecheck Info: File `Quantum_NeuralNetwork.out' has not changed.
-(rerunfilecheck)             Checksum: D5DC1A88B0CBC4B38A81DFE5FAB3ACDE;2911.
+(rerunfilecheck)             Checksum: 7796650253D0173DABC9B2DDBFFA7D4F;3420.
  ) 
 Here is how much of TeX's memory you used:
- 37329 strings out of 467525
- 765092 string characters out of 5418982
- 1235287 words of memory out of 5000000
- 65470 multiletter control sequences out of 15000+600000
- 687552 words of font info for 140 fonts, out of 8000000 for 9000
+ 37373 strings out of 467525
+ 765666 string characters out of 5418982
+ 1235285 words of memory out of 5000000
+ 65476 multiletter control sequences out of 15000+600000
+ 687821 words of font info for 143 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  84i,13n,108p,1997b,1083s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmbx8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmex10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmmi12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmmi6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmr12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmr17.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmr6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmr8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmsy6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on Quantum_NeuralNetwork.pdf (17 pages, 328185 bytes).
+Output written on Quantum_NeuralNetwork.pdf (21 pages, 345998 bytes).
 PDF statistics:
- 302 PDF objects out of 1000 (max. 8388607)
- 235 compressed objects within 3 object streams
- 63 named destinations out of 1000 (max. 500000)
- 32928 words of extra memory for PDF output out of 35830 (max. 10000000)
+ 361 PDF objects out of 1000 (max. 8388607)
+ 290 compressed objects within 3 object streams
+ 95 named destinations out of 1000 (max. 500000)
+ 32944 words of extra memory for PDF output out of 35830 (max. 10000000)
 

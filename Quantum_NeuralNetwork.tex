@@ -580,7 +580,7 @@ Alright, let's keep watching how this quantum neural network evolve. As Figure~\
     \label{fig:hidden3_2}
 \end{figure}
 The operation matrix of this layer is then:
-\begin{equation*}
+\begin{equation}
 \begin{aligned}
 U_{hidden}&=R_x(\theta_6)\otimes R_x(\theta_5)\otimes R_x(\theta_4)\\
 &=\begin{bmatrix}\cos(\frac{\theta_6}{2})&-i\sin(\frac{\theta_6}{2})\\-i\sin(\frac{\theta_6}{2})&\cos(\frac{\theta_6}{2})\end{bmatrix}\otimes
@@ -597,7 +597,8 @@ c_6c_5c_4 & -ic_6c_5s_4 & -ic_6s_5c_4 & -c_6s_5s_4 & -is_6c_5c_4 & -s_6c_5s_4 & 
 is_6s_5s_4 & -s_6s_5c_4 & -s_6c_5s_4 & -is_6c_5c_4 & -c_6s_5s_4 & -ic_6s_5c_4 & -ic_6c_5s_4 & c_6c_5c_4
 \end{bmatrix}  
 \end{aligned}  
-\end{equation*}
+\label{eq:rotationunitary}
+\end{equation}
 The new statevector becomes:
 \begin{equation}
 U_{hidden}\times
@@ -633,17 +634,250 @@ S_3c_5(-s_4C_2C_1+ic_4S_2S_1)+C_3s_5(is_4S_2C_1-c_4C_2S_1)\\[7pt]
 S_3s_5(-c_4C_2C_1-is_4S_2S_1)+C_3c_5(-ic_4S_2C_1-s_4C_2S_1)\\[7pt]
 S_3s_5(is_4C_2C_1+c_4S_2S_1)+C_3c_5(-s_4S_2C_1-ic_4C_2S_1)
 \end{bmatrix}
+\label{eq:statevector2}
 \end{equation}
+
+As the depth of the QNN increases through the addition of rotation and CNOT layers, the evolution of the quantum statevector can be mathematically represented as a sequence of alternating permutation matrices and parameterized rotation matrices defined by the rotation matrix in Eq.~\ref{eq:rotationunitary} and applied to the statevector in Eq.~\ref{eq:statevector2}.
+
+However, manually calculating this seems impossible. Can we abstract this into a mathmatical representation so that it's easier for us to analyze. Yes! We can and in fact a QNN can be represented as \textbf{Finite Fourier Series}:
+
+\begin{equation}
+    f(x)=\sum_{\omega\in\Omega}c_{\omega}(\theta)e^{i\omega x}
+\end{equation}
+
+Here, $\Omega$ denotes the set of accessible frequencies. Unlike classical neural networks with learnable frequencies, such as SIREN, the accessible frequency spectrum of a QNN is primarily determined by its data-encoding strategy and circuit architecture. In particular, both circuit depth, characterized by the number of data-reuploading layers, and circuit width, characterized by the number of qubits involved in data encoding, can influence the accessible frequency spectrum. We will explore these relationships in greater detail in the following sections.
+
+Furthermore, $\omega \in \Omega$ represents an individual frequency component, while $c_{\omega}(\theta)$ denotes its corresponding trainable Fourier coefficient. From Fourier analysis, we know that the expressive power of a Fourier series—namely, the range of functions it can approximate—depends in part on the richness of its accessible frequency spectrum. Unlike in SIREN, where frequencies can be learned during training, the frequency spectrum of a QNN with a fixed encoding scheme is predetermined by its architecture rather than directly optimized through training.
+
+This naturally raises an intriguing question: \textbf{Is a predetermined frequency spectrum a fundamental limitation of QNNs, or could it actually become an advantage?} We will investigate this question in the following sections.
 
 
 \subsection{Output Layer: Measurement}
+In end, we need to measure the results. What happens in the evolution of the quantum circuits discussed above are not observable! Once we observe, the entire quantum system collapse. Of course, we can observe that if each qubit collapses to 0 or 1. But how do we know the probability amplitude of each qubit? A common way is to measure the expected value of an Observable $\mathcal{O}$.
+In QNN, after encoding layer and multiple rotation and entangling layers, the statevector is:
+\begin{equation}
+    \ket{\psi(x,\theta)}=U(x,\theta)\ket{0}^{\otimes n}
+\end{equation}
+Yes, all the complex operation is just a unitary matrix. To measure the observable:
+\begin{equation}
+    f_{\theta}(x)=\bra{\psi(\theta,x)}\mathcal{O}\ket{\psi(\theta,x)}=\bra{0}U^{\dagger}(\theta,x)\mathcal{O}U(\theta,x)\ket{0}
+\end{equation}
+The most common measurement is the Pauli-Z expected value:
+\begin{equation}
+    O=Z=\begin{bmatrix}1&0\\0&-1\end{bmatrix}
+\end{equation}
+If a qubit's state is $\ket{\psi}=\alpha\ket{0}+\beta\ket{1}$ where $|\alpha|^2+|\beta|^2=1$. According to Born Rule:
+\begin{equation*}
+    P(0)=|\alpha|^2, \quad P(1)=|\beta|^2
+\end{equation*}
+Since eigenvalues of Pauli-Z are +1 and -1, so the expected value is
+\begin{equation}
+    \braket{Z}=\bra{\psi}Z\ket{\psi}=|\alpha|^2-|\beta|^2=P(0)-P(1)=2P(0)-1
+\end{equation}
+Since $-1<\braket{Z}<1$, the closer $\braket{Z}$ is to -1, the higher probability $\ket{0}$ will be measured. However, on real quantum hardware, the probability amplitude, which is the expected value cannot be measured directly. We must repeatly run circuit to estimate $\braket{Z}$:
+\begin{equation}
+    \hat{\braket{Z}}=\frac{N_0-N_1}{N}
+\end{equation}
+In multi-qubit system, such as the 3-qubit one demonstrated above, we have a $8\times1$ statevector:
+\begin{equation}
+    \ket{\psi}=\begin{bmatrix}
+        a_{000}\\a_{001}\\a_{010}\\a_{011}\\a_{100}\\a_{101}\\a_{110}\\a_{111}
+    \end{bmatrix}
+\end{equation}
+where
+\begin{equation}
+    \sum_{i,j,k\in\{0,1\}}|a_{ijk}|^2=1
+\end{equation}
+To measure the first qubit, we can define
+\begin{equation}
+    \mathcal{O}_1=I\otimes I\otimes Z
+\end{equation}
+Thus, 
+\begin{equation}
+\begin{aligned}
+\braket{Z_1}&=\bra{\psi}\mathcal{O}_1\ket{\psi}\\
+&=|a_{000}|^2-|a_{001}|^2+|a_{010}|^2-|a_{011}|^2+|a_{100}|^2-|a_{101}|^2+|a_{110}|^2-|a_{111}|^2
+\end{aligned}
+\end{equation}
+Of course, we can measure the other two qubits use slightly different observables:
+\begin{equation}
+\mathcal{O}_2=I\otimes Z\otimes I, \quad \mathcal{O}_3=Z\otimes I\otimes I
+\end{equation}
+The final measurement is also a vector:
+\begin{equation}
+    \mathbf{f}_{\theta}(x)=\begin{bmatrix}        \braket{Z_1}\\\braket{Z_2}\\\braket{Z_3}    \end{bmatrix}
+\end{equation}
+There are many other measurement such as Pauli-X, Pauli-Y, and Mulit-Qubit Correlation, which will not be expanded here.  
 
+\subsection{Output Layer: Quantum Measurement}
+
+The final stage of a QNN is the measurement layer, which converts quantum information into classical outputs. Unlike classical neural networks, where intermediate activations can be directly accessed, the quantum statesevolving throughout a quantum circuit cannot be directly observed without performing measurements. In particular, a computational-basis measurement of a qubit yields either 0 or 1, with probabilities governed by the Born rule. However, the complex probability amplitudes underlying these outcomes cannot be directly recovered
+from a single measurement.
+
+How, then, can we extract meaningful numerical outputs from a quantum circuit? A common approach is to measure the expectation value of a quantum observable $\mathcal{O}$.
+
+After the encoding layer and multiple variational rotation and entangling layers, the quantum state can be expressed as
+
+\begin{equation}
+    \ket{\psi(x,\theta)}
+    = U(x,\theta)\ket{0}^{\otimes n}
+\end{equation}
+
+where $U(x,\theta)$ represents the overall unitary transformation of the circuit. Despite the potentially complex sequence of quantum operations, the entire ideal circuit can be mathematically represented by a single unitary operator.
+
+Given an observable $\mathcal{O}$, the output of the QNN is defined as its expectation value:
+
+\begin{equation}
+\begin{aligned}
+    f_{\theta}(x)
+    &= \bra{\psi(x,\theta)}
+       \mathcal{O}
+       \ket{\psi(x,\theta)}\\
+    &= \bra{0}^{\otimes n}
+       U^{\dagger}(x,\theta)
+       \mathcal{O}
+       U(x,\theta)
+       \ket{0}^{\otimes n}
+\end{aligned}
+\end{equation}
+
+One of the most commonly used observables in variational QNNs is the Pauli-Z operator:
+
+\begin{equation}
+    Z =
+    \begin{bmatrix}
+        1 & 0\\
+        0 & -1
+    \end{bmatrix}
+\end{equation}
+
+To understand how this measurement works, consider a single qubit in the state
+
+\begin{equation}
+    \ket{\psi}
+    = \alpha\ket{0}+\beta\ket{1},
+    \qquad
+    |\alpha|^2+|\beta|^2=1
+\end{equation}
+
+According to the Born rule, the probabilities of measuring the qubit in states $\ket{0}$ and
+$\ket{1}$ are
+
+\begin{equation*}
+    P(0)=|\alpha|^2,
+    \qquad
+    P(1)=|\beta|^2
+\end{equation*}
+
+Since the eigenvalues of the Pauli-Z operator are $+1$ and $-1$, its expectation value is
+
+\begin{equation}
+\begin{aligned}
+    \braket{Z}
+    &= \bra{\psi}Z\ket{\psi}\\
+    &= |\alpha|^2-|\beta|^2\\
+    &= P(0)-P(1)\\
+    &= 2P(0)-1
+\end{aligned}
+\end{equation}
+
+Consequently, the measurement probabilities can be recovered from the expectation value:
+
+\begin{equation}
+    P(0)=\frac{1+\braket{Z}}{2},
+    \qquad
+    P(1)=\frac{1-\braket{Z}}{2}
+\end{equation}
+
+Since $-1\leq\braket{Z}\leq1$, an expectation value closer to $+1$ indicates a higher probability of measuring $\ket{0}$, whereas a value closer to $-1$ indicates a higher probability of measuring $\ket{1}$.
+
+Importantly, the expectation value should not be confused with the probability amplitude. While the probability amplitudes $\alpha$ and $\beta$ are generally complex-valued, the expectation value $\braket{Z}$ is real-valued and reflects the difference between the two measurement probabilities.
+
+On real quantum hardware, the expectation value cannot be obtained from a single circuit execution. Instead, the circuit must be executed repeatedly to estimate the expectation value statistically:
+
+\begin{equation}
+    \widehat{\braket{Z}}
+    = \frac{N_0-N_1}{N}
+\end{equation}
+
+where $N_0$ and $N_1$ denote the numbers of measurement outcomes 0 and 1, respectively, and $N=N_0+N_1$ is the total number of measurement shots.
+
+For a multi-qubit system, the same principle applies. Consider the three-qubit QNN introduced earlier. Following the little-endian convention, its final statevector is
+
+\begin{equation}
+    \ket{\psi}=
+    \begin{bmatrix}
+        a_{000}\\
+        a_{001}\\
+        a_{010}\\
+        a_{011}\\
+        a_{100}\\
+        a_{101}\\
+        a_{110}\\
+        a_{111}
+    \end{bmatrix}
+\end{equation}
+
+where
+
+\begin{equation}
+    \sum_{i,j,k\in\{0,1\}}
+    |a_{ijk}|^2=1
+\end{equation}
+
+To measure the first qubit, $q_1$, we define the observable
+
+\begin{equation}
+    \mathcal{O}_1=I\otimes I\otimes Z
+\end{equation}
+
+The corresponding expectation value becomes
+
+\begin{equation}
+\begin{aligned}
+    \braket{Z_1}
+    &= \bra{\psi}\mathcal{O}_1\ket{\psi}\\
+    &= |a_{000}|^2-|a_{001}|^2\\
+    &\quad+|a_{010}|^2-|a_{011}|^2\\
+    &\quad+|a_{100}|^2-|a_{101}|^2\\
+    &\quad+|a_{110}|^2-|a_{111}|^2
+\end{aligned}
+\end{equation}
+
+This expression illustrates that measuring a single qubit generally involves contributions from multiple computational basis states. In particular, the expectation value depends on the marginal measurement probabilities associated with the selected qubit, rather than on any individual probability amplitude.
+
+Similarly, the remaining two qubits can be measured using the observables
+
+\begin{equation}
+    \mathcal{O}_2=I\otimes Z\otimes I,
+    \qquad
+    \mathcal{O}_3=Z\otimes I\otimes I
+\end{equation}
+
+By measuring all three qubits, the QNN produces a vector of expectation values:
+
+\begin{equation}
+    \mathbf{f}_{\theta}(x)=
+    \begin{bmatrix}
+        \braket{Z_1}\\
+        \braket{Z_2}\\
+        \braket{Z_3}
+    \end{bmatrix}
+\end{equation}
+
+These expectation values serve as classical output features and can either be used directly for prediction or passed to an additional classical processing layer.
+
+Beyond Pauli-Z measurements, other observables, such as Pauli-X, Pauli-Y, and multi-qubit correlation operators, can also be employed to extract different properties of the quantum state. However, a detailed discussion of these measurement strategies is beyond the scope of this section.
+
+In summary, quantum measurement provides the essential bridge between the quantum representation and the classical output of a QNN. More importantly, expressing the QNN output as the expectation value of an observable establishes the mathematical foundation for analyzing its function representation, particularly through Fourier analysis.
 
 \section{Fourier Analysis of Quanutm Neural Networks and Expressivity}
 
 \subsection{Basics of Fourier Series and Fourier Transform}
 
-\subsection{Quantum Neural Network as a Partial Fourer Series}
+\subsection{Quantum Neural Network as a Finite Fourer Series}
+
+\subsection{Data-Reuploading and accessible frequencies}
 
 \subsection{Expressivity}
 

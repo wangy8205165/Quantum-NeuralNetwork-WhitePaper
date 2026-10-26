@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1792010472.19015 "/Users/yixiangwang/Desktop/CMU/Quantum_AI/QML/qnn/Quantum_NeuralNetwork.tex" "Quantum_NeuralNetwork.pdf" "Quantum_NeuralNetwork" 1792010473.05946 0
-  "/Users/yixiangwang/Desktop/CMU/Quantum_AI/QML/qnn/Quantum_NeuralNetwork.tex" 1792010472.03297 39505 78271f9d8b9c33aab74d84114db8a3df ""
+["pdflatex"] 1792988321.33383 "/Users/yixiangwang/Desktop/CMU/Quantum_AI/QML/qnn/Quantum_NeuralNetwork.tex" "Quantum_NeuralNetwork.pdf" "Quantum_NeuralNetwork" 1792988322.3095 0
+  "/Users/yixiangwang/Desktop/CMU/Quantum_AI/QML/qnn/Quantum_NeuralNetwork.tex" 1792988321.18188 50597 98d104946526938f3454b950e885aae6 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc" 1254269338 2375 baa924870cfb487815765f9094cf3728 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc" 1202520719 3486 c7eadf5dcc57b3b2d11736679f6636ba ""
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc" 1202520719 2405 5dcf2c1b967ee25cc46c58cd52244aed ""
@@ -241,9 +241,9 @@
   "/usr/local/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1788970897 5573038 b99aad5e4898a9034e953632f940512b ""
   "/usr/local/texlive/2026/texmf-var/web2c/pdftex/pdflatex.fmt" 1774209607 3636776 dc5fa9b6b1453b9d196cd42edf876004 ""
   "/usr/local/texlive/2026/texmf.cnf" 1774209515 577 648cd9f92f9c0eac486f4c71c85cfbbe ""
-  "Quantum_NeuralNetwork.aux" 1792010472.99758 5270 5d9313bb02319df62694fb34d54726f0 "pdflatex"
-  "Quantum_NeuralNetwork.out" 1792010472.99823 2911 d5dc1a88b0cbc4b38a81dfe5fab3acde "pdflatex"
-  "Quantum_NeuralNetwork.tex" 1792010472.03297 39505 78271f9d8b9c33aab74d84114db8a3df ""
+  "Quantum_NeuralNetwork.aux" 1792988322.24344 5919 5e55b5985328c0e037c5f81c22baafc4 "pdflatex"
+  "Quantum_NeuralNetwork.out" 1792988322.24404 3420 7796650253d0173dabc9b2ddbffa7d4f "pdflatex"
+  "Quantum_NeuralNetwork.tex" 1792988321.18188 50597 98d104946526938f3454b950e885aae6 ""
   "figures/bell.png" 1791325615.48404 6512 7c698f8355998718c3079de3f1ec50b0 ""
   "figures/cnot.png" 1791336303.76098 10485 d31c5bbf06f5eee72405815eb24baa7c ""
   "figures/encode_3.png" 1791861858.86115 9634 71c277ebb115b903a8f242a5b13e32c6 ""
