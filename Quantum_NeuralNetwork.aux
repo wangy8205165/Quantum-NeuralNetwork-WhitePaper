@@ -2,6 +2,11 @@
 \providecommand\hyper@newdestlabel[2]{}
 \providecommand\HyField@AuxAddToFields[1]{}
 \providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{lecun2015deep}
+\citation{vaswani2017attention}
+\citation{scarselli2009graph}
+\citation{nielsen2010quantum}
+\citation{goodfellow2016deep}
 \@writefile{toc}{\contentsline {section}{\numberline {1}Background}{1}{section.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {2}Review of Classical Neural Networks}{1}{section.2}\protected@file@percent }
 \newlabel{sec:classical_nn}{{2}{1}{Review of Classical Neural Networks}{section.2}{}}
@@ -11,6 +16,7 @@
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
 \newlabel{fig:mlps}{{1}{1}{Architecture of a Multilayer Perceptron (MLP), consisting of an input layer, hidden layers, and an output layer}{figure.caption.1}{}}
 \newlabel{fig:mlps@cref}{{[figure][1][]1}{[1][1][]1}{}{}{}}
+\citation{rumelhart1986learning}
 \newlabel{eq:mlp_layer}{{2.1}{2}{Architecture of Multilayer Perceptrons}{equation.2.1}{}}
 \newlabel{eq:mlp_layer@cref}{{[equation][1][2]2.1}{[1][1][]2}{}{}{}}
 \newlabel{eq:mlp_composition}{{2.2}{2}{Architecture of Multilayer Perceptrons}{equation.2.2}{}}
@@ -22,84 +28,162 @@
 \newlabel{eq:mlp_training@cref}{{[equation][5][2]2.5}{[1][2][]2}{}{}{}}
 \citation{cybenko1989approximation}
 \citation{leshno1993multilayer}
+\citation{goodfellow2016deep}
+\citation{telgarsky2016benefits}
+\citation{goodfellow2016deep}
+\citation{vaswani2017attention}
+\citation{scarselli2009graph}
 \@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Illustration of function approximation using ReLU-based MLPs. Increasing the number of hidden neurons provides greater flexibility to approximate a nonlinear target function.}}{3}{figure.caption.2}\protected@file@percent }
 \newlabel{fig:relu}{{2}{3}{Illustration of function approximation using ReLU-based MLPs. Increasing the number of hidden neurons provides greater flexibility to approximate a nonlinear target function}{figure.caption.2}{}}
 \newlabel{fig:relu@cref}{{[figure][2][]2}{[1][2][]3}{}{}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Universal Approximation Theorem}{3}{subsection.2.3}\protected@file@percent }
 \newlabel{eq:universal_approximation}{{2.6}{3}{Universal Approximation Theorem}{equation.2.6}{}}
 \newlabel{eq:universal_approximation@cref}{{[equation][6][2]2.6}{[1][3][]3}{}{}{}}
+\citation{mitarai2018quantum}
+\citation{benedetti2019parameterized}
+\citation{nielsen2010quantum}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Beyond MLPs: Toward Quantum Neural Networks}{4}{subsection.2.4}\protected@file@percent }
 \newlabel{eq:qnn_function_approx}{{2.7}{4}{Beyond MLPs: Toward Quantum Neural Networks}{equation.2.7}{}}
 \newlabel{eq:qnn_function_approx@cref}{{[equation][7][2]2.7}{[1][4][]4}{}{}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {3}Quantum Neural Networks}{4}{section.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Basics of Quantum Computing}{4}{subsection.3.1}\protected@file@percent }
-\newlabel{eq:entangle}{{3.1}{5}{Basics of Quantum Computing}{equation.3.1}{}}
-\newlabel{eq:entangle@cref}{{[equation][1][3]3.1}{[1][5][]5}{}{}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces short}}{6}{figure.caption.3}\protected@file@percent }
-\newlabel{fig:bellstate}{{3}{6}{short}{figure.caption.3}{}}
-\newlabel{fig:bellstate@cref}{{[figure][3][]3}{[1][5][]6}{}{}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Dissection of QNN}{6}{subsection.3.2}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces short}}{6}{figure.caption.4}\protected@file@percent }
-\newlabel{fig:qnn}{{4}{6}{short}{figure.caption.4}{}}
-\newlabel{fig:qnn@cref}{{[figure][4][]4}{[1][5][]6}{}{}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Input Layer: Encoding}{7}{subsection.3.3}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Input layer of a QNN using angluar encoding.}}{8}{figure.caption.5}\protected@file@percent }
-\newlabel{fig:encode}{{5}{8}{Input layer of a QNN using angluar encoding}{figure.caption.5}{}}
-\newlabel{fig:encode@cref}{{[figure][5][]5}{[1][8][]8}{}{}{}}
-\newlabel{eq:unitarymatrix}{{3.5}{9}{Input Layer: Encoding}{equation.3.5}{}}
-\newlabel{eq:unitarymatrix@cref}{{[equation][5][3]3.5}{[1][9][]9}{}{}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Hidden Layer - Rotation}{10}{subsection.3.4}\protected@file@percent }
-\newlabel{eq:statevector-hidden1}{{3.6}{11}{Hidden Layer - Rotation}{equation.3.6}{}}
-\newlabel{eq:statevector-hidden1@cref}{{[equation][6][3]3.6}{[1][10][]11}{}{}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces short}}{11}{figure.caption.6}\protected@file@percent }
-\newlabel{fig:hidden3_1}{{6}{11}{short}{figure.caption.6}{}}
-\newlabel{fig:hidden3_1@cref}{{[figure][6][]6}{[1][11][]11}{}{}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.5}Hidden Layer - Entanglement}{11}{subsection.3.5}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces short}}{12}{figure.caption.7}\protected@file@percent }
-\newlabel{fig:cnot}{{7}{12}{short}{figure.caption.7}{}}
-\newlabel{fig:cnot@cref}{{[figure][7][]7}{[1][12][]12}{}{}{}}
-\newlabel{eq:stateof2}{{3.8}{12}{Hidden Layer - Entanglement}{equation.3.8}{}}
-\newlabel{eq:stateof2@cref}{{[equation][8][3]3.8}{[1][12][]12}{}{}{}}
-\newlabel{eq:cnoton2}{{3.9}{12}{Hidden Layer - Entanglement}{equation.3.9}{}}
-\newlabel{eq:cnoton2@cref}{{[equation][9][3]3.9}{[1][12][]12}{}{}{}}
-\newlabel{eq:entanglematrix}{{3.11}{13}{Hidden Layer - Entanglement}{equation.3.11}{}}
-\newlabel{eq:entanglematrix@cref}{{[equation][11][3]3.11}{[1][12][]13}{}{}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces short}}{13}{figure.caption.8}\protected@file@percent }
-\newlabel{fig:entangle3}{{8}{13}{short}{figure.caption.8}{}}
-\newlabel{fig:entangle3@cref}{{[figure][8][]8}{[1][13][]13}{}{}{}}
-\newlabel{eq:cnot1}{{3.12}{13}{Hidden Layer - Entanglement}{equation.3.12}{}}
-\newlabel{eq:cnot1@cref}{{[equation][12][3]3.12}{[1][13][]13}{}{}{}}
-\newlabel{eq:cnot2}{{3.13}{14}{Hidden Layer - Entanglement}{equation.3.13}{}}
-\newlabel{eq:cnot2@cref}{{[equation][13][3]3.13}{[1][14][]14}{}{}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.6}Information Propogation through CNOT Gates}{14}{subsection.3.6}\protected@file@percent }
-\newlabel{eq:nnfunc}{{3.17}{15}{Information Propogation through CNOT Gates}{equation.3.17}{}}
-\newlabel{eq:nnfunc@cref}{{[equation][17][3]3.17}{[1][15][]15}{}{}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces short}}{17}{figure.caption.9}\protected@file@percent }
-\newlabel{fig:hidden3_2}{{9}{17}{short}{figure.caption.9}{}}
-\newlabel{fig:hidden3_2@cref}{{[figure][9][]9}{[1][16][]17}{}{}{}}
-\newlabel{eq:rotationunitary}{{3.21}{17}{Information Propogation through CNOT Gates}{equation.3.21}{}}
-\newlabel{eq:rotationunitary@cref}{{[equation][21][3]3.21}{[1][17][]17}{}{}{}}
-\newlabel{eq:statevector2}{{3.22}{18}{Information Propogation through CNOT Gates}{equation.3.22}{}}
-\newlabel{eq:statevector2@cref}{{[equation][22][3]3.22}{[1][17][]18}{}{}{}}
-\newlabel{eq:statevector3}{{3.23}{18}{Information Propogation through CNOT Gates}{equation.3.23}{}}
-\newlabel{eq:statevector3@cref}{{[equation][23][3]3.23}{[1][18][]18}{}{}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.7}Output Layer: Quantum Measurement}{19}{subsection.3.7}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4}Fourier Analysis of Quanutm Neural Networks and Expressivity}{22}{section.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Basics of Fourier Series and Fourier Transform}{22}{subsection.4.1}\protected@file@percent }
-\newlabel{eq:fourier_series}{{4.1}{22}{Basics of Fourier Series and Fourier Transform}{equation.4.1}{}}
-\newlabel{eq:fourier_series@cref}{{[equation][1][4]4.1}{[1][22][]22}{}{}{}}
-\newlabel{eq:fourier_coefficients}{{4.2}{22}{Basics of Fourier Series and Fourier Transform}{equation.4.2}{}}
-\newlabel{eq:fourier_coefficients@cref}{{[equation][2][4]4.2}{[1][22][]22}{}{}{}}
-\newlabel{eq:finite_fourier_series}{{4.4}{23}{Basics of Fourier Series and Fourier Transform}{equation.4.4}{}}
-\newlabel{eq:finite_fourier_series@cref}{{[equation][4][4]4.4}{[1][22][]23}{}{}{}}
-\newlabel{eq:fourier_transform}{{4.5}{23}{Basics of Fourier Series and Fourier Transform}{equation.4.5}{}}
-\newlabel{eq:fourier_transform@cref}{{[equation][5][4]4.5}{[1][23][]23}{}{}{}}
-\newlabel{eq:inverse_fourier_transform}{{4.6}{23}{Basics of Fourier Series and Fourier Transform}{equation.4.6}{}}
-\newlabel{eq:inverse_fourier_transform@cref}{{[equation][6][4]4.6}{[1][23][]23}{}{}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Connection to Quantum Neural Networks}{23}{subsection.4.2}\protected@file@percent }
-\newlabel{eq:qnn_fourier_representation}{{4.8}{23}{Connection to Quantum Neural Networks}{equation.4.8}{}}
-\newlabel{eq:qnn_fourier_representation@cref}{{[equation][8][4]4.8}{[1][23][]23}{}{}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Quantum Neural Network as a Finite Fourer Series}{24}{subsection.4.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Data-Reuploading and accessible frequencies}{24}{subsection.4.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Expressivity}{24}{subsection.4.5}\protected@file@percent }
-\gdef \@abspage@last{25}
+\newlabel{sec:quantum_basics}{{3.1}{4}{Basics of Quantum Computing}{subsection.3.1}{}}
+\newlabel{sec:quantum_basics@cref}{{[subsection][1][3]3.1}{[1][4][]4}{}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.1.1}Qubits and Quantum States}{4}{subsubsection.3.1.1}\protected@file@percent }
+\newlabel{eq:qubit_state}{{3.1}{5}{Qubits and Quantum States}{equation.3.1}{}}
+\newlabel{eq:qubit_state@cref}{{[equation][1][3]3.1}{[1][4][]5}{}{}{}}
+\newlabel{eq:bloch_state}{{3.3}{5}{Qubits and Quantum States}{equation.3.3}{}}
+\newlabel{eq:bloch_state@cref}{{[equation][3][3]3.3}{[1][5][]5}{}{}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Bloch sphere representation of a single-qubit pure state. The angles $\vartheta $ and $\varphi $ characterize its position on the sphere, up to a global phase.}}{5}{figure.caption.3}\protected@file@percent }
+\newlabel{fig:bloch}{{3}{5}{Bloch sphere representation of a single-qubit pure state. The angles $\vartheta $ and $\varphi $ characterize its position on the sphere, up to a global phase}{figure.caption.3}{}}
+\newlabel{fig:bloch@cref}{{[figure][3][]3}{[1][5][]5}{}{}{}}
+\newlabel{eq:multi_qubit_state}{{3.4}{5}{Qubits and Quantum States}{equation.3.4}{}}
+\newlabel{eq:multi_qubit_state@cref}{{[equation][4][3]3.4}{[1][5][]5}{}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.1.2}Quantum Gates and Unitary Operations}{6}{subsubsection.3.1.2}\protected@file@percent }
+\newlabel{eq:unitary_gate}{{3.5}{6}{Quantum Gates and Unitary Operations}{equation.3.5}{}}
+\newlabel{eq:unitary_gate@cref}{{[equation][5][3]3.5}{[1][6][]6}{}{}{}}
+\newlabel{eq:rotation_gate}{{3.8}{6}{Quantum Gates and Unitary Operations}{equation.3.8}{}}
+\newlabel{eq:rotation_gate@cref}{{[equation][8][3]3.8}{[1][6][]6}{}{}{}}
+\newlabel{eq:rx_gate}{{3.9}{6}{Quantum Gates and Unitary Operations}{equation.3.9}{}}
+\newlabel{eq:rx_gate@cref}{{[equation][9][3]3.9}{[1][6][]6}{}{}{}}
+\newlabel{eq:tensor_product_gates}{{3.10}{6}{Quantum Gates and Unitary Operations}{equation.3.10}{}}
+\newlabel{eq:tensor_product_gates@cref}{{[equation][10][3]3.10}{[1][6][]6}{}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.1.3}Multi-Qubit Gates and Entanglement}{7}{subsubsection.3.1.3}\protected@file@percent }
+\newlabel{eq:cnot_operation}{{3.11}{7}{Multi-Qubit Gates and Entanglement}{equation.3.11}{}}
+\newlabel{eq:cnot_operation@cref}{{[equation][11][3]3.11}{[1][7][]7}{}{}{}}
+\newlabel{eq:cnot_10}{{3.12}{7}{Multi-Qubit Gates and Entanglement}{equation.3.12}{}}
+\newlabel{eq:cnot_10@cref}{{[equation][12][3]3.12}{[1][7][]7}{}{}{}}
+\newlabel{eq:cnot_01}{{3.13}{7}{Multi-Qubit Gates and Entanglement}{equation.3.13}{}}
+\newlabel{eq:cnot_01@cref}{{[equation][13][3]3.13}{[1][7][]7}{}{}{}}
+\newlabel{eq:bell_state}{{3.16}{7}{Multi-Qubit Gates and Entanglement}{equation.3.16}{}}
+\newlabel{eq:bell_state@cref}{{[equation][16][3]3.16}{[1][7][]7}{}{}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Generation of a Bell state using a Hadamard gate followed by a CNOT gate. The resulting two-qubit state is maximally entangled.}}{8}{figure.caption.4}\protected@file@percent }
+\newlabel{fig:bell}{{4}{8}{Generation of a Bell state using a Hadamard gate followed by a CNOT gate. The resulting two-qubit state is maximally entangled}{figure.caption.4}{}}
+\newlabel{fig:bell@cref}{{[figure][4][]4}{[1][7][]8}{}{}{}}
+\newlabel{eq:entangle2}{{3.19}{8}{Multi-Qubit Gates and Entanglement}{equation.3.19}{}}
+\newlabel{eq:entangle2@cref}{{[equation][19][3]3.19}{[1][8][]8}{}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.1.4}Quantum Measurement and Connection to QNNs}{8}{subsubsection.3.1.4}\protected@file@percent }
+\citation{mitarai2018quantum}
+\citation{perezsalinas2020data}
+\citation{schuld2021effect}
+\newlabel{eq:observable_expectation}{{3.21}{9}{Quantum Measurement and Connection to QNNs}{equation.3.21}{}}
+\newlabel{eq:observable_expectation@cref}{{[equation][21][3]3.21}{[1][8][]9}{}{}{}}
+\newlabel{eq:qnn_basics_output}{{3.23}{9}{Quantum Measurement and Connection to QNNs}{equation.3.23}{}}
+\newlabel{eq:qnn_basics_output@cref}{{[equation][23][3]3.23}{[1][9][]9}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Dissection of QNN}{9}{subsection.3.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces short}}{9}{figure.caption.5}\protected@file@percent }
+\newlabel{fig:qnn}{{5}{9}{short}{figure.caption.5}{}}
+\newlabel{fig:qnn@cref}{{[figure][5][]5}{[1][9][]9}{}{}{}}
+\citation{barenco1995elementary}
+\citation{benedetti2019parameterized}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Input Layer: Encoding}{10}{subsection.3.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Input layer of a QNN using angluar encoding.}}{11}{figure.caption.6}\protected@file@percent }
+\newlabel{fig:encode}{{6}{11}{Input layer of a QNN using angluar encoding}{figure.caption.6}{}}
+\newlabel{fig:encode@cref}{{[figure][6][]6}{[1][11][]11}{}{}{}}
+\citation{schuld2021effect}
+\citation{perezsalinas2020data}
+\newlabel{eq:unitarymatrix}{{3.27}{13}{Input Layer: Encoding}{equation.3.27}{}}
+\newlabel{eq:unitarymatrix@cref}{{[equation][27][3]3.27}{[1][12][]13}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Hidden Layer - Rotation}{13}{subsection.3.4}\protected@file@percent }
+\citation{benedetti2019parameterized}
+\newlabel{eq:statevector-hidden1}{{3.28}{14}{Hidden Layer - Rotation}{equation.3.28}{}}
+\newlabel{eq:statevector-hidden1@cref}{{[equation][28][3]3.28}{[1][14][]14}{}{}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces short}}{15}{figure.caption.7}\protected@file@percent }
+\newlabel{fig:hidden3_1}{{7}{15}{short}{figure.caption.7}{}}
+\newlabel{fig:hidden3_1@cref}{{[figure][7][]7}{[1][14][]15}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5}Hidden Layer - Entanglement}{15}{subsection.3.5}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces short}}{15}{figure.caption.8}\protected@file@percent }
+\newlabel{fig:cnot}{{8}{15}{short}{figure.caption.8}{}}
+\newlabel{fig:cnot@cref}{{[figure][8][]8}{[1][15][]15}{}{}{}}
+\newlabel{eq:stateof2}{{3.30}{15}{Hidden Layer - Entanglement}{equation.3.30}{}}
+\newlabel{eq:stateof2@cref}{{[equation][30][3]3.30}{[1][15][]15}{}{}{}}
+\newlabel{eq:cnoton2}{{3.31}{16}{Hidden Layer - Entanglement}{equation.3.31}{}}
+\newlabel{eq:cnoton2@cref}{{[equation][31][3]3.31}{[1][15][]16}{}{}{}}
+\newlabel{eq:entanglematrix}{{3.33}{16}{Hidden Layer - Entanglement}{equation.3.33}{}}
+\newlabel{eq:entanglematrix@cref}{{[equation][33][3]3.33}{[1][16][]16}{}{}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces short}}{16}{figure.caption.9}\protected@file@percent }
+\newlabel{fig:entangle3}{{9}{16}{short}{figure.caption.9}{}}
+\newlabel{fig:entangle3@cref}{{[figure][9][]9}{[1][16][]16}{}{}{}}
+\newlabel{eq:cnot1}{{3.34}{17}{Hidden Layer - Entanglement}{equation.3.34}{}}
+\newlabel{eq:cnot1@cref}{{[equation][34][3]3.34}{[1][16][]17}{}{}{}}
+\newlabel{eq:cnot2}{{3.35}{17}{Hidden Layer - Entanglement}{equation.3.35}{}}
+\newlabel{eq:cnot2@cref}{{[equation][35][3]3.35}{[1][17][]17}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.6}Information Propogation through CNOT Gates}{18}{subsection.3.6}\protected@file@percent }
+\newlabel{eq:nnfunc}{{3.39}{19}{Information Propogation through CNOT Gates}{equation.3.39}{}}
+\newlabel{eq:nnfunc@cref}{{[equation][39][3]3.39}{[1][18][]19}{}{}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces short}}{20}{figure.caption.10}\protected@file@percent }
+\newlabel{fig:hidden3_2}{{10}{20}{short}{figure.caption.10}{}}
+\newlabel{fig:hidden3_2@cref}{{[figure][10][]10}{[1][19][]20}{}{}{}}
+\newlabel{eq:rotationunitary}{{3.43}{20}{Information Propogation through CNOT Gates}{equation.3.43}{}}
+\newlabel{eq:rotationunitary@cref}{{[equation][43][3]3.43}{[1][20][]20}{}{}{}}
+\citation{schuld2021effect}
+\newlabel{eq:statevector2}{{3.44}{21}{Information Propogation through CNOT Gates}{equation.3.44}{}}
+\newlabel{eq:statevector2@cref}{{[equation][44][3]3.44}{[1][20][]21}{}{}{}}
+\newlabel{eq:statevector3}{{3.45}{21}{Information Propogation through CNOT Gates}{equation.3.45}{}}
+\newlabel{eq:statevector3@cref}{{[equation][45][3]3.45}{[1][21][]21}{}{}{}}
+\citation{sitzmann2020implicit}
+\citation{schuld2021effect}
+\citation{nielsen2010quantum}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.7}Output Layer: Quantum Measurement}{22}{subsection.3.7}\protected@file@percent }
+\citation{mitarai2018quantum}
+\citation{benedetti2019parameterized}
+\citation{stein2003fourier}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Fourier Analysis of Quanutm Neural Networks and Expressivity}{25}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Basics of Fourier Series and Fourier Transform}{25}{subsection.4.1}\protected@file@percent }
+\newlabel{eq:fourier_series}{{4.1}{25}{Basics of Fourier Series and Fourier Transform}{equation.4.1}{}}
+\newlabel{eq:fourier_series@cref}{{[equation][1][4]4.1}{[1][25][]25}{}{}{}}
+\newlabel{eq:fourier_coefficients}{{4.2}{25}{Basics of Fourier Series and Fourier Transform}{equation.4.2}{}}
+\newlabel{eq:fourier_coefficients@cref}{{[equation][2][4]4.2}{[1][25][]25}{}{}{}}
+\citation{schuld2021effect}
+\citation{schuld2021effect}
+\newlabel{eq:finite_fourier_series}{{4.4}{26}{Basics of Fourier Series and Fourier Transform}{equation.4.4}{}}
+\newlabel{eq:finite_fourier_series@cref}{{[equation][4][4]4.4}{[1][26][]26}{}{}{}}
+\newlabel{eq:fourier_transform}{{4.5}{26}{Basics of Fourier Series and Fourier Transform}{equation.4.5}{}}
+\newlabel{eq:fourier_transform@cref}{{[equation][5][4]4.5}{[1][26][]26}{}{}{}}
+\newlabel{eq:inverse_fourier_transform}{{4.6}{26}{Basics of Fourier Series and Fourier Transform}{equation.4.6}{}}
+\newlabel{eq:inverse_fourier_transform@cref}{{[equation][6][4]4.6}{[1][26][]26}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Connection to Quantum Neural Networks}{26}{subsection.4.2}\protected@file@percent }
+\newlabel{eq:qnn_fourier_representation}{{4.8}{26}{Connection to Quantum Neural Networks}{equation.4.8}{}}
+\newlabel{eq:qnn_fourier_representation@cref}{{[equation][8][4]4.8}{[1][26][]26}{}{}{}}
+\bibstyle{unsrt}
+\bibdata{reference}
+\bibcite{lecun2015deep}{1}
+\bibcite{vaswani2017attention}{2}
+\bibcite{scarselli2009graph}{3}
+\bibcite{nielsen2010quantum}{4}
+\bibcite{goodfellow2016deep}{5}
+\bibcite{rumelhart1986learning}{6}
+\bibcite{cybenko1989approximation}{7}
+\bibcite{leshno1993multilayer}{8}
+\bibcite{telgarsky2016benefits}{9}
+\bibcite{mitarai2018quantum}{10}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Quantum Neural Network as a Finite Fourer Series}{27}{subsection.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Data-Reuploading and accessible frequencies}{27}{subsection.4.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Expressivity}{27}{subsection.4.5}\protected@file@percent }
+\bibcite{benedetti2019parameterized}{11}
+\bibcite{perezsalinas2020data}{12}
+\bibcite{schuld2021effect}{13}
+\bibcite{barenco1995elementary}{14}
+\bibcite{sitzmann2020implicit}{15}
+\bibcite{stein2003fourier}{16}
+\gdef \@abspage@last{29}

@@ -1,0 +1,83 @@
+\begin{thebibliography}{10}
+
+\bibitem{lecun2015deep}
+Yann LeCun, Yoshua Bengio, and Geoffrey Hinton.
+\newblock Deep learning.
+\newblock {\em Nature}, 521:436--444, 2015.
+
+\bibitem{vaswani2017attention}
+Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan~N. Gomez, {\L}ukasz Kaiser, and Illia Polosukhin.
+\newblock Attention is all you need.
+\newblock In {\em Advances in Neural Information Processing Systems}, volume~30, 2017.
+
+\bibitem{scarselli2009graph}
+Franco Scarselli, Marco Gori, Ah~Chung Tsoi, Markus Hagenbuchner, and Gabriele Monfardini.
+\newblock The graph neural network model.
+\newblock {\em IEEE Transactions on Neural Networks}, 20(1):61--80, 2009.
+
+\bibitem{nielsen2010quantum}
+Michael~A. Nielsen and Isaac~L. Chuang.
+\newblock {\em Quantum Computation and Quantum Information}.
+\newblock Cambridge University Press, 10th anniversary edition, 2010.
+
+\bibitem{goodfellow2016deep}
+Ian Goodfellow, Yoshua Bengio, and Aaron Courville.
+\newblock {\em Deep Learning}.
+\newblock MIT Press, 2016.
+
+\bibitem{rumelhart1986learning}
+David~E. Rumelhart, Geoffrey~E. Hinton, and Ronald~J. Williams.
+\newblock Learning representations by back-propagating errors.
+\newblock {\em Nature}, 323:533--536, 1986.
+
+\bibitem{cybenko1989approximation}
+George Cybenko.
+\newblock Approximation by superpositions of a sigmoidal function.
+\newblock {\em Mathematics of Control, Signals, and Systems}, 2(4):303--314, 1989.
+
+\bibitem{leshno1993multilayer}
+Moshe Leshno, Vladimir~Ya. Lin, Allan Pinkus, and Shimon Schocken.
+\newblock Multilayer feedforward networks with a nonpolynomial activation function can approximate any function.
+\newblock {\em Neural Networks}, 6(6):861--867, 1993.
+
+\bibitem{telgarsky2016benefits}
+Matus Telgarsky.
+\newblock Benefits of depth in neural networks.
+\newblock In {\em 29th Annual Conference on Learning Theory}, volume~49 of {\em Proceedings of Machine Learning Research}, pages 1517--1539. PMLR, 2016.
+
+\bibitem{mitarai2018quantum}
+Kosuke Mitarai, Makoto Negoro, Masahiro Kitagawa, and Keisuke Fujii.
+\newblock Quantum circuit learning.
+\newblock {\em Physical Review A}, 98(3):032309, 2018.
+
+\bibitem{benedetti2019parameterized}
+Marcello Benedetti, Erika Lloyd, Stefan Sack, and Mattia Fiorentini.
+\newblock Parameterized quantum circuits as machine learning models.
+\newblock {\em Quantum Science and Technology}, 4(4):043001, 2019.
+
+\bibitem{perezsalinas2020data}
+Adri{\'a}n P{\'e}rez-Salinas, Alba Cervera-Lierta, Elies Gil-Fuster, and Jos{\'e}~I. Latorre.
+\newblock Data re-uploading for a universal quantum classifier.
+\newblock {\em Quantum}, 4:226, 2020.
+
+\bibitem{schuld2021effect}
+Maria Schuld, Ryan Sweke, and Johannes~Jakob Meyer.
+\newblock Effect of data encoding on the expressive power of variational quantum-machine-learning models.
+\newblock {\em Physical Review A}, 103(3):032430, 2021.
+
+\bibitem{barenco1995elementary}
+Adriano Barenco, Charles~H. Bennett, Richard Cleve, David~P. DiVincenzo, Norman Margolus, Peter Shor, Tycho Sleator, John~A. Smolin, and Harald Weinfurter.
+\newblock Elementary gates for quantum computation.
+\newblock {\em Physical Review A}, 52(5):3457--3467, 1995.
+
+\bibitem{sitzmann2020implicit}
+Vincent Sitzmann, Julien N.~P. Martel, Alexander~W. Bergman, David~B. Lindell, and Gordon Wetzstein.
+\newblock Implicit neural representations with periodic activation functions.
+\newblock In {\em Advances in Neural Information Processing Systems}, volume~33, 2020.
+
+\bibitem{stein2003fourier}
+Elias~M. Stein and Rami Shakarchi.
+\newblock {\em Fourier Analysis: An Introduction}, volume~1 of {\em Princeton Lectures in Analysis}.
+\newblock Princeton University Press, 2003.
+
+\end{thebibliography}

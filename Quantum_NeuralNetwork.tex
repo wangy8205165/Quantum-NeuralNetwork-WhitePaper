@@ -77,9 +77,12 @@
 \end{titlepage}
 
 \section{Background}
-Classical machine learning has gained huge success in recent years especially deep learning models such as multi-layer perceptrons (MLP), Convolution Neural Networks (CNN), Recurrent Neural Netowrks (RNN), Transformers, and Graph Neural Netowrks (GNN). These architectures, due to its inductive bias and with development of hardware accelerators, have been applied in many fieds such as image processing, audio-speech processing, language modeling, and fraud detection. However, as the models are getting larger and larger, the computing power required is also growing exponentially. Governments and private companies are spending billions of dollar on building data center to satisfy the compute needs of now. 
+Classical machine learning has gained huge success in recent years especially deep learning models such as multi-layer perceptrons (MLP), Convolution Neural Networks (CNN), Recurrent Neural Netowrks (RNN), Transformers, and Graph Neural Netowrks (GNN) \cite{lecun2015deep,vaswani2017attention,scarselli2009graph}. These architectures, due to its inductive bias and with development of hardware accelerators, have been applied in many fieds such as image processing, audio-speech processing, language modeling, and fraud detection.
+% Citation needed: the following compute-growth and data-center spending claims
+% require a defined time period and quantitative evidence.
+However, as the models are getting larger and larger, the computing power required is also growing exponentially. Governments and private companies are spending billions of dollar on building data center to satisfy the compute needs of now.
 
-On the other hand, a new paradigm of computing started to shine on the stage -- quantum computing. 
+On the other hand, a new paradigm of computing started to shine on the stage -- quantum computing \cite{nielsen2010quantum}.
 
 \section{Review of Classical Neural Networks}
 \label{sec:classical_nn}
@@ -88,7 +91,7 @@ Before exploring Quantum Neural Networks (QNNs), it is essential to understand t
 
 \subsection{Architecture of Multilayer Perceptrons}
 
-An MLP is a feedforward neural network consisting of an input layer, one or more hidden layers, and an output layer, as illustrated in Fig.~\ref{fig:mlps}. Each layer consists of multiple neurons, which perform affine transformations followed by nonlinear activation functions.
+An MLP is a feedforward neural network consisting of an input layer, one or more hidden layers, and an output layer, as illustrated in Fig.~\ref{fig:mlps} \cite[Chap.~6]{goodfellow2016deep}. Each layer consists of multiple neurons, which perform affine transformations followed by nonlinear activation functions.
 
 \begin{figure}[htbp]
     \centering
@@ -167,7 +170,7 @@ Given a training dataset $\mathcal{D}=\{(\mathbf{x}_i,y_i)\}_{i=1}^{N}$, the net
     \label{eq:mlp_training}
 \end{equation}
 
-In practice, the parameters are typically optimized through gradient-based methods using backpropagation.
+In practice, the parameters are typically optimized through gradient-based methods using backpropagation \cite{rumelhart1986learning}.
 
 \subsection{Universal Approximation Theorem}
 
@@ -193,15 +196,15 @@ This theorem establishes the remarkable expressive potential of neural networks.
 
 First, the theorem guarantees the \emph{existence} of suitable parameters, but does not guarantee that a training algorithm can efficiently discover them. Second, it does not specify how many neurons or parameters are required to achieve a desired approximation accuracy. Finally, approximation capability does not necessarily imply good generalization to unseen data.
 
-Although a single hidden layer is theoretically sufficient for universal approximation, deeper architectures may represent certain functions more efficiently by exploiting their compositional structure.
+Although a single hidden layer is theoretically sufficient for universal approximation, deeper architectures may represent certain functions more efficiently by exploiting their compositional structure \cite{goodfellow2016deep,telgarsky2016benefits}.
 
 \subsection{Beyond MLPs: Toward Quantum Neural Networks}
 
-Modern deep learning has extended the basic principles of MLPs into numerous specialized architectures. Convolutional Neural Networks (CNNs) exploit spatial structure, recurrent architectures such as RNNs, LSTMs, and GRUs model sequential dependencies, Transformers leverage attention mechanisms, and Graph Neural Networks (GNNs) incorporate graph structure. Despite their architectural differences, these models share the fundamental objective of learning parameterized functions from data.
+Modern deep learning has extended the basic principles of MLPs into numerous specialized architectures. Convolutional Neural Networks (CNNs) exploit spatial structure, recurrent architectures such as RNNs, LSTMs, and GRUs model sequential dependencies, Transformers leverage attention mechanisms, and Graph Neural Networks (GNNs) incorporate graph structure \cite{goodfellow2016deep,vaswani2017attention,scarselli2009graph}. Despite their architectural differences, these models share the fundamental objective of learning parameterized functions from data.
 
 This naturally leads to an intriguing question: can quantum computers also serve as function approximators?
 
-While classical MLPs construct functions through compositions of affine transformations and nonlinear activations, variational QNNs construct functions through quantum data encoding, parameterized unitary transformations, and measurements. A typical QNN output can be expressed as
+While classical MLPs construct functions through compositions of affine transformations and nonlinear activations, variational QNNs construct functions through quantum data encoding, parameterized unitary transformations, and measurements. A typical QNN output can be expressed as \cite{mitarai2018quantum,benedetti2019parameterized}
 
 \begin{equation}
     f_{\theta}(\mathbf{x})
@@ -224,60 +227,461 @@ These questions motivate the following investigation into the mathematical repre
 \section{Quantum Neural Networks}
 
 \subsection{Basics of Quantum Computing}
-If we have multiple qubits, let's say $N$ qubits. Each qubit, individually is operated by a quantum gate $U_1,U_2,\cdots,U_N$. Then the operation matrix on the entire quantum state is
-\[U=U_1\otimes U_2\otimes U_3\otimes \cdots \otimes U_N\]
+\label{sec:quantum_basics}
 
-CNOT gate is an interesting gate that takes 2 qubits as input. Its main purpose is to produce conditional independence between these 2 qubits. In these 2 qubits, one is target and the other is control. The logic is:
-\[\ket{c,t}\xrightarrow{\text{CNOT}}\ket{c,t\oplus c}\]
-That is flipping the target qubit if the control qubit is 1, otherwise do nothing. For example, if we let $q_0$ be the target and $q_1$ be the control and we use little-endian format $\ket{q_1q_0}$. 
-\[\begin{aligned}
-    \ket{00}\rightarrow\ket{00}\\
-    \ket{01}\rightarrow\ket{01}\\
-    \ket{10}\rightarrow\ket{11}\\
-    \ket{11}\rightarrow\ket{10}
-\end{aligned}\]
-The operation matrix of CNOT gate is therefore:
-\[CNOT_{q_1\rightarrow q_0}=\begin{bmatrix}
-    1&0&0&0\\0&1&0&0\\0&0&0&1\\0&0&1&0
-\end{bmatrix}\]
-For example,
-\[CNOT_{q_1\rightarrow q_0}\ket{10}=\begin{bmatrix}1&0&0&0\\0&1&0&0\\0&0&0&1\\0&0&1&0\end{bmatrix}\begin{bmatrix}0\\0\\1\\0\end{bmatrix}
-=\begin{bmatrix}0\\0\\0\\1\end{bmatrix}=\ket{11}\]
-Please be aware that if $q_0$ is the control and $q_1$ is the target, then
-\[CNOT_{q_0\rightarrow q_1}=\begin{bmatrix}
-    1&0&0&0\\0&0&0&1\\0&0&1&0\\0&1&0&0
-\end{bmatrix}\]
-For example, 
-\begin{equation*}
-    CNOT_{q_0\rightarrow q_1}\ket{01}=\begin{bmatrix}
-    1&0&0&0\\0&0&0&1\\0&0&1&0\\0&1&0&0\end{bmatrix}\times\begin{bmatrix}0\\1\\0\\0\end{bmatrix}=
-    \begin{bmatrix}0\\0\\0\\1\end{bmatrix}=\ket{11}
-\end{equation*}
+Quantum computing is built upon the principles of quantum
+mechanics, which provide a fundamentally different
+computational framework from classical computing.
+Unlike classical computers, which process information
+using binary bits, quantum computers manipulate quantum
+bits, or qubits, through unitary transformations and
+quantum measurements. This section introduces the
+essential concepts of quantum computing, including
+quantum states, quantum gates, tensor products,
+entanglement, and measurement. These concepts form
+the mathematical foundation of Quantum Neural Networks
+(QNNs). The following discussion is based on the
+standard quantum computing formalism presented in
+\cite[Chaps.~2 and~4]{nielsen2010quantum}.
 
-Then, how is entanglment produced using CNOT gate? In Figure~\ref{fig:bellstate}, we have two qubits, both in $\ket{0}$ as initial state. Then, one of them undergo Hadmard operation, which makes the state become:
-\[\ket{\psi}=\frac{1}{\sqrt{2}}(\ket{00}+\ket{01})\]
-After applying a CNOT gate on these 2 qubits, we have:
-\[CNOT_{q_0\rightarrow q_1}\ket{\psi}=\frac{1}{\sqrt{2}}(\ket{00}+\ket{11})\]
-Now, these 2 qubits are entangled! This means that if we know the state of one of the qubits, we immediately know the state of the other without measuring it. \\
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.5\textwidth]{figures/bell.png}
-    \caption[short]{How entanglment is produced in bell state}
-    \label{fig:bellstate}
-\end{figure}
-\textbf{Rule of thumb.} For a two-qubit syste:
-\[\ket{\psi_1\psi_0}=a\ket{00}+b\ket{01}+c\ket{10}+\ket{11}\]
-The quickest way to check if these two qubits are entangled is:
+\subsubsection{Qubits and Quantum States}
+
+In classical computing, a bit can take one of two
+possible values, either 0 or 1. In contrast, a qubit
+can exist in a superposition of two computational
+basis states, denoted by $\ket{0}$ and $\ket{1}$.
+The general state of a single qubit is expressed as
+
 \begin{equation}
-    \begin{cases}
-        ad-bc\neq 0, \quad \text{entangled}\\
-        ad-bc=0, \quad \text{product state/non-entangled}
-    \end{cases}
-    \label{eq:entangle}
+    \ket{\psi}=\alpha\ket{0}+\beta\ket{1},
+    \qquad |\alpha|^2+|\beta|^2=1
+    \label{eq:qubit_state}
 \end{equation}
 
+where $\alpha,\beta\in\mathbb{C}$ are complex
+probability amplitudes. In vector notation,
+
+\begin{equation}
+    \ket{0}=
+    \begin{bmatrix}1\\0\end{bmatrix},
+    \quad
+    \ket{1}=
+    \begin{bmatrix}0\\1\end{bmatrix},
+    \quad
+    \ket{\psi}=
+    \begin{bmatrix}\alpha\\\beta\end{bmatrix}
+\end{equation}
+
+According to the Born rule, the probabilities of
+measuring $\ket{0}$ and $\ket{1}$ are
+$|\alpha|^2$ and $|\beta|^2$, respectively.
+Importantly, the probability amplitudes also
+contain phase information, which plays a crucial
+role in quantum interference.
+
+Ignoring an unobservable global phase, any pure
+single-qubit state can be represented geometrically
+on the Bloch sphere, as illustrated in
+Fig.~\ref{fig:bloch}:
+
+\begin{equation}
+    \ket{\psi}
+    =\cos\left(\frac{\vartheta}{2}\right)\ket{0}
+    +e^{i\varphi}
+    \sin\left(\frac{\vartheta}{2}\right)\ket{1}
+    \label{eq:bloch_state}
+\end{equation}
+
+where $\vartheta$ and $\varphi$ represent the
+polar and azimuthal angles, respectively.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.4\textwidth]{figures/bloch.png}
+    \caption{Bloch sphere representation of a
+    single-qubit pure state. The angles
+    $\vartheta$ and $\varphi$ characterize its
+    position on the sphere, up to a global phase.}
+    \label{fig:bloch}
+\end{figure}
+
+For a system containing $n$ qubits, the quantum
+state belongs to a $2^n$-dimensional Hilbert
+space and can be expressed as
+
+\begin{equation}
+    \ket{\psi}
+    =\sum_{j=0}^{2^n-1}a_j\ket{j},
+    \qquad
+    \sum_{j=0}^{2^n-1}|a_j|^2=1
+    \label{eq:multi_qubit_state}
+\end{equation}
+
+where $\ket{j}$ denotes the computational basis
+state corresponding to the binary representation
+of $j$.
+
+Throughout this paper, we adopt the
+\textit{little-endian convention}, in which the
+computational basis is ordered as
+$\ket{q_{n-1}\cdots q_1q_0}$, with $q_0$ being
+the least significant bit.
+
+Although the dimension of the quantum state
+space grows exponentially with the number of
+qubits, this does not automatically imply an
+exponential computational advantage, since
+extracting information from a quantum state
+is constrained by quantum measurement.
+
+\subsubsection{Quantum Gates and Unitary Operations}
+
+Quantum states are manipulated through quantum
+gates, which are mathematically represented by
+unitary matrices. A quantum gate $U$ transforms
+an initial state $\ket{\psi}$ into
+
+\begin{equation}
+    \ket{\psi'}=U\ket{\psi},
+    \qquad U^\dagger U=I
+    \label{eq:unitary_gate}
+\end{equation}
+
+where $U^\dagger$ is the conjugate transpose
+of $U$. The unitary condition ensures that
+the normalization of the quantum state is
+preserved throughout the evolution of an
+ideal quantum circuit.
+
+Several fundamental single-qubit gates are
+widely used in quantum computing. For example,
+the Pauli-X gate acts similarly to a classical
+NOT gate, while the Hadamard gate transforms
+computational basis states into equal
+superpositions:
+
+\begin{equation}
+    X=
+    \begin{bmatrix}
+        0&1\\1&0
+    \end{bmatrix},
+    \qquad
+    H=\frac{1}{\sqrt{2}}
+    \begin{bmatrix}
+        1&1\\1&-1
+    \end{bmatrix}
+\end{equation}
+
+In particular,
+
+\begin{equation}
+    H\ket{0}
+    =\frac{1}{\sqrt{2}}
+    \left(\ket{0}+\ket{1}\right)
+\end{equation}
+
+Another important class of gates is the
+rotation gates, which rotate quantum states
+around different axes of the Bloch sphere.
+They can be expressed as
+
+\begin{equation}
+    R_{\nu}(\theta)
+    =e^{-i\theta\sigma_{\nu}/2},
+    \qquad \nu\in\{x,y,z\}
+    \label{eq:rotation_gate}
+\end{equation}
+
+where $\sigma_{\nu}$ denotes the corresponding
+Pauli operator. For example, the rotation
+around the X-axis is
+
+\begin{equation}
+    R_x(\theta)=
+    \begin{bmatrix}
+        \cos\frac{\theta}{2}
+        &-i\sin\frac{\theta}{2}\\
+        -i\sin\frac{\theta}{2}
+        &\cos\frac{\theta}{2}
+    \end{bmatrix}
+    \label{eq:rx_gate}
+\end{equation}
+
+Rotation gates are particularly important
+in QNNs because their rotation angles can
+encode classical input features or represent
+trainable model parameters.
+
+When multiple qubits are involved, the
+combined state space is constructed using
+the tensor product. If independent
+single-qubit gates $U_0,U_1,\ldots,U_{n-1}$
+act on their respective qubits, the overall
+operation is represented, under our
+little-endian convention, as
+
+\begin{equation}
+    U=U_{n-1}\otimes\cdots\otimes U_1\otimes U_0
+    \label{eq:tensor_product_gates}
+\end{equation}
+
+The tensor product provides a systematic
+way to construct multi-qubit operations
+from individual gates. However, not all
+multi-qubit operations can be decomposed
+into tensor products of single-qubit gates.
+Such operations are essential for generating
+quantum entanglement.
+
+\subsubsection{Multi-Qubit Gates and Entanglement}
+
+One of the most fundamental multi-qubit
+gates is the Controlled-NOT (CNOT) gate,
+which operates on two qubits: a control
+qubit and a target qubit. The target is
+flipped if and only if the control is in
+state $\ket{1}$. Its action on computational
+basis states is defined as
+
+\begin{equation}
+    \ket{c,t}
+    \xrightarrow{\mathrm{CNOT}}
+    \ket{c,t\oplus c}
+    \label{eq:cnot_operation}
+\end{equation}
+
+where $\oplus$ denotes modulo-2 addition.
+
+For a two-qubit system following the
+little-endian convention $\ket{q_1q_0}$,
+if $q_1$ is the control and $q_0$ is
+the target, the corresponding matrix is
+
+\begin{equation}
+    \mathrm{CNOT}_{q_1\rightarrow q_0}
+    =
+    \begin{bmatrix}
+        1&0&0&0\\
+        0&1&0&0\\
+        0&0&0&1\\
+        0&0&1&0
+    \end{bmatrix}
+    \label{eq:cnot_10}
+\end{equation}
+
+For example,
+$\mathrm{CNOT}_{q_1\rightarrow q_0}
+\ket{10}=\ket{11}$.
+
+Conversely, if $q_0$ is the control
+and $q_1$ is the target, the matrix
+becomes
+
+\begin{equation}
+    \mathrm{CNOT}_{q_0\rightarrow q_1}
+    =
+    \begin{bmatrix}
+        1&0&0&0\\
+        0&0&0&1\\
+        0&0&1&0\\
+        0&1&0&0
+    \end{bmatrix}
+    \label{eq:cnot_01}
+\end{equation}
+
+Notice that reversing the control and
+target qubits changes the matrix
+representation. For instance,
+
+\begin{equation}
+    \mathrm{CNOT}_{q_0\rightarrow q_1}
+    \ket{01}=\ket{11}
+\end{equation}
+
+Beyond conditional bit flipping, the CNOT
+gate plays a crucial role in creating
+quantum entanglement. Consider two qubits
+initially prepared in $\ket{00}$.
+As illustrated in Fig.~\ref{fig:bell},
+we first apply a Hadamard gate to $q_0$:
+
+\begin{equation}
+\begin{aligned}
+    \ket{\psi}
+    &=(I\otimes H)\ket{00}\\
+    &=\frac{1}{\sqrt{2}}
+    \left(\ket{00}+\ket{01}\right)
+\end{aligned}
+\end{equation}
+
+Next, applying a CNOT gate with $q_0$
+as the control and $q_1$ as the target
+produces
+
+\begin{equation}
+\begin{aligned}
+    \ket{\psi_{\mathrm{Bell}}}
+    &=\mathrm{CNOT}_{q_0\rightarrow q_1}
+      \ket{\psi}\\
+    &=\frac{1}{\sqrt{2}}
+      \left(\ket{00}+\ket{11}\right)
+\end{aligned}
+\label{eq:bell_state}
+\end{equation}
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.5\textwidth]
+    {figures/bell.png}
+    \caption{Generation of a Bell state using
+    a Hadamard gate followed by a CNOT gate.
+    The resulting two-qubit state is maximally
+    entangled.}
+    \label{fig:bell}
+\end{figure}
+
+The resulting Bell state is entangled,
+meaning that it cannot be expressed as
+the tensor product of two individual
+single-qubit states. Measuring both
+qubits in the computational basis
+produces either $\ket{00}$ or $\ket{11}$,
+each with probability $1/2$.
+
+More generally, for an arbitrary
+two-qubit pure state
+
+\begin{equation}
+    \ket{\psi}
+    =a\ket{00}+b\ket{01}
+    +c\ket{10}+d\ket{11}
+\end{equation}
+
+entanglement can be determined by
+examining the coefficient matrix
+
+\begin{equation}
+    A=
+    \begin{bmatrix}
+        a&b\\c&d
+    \end{bmatrix}
+\end{equation}
+
+The state is separable if and only if
+$A$ has rank one, or equivalently,
+its determinant vanishes:
+
+\begin{equation}
+    \boxed{
+    \begin{cases}
+        ad-bc=0, & \text{Separable}\\
+        ad-bc\neq0, & \text{Entangled}
+    \end{cases}
+    }
+    \label{eq:entangle2}
+\end{equation}
+
+This criterion applies specifically
+to two-qubit pure states. For the Bell
+state in Eq.~\ref{eq:bell_state},
+$ad-bc=1/2\neq0$, confirming that
+the state is entangled.
+
+Entangling gates such as CNOT are
+important building blocks of QNNs,
+as they enable quantum circuits to
+establish interactions among qubits
+that cannot be generated by independent
+single-qubit operations alone.
+
+\subsubsection{Quantum Measurement and Connection to QNNs}
+
+Unlike classical computation, where the
+values of computational variables can
+generally be accessed directly, extracting
+information from a quantum system requires
+measurement.
+
+For a single qubit
+$\ket{\psi}=\alpha\ket{0}+\beta\ket{1}$,
+a computational-basis measurement yields
+either 0 or 1, with probabilities
+
+\begin{equation}
+    P(0)=|\alpha|^2,
+    \qquad
+    P(1)=|\beta|^2
+\end{equation}
+
+A single measurement does not reveal the
+underlying complex probability amplitudes.
+Instead, repeated preparation and measurement
+of the same quantum state allow us to
+estimate measurement probabilities and
+expectation values statistically.
+
+In particular, the expectation value
+of a Hermitian observable $\mathcal{O}$
+for a quantum state $\ket{\psi}$ is
+
+\begin{equation}
+    \langle\mathcal{O}\rangle
+    =\bra{\psi}\mathcal{O}\ket{\psi}
+    \label{eq:observable_expectation}
+\end{equation}
+
+This provides a natural mechanism for
+converting quantum information into
+classical numerical outputs.
+
+The concepts introduced in this section
+form the foundation of variational QNNs.
+In a typical QNN, classical input data
+$\mathbf{x}$ are encoded into quantum
+states, trainable quantum gates transform
+these states, entangling operations
+introduce interactions among qubits,
+and quantum measurements produce
+classical outputs.
+
+Mathematically, such a model can be
+expressed as
+
+\begin{equation}
+    \ket{\psi(\mathbf{x},\theta)}
+    =U(\mathbf{x},\theta)\ket{0}^{\otimes n}
+\end{equation}
+
+with the corresponding output function
+
+\begin{equation}
+    f_{\theta}(\mathbf{x})
+    =
+    \bra{0}^{\otimes n}
+    U^\dagger(\mathbf{x},\theta)
+    \mathcal{O}
+    U(\mathbf{x},\theta)
+    \ket{0}^{\otimes n}
+    \label{eq:qnn_basics_output}
+\end{equation}
+
+where $\theta$ denotes the trainable
+circuit parameters.
+
+Thus, quantum states, unitary operations,
+entanglement, and measurement collectively
+provide the building blocks for constructing
+parameterized quantum models. The following
+section examines how these principles are
+combined to form Quantum Neural Networks
+and how quantum circuits can be used
+for function approximation.
+
+
+
+
 \subsection{Dissection of QNN}
-Similar to classical neural networks, quantum neural networks (QNN) also tries to universally approximate functions but in a foundamental different way. Figure~\ref{fig:qnn} shows a \textbf{3-qubit} circuit architecture of a standard quantum neural networks. Simply speaking, it is composed of layers of rotation gate (X,Y,Z) and CNOT gate. In the end, the each wire has a measurement gate (usually Z-basis). 
+Similar to classical neural networks, quantum neural networks (QNN) can also serve as function approximators, with universality requiring suitable encoding and circuit families \cite{mitarai2018quantum,perezsalinas2020data,schuld2021effect}. Figure~\ref{fig:qnn} shows a \textbf{3-qubit} circuit architecture of a standard quantum neural networks. Simply speaking, it is composed of layers of rotation gate (X,Y,Z) and CNOT gate. In the end, the each wire has a measurement gate (usually Z-basis).
 \begin{figure}[htbp]
 \centering\includegraphics[width=0.8\textwidth]{figures/qnn_3.png}
 \caption[short]{A standard quantum neural network}
@@ -308,10 +712,10 @@ For example, if a two-qubit system is in state $\ket{11}$, which in basis vector
 \[\begin{bmatrix}1&0&0&0\\0&0&0&1\\0&0&1&0\\0&1&0&0\end{bmatrix}\times
 \begin{bmatrix}0\\0\\0\\1\end{bmatrix}=\begin{bmatrix}0\\1\\0\\0\end{bmatrix}=\ket{01}\]
 \[CNOT\ket{11}\rightarrow\ket{01}\]
-These three rotation gates and CNOT gate are also known universal gates in quantum computer, similar to NOR and NAND in classical computer. Any unitary matrix can be decomposed to sequenec of rotation gates and CNOT gate. Similar to classical neural network, quantum neural network also has input, hidden and output layers, which corresponds to encoding, rotation and entanglment in Hilbert Space, and measurement. Let's look at them one by one.
+These three rotation gates and CNOT gate are also known universal gates in quantum computer, similar to NOR and NAND in classical computer. Up to an overall global phase, any unitary matrix can be decomposed into a sequence of single-qubit rotation gates and CNOT gates \cite{barenco1995elementary}. Similar to classical neural network, quantum neural network also has input, hidden and output layers, which corresponds to encoding, rotation and entanglment in Hilbert Space, and measurement. Let's look at them one by one.
 
 \subsection{Input Layer: Encoding}
-For most of machine learning tasks, the data is classical. Therefore, we need a way to encode the classical data into quantum states. Three main encoding approaches are:
+For most of machine learning tasks, the data is classical. Therefore, we need a way to encode the classical data into quantum states. Three main encoding approaches are \cite{benedetti2019parameterized}:
 \begin{enumerate}
     \item \textbf{Amplitude Encoding}
     \item \textbf{Basis Encoding}
@@ -409,11 +813,15 @@ Please be aware that since we use little-endian convention, the tensor product o
 If our initial state is $\ket{0}$, then the resulting state is the first column of this matrix. In fact, the matrix is
 \[U_{\mathbf{b,b'}}=(-i)^{d_H(\mathbf{b,b'})}\prod_{j:b_j=b'_j}c_j \prod_{j:b_j\neq b'_j}s_j\]
 where $d_H(\mathbf{b,b'})$ is Hamming distance between target state and initial state. \\
-Before concluding angle encoding, there is one more thing - \textbf{scaling}. As you might have observed, the trignometric functions are all periodic ($2\pi$) meaning that
+Before concluding angle encoding, there is one more thing - \textbf{scaling}.
+% Technical note: Rx(x+2*pi)=-Rx(x), so the physical state is 2*pi-periodic
+% up to global phase; the individual half-angle functions have period 4*pi.
+% Mapping features to [0,pi] is a preprocessing choice, not a universal requirement.
+As you might have observed, the trignometric functions are all periodic ($2\pi$) meaning that
 \[\ket{\psi(x)}=\ket{\psi(x+2\pi)}\]
 If the range of classical data is larger than $2\pi$, then two different classical values will be mapped to the same quantum state, causing information loss. Therefore, scaling must be conducted such that the input values, before encoding, must be between $0$ and $\pi$. This is becuase the periodicity of cosine and sine functions are $2\pi$, so the periodicity in $\cos(\frac{x}{2})$ is $\pi$. A simple and most common way to do scaling is as follows:
 \[\theta=\pi\frac{x-x_{min}}{x_{max}-x_{min}}\]
-Now, the features are mapped into a non-repeatitive and continuous angle space. Finally, there are many variants of angle encoding such as XYZ encoding, data-reuploading, multiscale, and adaptive encoding. What has to be aware of is that encoding can have notrivial impact on the representation capacity of the model. 
+Now, the features are mapped into a non-repeatitive and continuous angle space. Finally, there are many variants of angle encoding such as XYZ encoding, data-reuploading, multiscale, and adaptive encoding. What has to be aware of is that encoding can have notrivial impact on the representation capacity of the model \cite{schuld2021effect,perezsalinas2020data}.
 
 \subsection{Hidden Layer - Rotation}
 Now, after angle encoding, each qubit is in the state 
@@ -490,6 +898,7 @@ Then, this $8\times8$ matrix is the same as Eq.~\eqref{eq:unitarymatrix}
 \end{figure}
 
 \subsection{Hidden Layer - Entanglement}
+Local rotations and entangling gates are standard building blocks of parameterized quantum circuits \cite{benedetti2019parameterized}.
 What's getting more interesting is the CNOT gate in the next layer. If we only apply rotation gates on each qubit separately, there is no interactions between qubits. CNOT gate allows interactions between qubits so that information can be passed across qubits instead of just staying at only a single qubit. A good analogy is that in classical neural networks, each neuron takes all the neurons in the previous layer as inputs, if we assume fully-connected layers.\\
 Although we have a 3-qubit system, but let's look at the first two qubits $q_0,q_1$. In Figure~\ref{fig:cnot}, after encoding layer and first rotation layer, the state of each qubit is:
 
@@ -777,7 +1186,7 @@ S_3s_5(is_4C_2C_1+c_4S_2S_1)+C_3c_5(-s_4S_2C_1-ic_4C_2S_1)
 
 However, as the circuit depth increases, manually deriving the statevector quickly becomes computationally intractable. This naturally raises an important question: can we abstract these increasingly complex expressions into a more compact mathematical representation that allows us to analyze the QNN systematically?
 
-Fortunately, the answer is yes! In fact, under the data-encoding schemes considered here, the output of a QNN can be represented as a \textbf{finite Fourier series}.
+Fortunately, the answer is yes! In fact, under the data-encoding schemes considered here, the output of a QNN can be represented as a \textbf{finite Fourier series} \cite{schuld2021effect}.
 
 To understand why, let us revisit Eq.~\ref{eq:statevector3}. A closer examination reveals that each probability amplitude consists of combinations of sine and cosine functions. By applying standard trigonometric identities, these expressions can be rewritten in the general form
 \begin{equation}
@@ -799,7 +1208,7 @@ This is precisely the structure of a finite trigonometric series! More important
     c_{\omega}(\theta)e^{i\omega x}
 \end{equation}
 
-Here, $\Omega$ denotes the set of accessible frequencies. Unlike classical neural networks with learnable frequencies, such as SIREN, the accessible frequency spectrum of a QNN is primarily determined by its data-encoding strategy and circuit architecture. In particular, both circuit depth, characterized by the number of data-reuploading layers, and circuit width, characterized by the number of qubits involved in data encoding, can influence the accessible frequency spectrum. We will explore these relationships in greater detail in the following sections.
+Here, $\Omega$ denotes the set of accessible frequencies. Unlike classical neural networks with learnable frequencies, such as SIREN \cite{sitzmann2020implicit}, the accessible frequency spectrum of a QNN is primarily determined by its data-encoding strategy and circuit architecture. In particular, both circuit depth, characterized by the number of data-reuploading layers, and circuit width, characterized by the number of qubits involved in data encoding, can influence the accessible frequency spectrum \cite{schuld2021effect}. We will explore these relationships in greater detail in the following sections.
 
 Furthermore, $\omega \in \Omega$ represents an individual frequency component, while $c_{\omega}(\theta)$ denotes its corresponding trainable Fourier coefficient. From Fourier analysis, we know that the expressive power of a Fourier series—namely, the range of functions it can approximate—depends in part on the richness of its accessible frequency spectrum. Unlike in SIREN, where frequencies can be learned during training, the frequency spectrum of a QNN with a fixed encoding scheme is predetermined by its architecture rather than directly optimized through training.
 
@@ -809,7 +1218,7 @@ This remarkable connection allows us to study the expressive power of QNNs throu
 
 \subsection{Output Layer: Quantum Measurement}
 
-The final stage of a QNN is the measurement layer, which converts quantum information into classical outputs. Unlike classical neural networks, where intermediate activations can be directly accessed, the quantum statesevolving throughout a quantum circuit cannot be directly observed without performing measurements. In particular, a computational-basis measurement of a qubit yields either 0 or 1, with probabilities governed by the Born rule. However, the complex probability amplitudes underlying these outcomes cannot be directly recovered
+The final stage of a QNN is the measurement layer, which converts quantum information into classical outputs. Unlike classical neural networks, where intermediate activations can be directly accessed, the quantum statesevolving throughout a quantum circuit cannot be directly observed without performing measurements. In particular, a computational-basis measurement of a qubit yields either 0 or 1, with probabilities governed by the Born rule \cite[Sec.~2.2]{nielsen2010quantum}. However, the complex probability amplitudes underlying these outcomes cannot be directly recovered
 from a single measurement.
 
 How, then, can we extract meaningful numerical outputs from a quantum circuit? A common approach is to measure the expectation value of a quantum observable $\mathcal{O}$.
@@ -891,7 +1300,7 @@ Since $-1\leq\braket{Z}\leq1$, an expectation value closer to $+1$ indicates a h
 
 Importantly, the expectation value should not be confused with the probability amplitude. While the probability amplitudes $\alpha$ and $\beta$ are generally complex-valued, the expectation value $\braket{Z}$ is real-valued and reflects the difference between the two measurement probabilities.
 
-On real quantum hardware, the expectation value cannot be obtained from a single circuit execution. Instead, the circuit must be executed repeatedly to estimate the expectation value statistically:
+On real quantum hardware, the expectation value cannot be obtained from a single circuit execution. Instead, the circuit must be executed repeatedly to estimate the expectation value statistically \cite{mitarai2018quantum,benedetti2019parameterized}:
 
 \begin{equation}
     \widehat{\braket{Z}}
@@ -972,7 +1381,7 @@ In summary, quantum measurement provides the essential bridge between the quantu
 \section{Fourier Analysis of Quanutm Neural Networks and Expressivity}
 
 \subsection{Basics of Fourier Series and Fourier Transform}
-Fourier analysis provides a powerful mathematical framework for representing and analyzing functions in terms of their frequency components. The fundamental idea is that a function can be decomposed into a combination of oscillatory basis functions, such as sines, cosines, or complex exponentials. Instead of examining a function solely in its original domain, Fourier analysis allows us to study its behavior in the frequency domain.
+Fourier analysis provides a powerful mathematical framework for representing and analyzing functions in terms of their frequency components. Standard treatments cover both Fourier series and Fourier transforms \cite{stein2003fourier}. The fundamental idea is that a function can be decomposed into a combination of oscillatory basis functions, such as sines, cosines, or complex exponentials. Instead of examining a function solely in its original domain, Fourier analysis allows us to study its behavior in the frequency domain.
 
 Two fundamental tools in Fourier analysis are the \textit{Fourier series} and the \textit{Fourier transform}. Although closely related, they serve different purposes and apply to different classes of functions.
 
@@ -1063,7 +1472,7 @@ As discussed previously, the output of a variational QNN is typically defined th
     |0\rangle
 \end{equation}
 
-For the finite-dimensional quantum circuits with data-encoding operations considered in this paper, this expectation-value function can be expressed as a finite Fourier series:
+For the finite-dimensional quantum circuits with data-encoding operations considered in this paper, this expectation-value function can be expressed as a finite Fourier series \cite{schuld2021effect}:
 
 \begin{equation}
     f_{\theta}(x)=
@@ -1074,7 +1483,7 @@ For the finite-dimensional quantum circuits with data-encoding operations consid
 
 Here, $\Omega$ denotes the set of accessible frequencies, while $c_{\omega}(\theta)$ represents the Fourier coefficients controlled by the trainable circuit parameters.
 
-Unlike conventional Fourier approximations, where the selected frequencies may be chosen or optimized for a particular task, the accessible frequencies of a QNN with a fixed data-encoding scheme are determined by its encoding operations and circuit architecture. The trainable parameters primarily control the corresponding Fourier coefficients, subject to constraints imposed by the circuit.
+Unlike conventional Fourier approximations, where the selected frequencies may be chosen or optimized for a particular task, the accessible frequencies of a QNN with a fixed data-encoding scheme are determined by its encoding operations and circuit architecture. The trainable parameters primarily control the corresponding Fourier coefficients, subject to constraints imposed by the circuit \cite{schuld2021effect}.
 
 Therefore, Fourier analysis provides a natural framework for investigating two fundamental aspects of QNN expressivity: which frequencies a quantum circuit can represent, and how flexibly it can adjust their coefficients.
 
@@ -1086,5 +1495,8 @@ In the following section, we will examine how these properties emerge from quant
 
 \subsection{Expressivity}
 
+
+\bibliographystyle{unsrt}
+\bibliography{reference}
 
 \end{document}

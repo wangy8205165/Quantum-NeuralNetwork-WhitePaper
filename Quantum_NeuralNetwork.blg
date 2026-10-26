@@ -1,0 +1,46 @@
+This is BibTeX, Version 0.99e (TeX Live 2026)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: Quantum_NeuralNetwork.aux
+The style file: unsrt.bst
+Database file #1: reference.bib
+You've used 16 entries,
+            1791 wiz_defined-function locations,
+            545 strings with 6344 characters,
+and the built_in function-call counts, 3985 in all, are:
+= -- 330
+> -- 213
+< -- 5
++ -- 77
+- -- 61
+* -- 311
+:= -- 643
+add.period$ -- 49
+call.type$ -- 16
+change.case$ -- 14
+chr.to.int$ -- 0
+cite$ -- 16
+duplicate$ -- 169
+empty$ -- 381
+format.name$ -- 61
+if$ -- 870
+int.to.chr$ -- 0
+int.to.str$ -- 16
+missing$ -- 19
+newline$ -- 83
+num.names$ -- 16
+pop$ -- 45
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 63
+stack$ -- 0
+substring$ -- 253
+swap$ -- 36
+text.length$ -- 5
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 0
+while$ -- 35
+width$ -- 18
+write$ -- 179
