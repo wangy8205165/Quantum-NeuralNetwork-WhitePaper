@@ -165,6 +165,47 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Connection to Quantum Neural Networks}{26}{subsection.4.2}\protected@file@percent }
 \newlabel{eq:qnn_fourier_representation}{{4.8}{26}{Connection to Quantum Neural Networks}{equation.4.8}{}}
 \newlabel{eq:qnn_fourier_representation@cref}{{[equation][8][4]4.8}{[1][26][]26}{}{}{}}
+\citation{schuld2021effect}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Quantum Neural Networks as Finite Fourier Series}{27}{subsection.4.3}\protected@file@percent }
+\newlabel{sec:qnn_fourier}{{4.3}{27}{Quantum Neural Networks as Finite Fourier Series}{subsection.4.3}{}}
+\newlabel{sec:qnn_fourier@cref}{{[subsection][3][4]4.3}{[1][27][]27}{}{}{}}
+\@writefile{toc}{\contentsline {paragraph}{Conventions.}{27}{section*.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Circuit model.}{27}{section*.12}\protected@file@percent }
+\newlabel{eq:circuit}{{4.9}{27}{Circuit model}{equation.4.9}{}}
+\newlabel{eq:circuit@cref}{{[equation][9][4]4.9}{[1][27][]27}{}{}{}}
+\newlabel{eq:encoding}{{4.10}{27}{Circuit model}{equation.4.10}{}}
+\newlabel{eq:encoding@cref}{{[equation][10][4]4.10}{[1][27][]27}{}{}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces General structure of the quantum circuits considered in this section: data-independent blocks $W^{(l)}$ alternate with data-encoding gates $S(x)$.}}{28}{figure.caption.13}\protected@file@percent }
+\newlabel{fig:qc_fourier}{{11}{28}{General structure of the quantum circuits considered in this section: data-independent blocks $W^{(l)}$ alternate with data-encoding gates $S(x)$}{figure.caption.13}{}}
+\newlabel{fig:qc_fourier@cref}{{[figure][11][]11}{[1][27][]28}{}{}{}}
+\newlabel{eq:output}{{4.13}{28}{Circuit model}{equation.4.13}{}}
+\newlabel{eq:output@cref}{{[equation][13][4]4.13}{[1][28][]28}{}{}{}}
+\@writefile{toc}{\contentsline {paragraph}{Step 1: Diagonalizing the encoding gate.}{28}{section*.14}\protected@file@percent }
+\newlabel{eq:diag_encoding}{{4.19}{29}{Step 1: Diagonalizing the encoding gate}{equation.4.19}{}}
+\newlabel{eq:diag_encoding@cref}{{[equation][19][4]4.19}{[1][29][]29}{}{}{}}
+\@writefile{toc}{\contentsline {paragraph}{Step 2: A single encoding layer ($L=1$).}{29}{section*.15}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Step 3: Two encoding layers ($L=2$).}{30}{section*.16}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Step 4: General number of encoding layers.}{30}{section*.17}\protected@file@percent }
+\newlabel{eq:coefficients}{{4.31}{31}{Step 4: General number of encoding layers}{equation.4.31}{}}
+\newlabel{eq:coefficients@cref}{{[equation][31][4]4.31}{[1][30][]31}{}{}{}}
+\newlabel{eq:fourier_representation}{{4.33}{31}{Step 4: General number of encoding layers}{equation.4.33}{}}
+\newlabel{eq:fourier_representation@cref}{{[equation][33][4]4.33}{[1][31][]31}{}{}{}}
+\@writefile{toc}{\contentsline {paragraph}{Step 5: Measurement.}{31}{section*.18}\protected@file@percent }
+\newlabel{eq:expectation_sum}{{4.37}{31}{Step 5: Measurement}{equation.4.37}{}}
+\newlabel{eq:expectation_sum@cref}{{[equation][37][4]4.37}{[1][31][]31}{}{}{}}
+\newlabel{eq:pair_coefficients}{{4.42}{32}{Step 5: Measurement}{equation.4.42}{}}
+\newlabel{eq:pair_coefficients@cref}{{[equation][42][4]4.42}{[1][32][]32}{}{}{}}
+\newlabel{eq:f_pairs}{{4.43}{32}{Step 5: Measurement}{equation.4.43}{}}
+\newlabel{eq:f_pairs@cref}{{[equation][43][4]4.43}{[1][32][]32}{}{}{}}
+\@writefile{toc}{\contentsline {paragraph}{Step 6: Frequency spectrum and Fourier coefficients.}{32}{section*.19}\protected@file@percent }
+\newlabel{eq:spectrum}{{4.45}{32}{Step 6: Frequency spectrum and Fourier coefficients}{equation.4.45}{}}
+\newlabel{eq:spectrum@cref}{{[equation][45][4]4.45}{[1][32][]32}{}{}{}}
+\newlabel{eq:fourier_coefficients}{{4.47}{33}{Step 6: Frequency spectrum and Fourier coefficients}{equation.4.47}{}}
+\newlabel{eq:fourier_coefficients@cref}{{[equation][47][4]4.47}{[1][32][]33}{}{}{}}
+\newlabel{eq:qnn_fourier}{{4.48}{33}{Step 6: Frequency spectrum and Fourier coefficients}{equation.4.48}{}}
+\newlabel{eq:qnn_fourier@cref}{{[equation][48][4]4.48}{[1][33][]33}{}{}{}}
+\@writefile{toc}{\contentsline {paragraph}{Roles of the encoding and trainable blocks.}{33}{section*.20}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Example: Pauli-rotation encoding.}{33}{section*.21}\protected@file@percent }
 \bibstyle{unsrt}
 \bibdata{reference}
 \bibcite{lecun2015deep}{1}
@@ -177,13 +218,12 @@
 \bibcite{leshno1993multilayer}{8}
 \bibcite{telgarsky2016benefits}{9}
 \bibcite{mitarai2018quantum}{10}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Quantum Neural Network as a Finite Fourer Series}{27}{subsection.4.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Data-Reuploading and accessible frequencies}{27}{subsection.4.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Expressivity}{27}{subsection.4.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Expressivity and Frequency Expansion}{34}{subsection.4.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}Applications}{34}{section.5}\protected@file@percent }
 \bibcite{benedetti2019parameterized}{11}
 \bibcite{perezsalinas2020data}{12}
 \bibcite{schuld2021effect}{13}
 \bibcite{barenco1995elementary}{14}
 \bibcite{sitzmann2020implicit}{15}
 \bibcite{stein2003fourier}{16}
-\gdef \@abspage@last{29}
+\gdef \@abspage@last{36}

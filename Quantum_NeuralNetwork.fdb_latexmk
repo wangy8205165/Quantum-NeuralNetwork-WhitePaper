@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex Quantum_NeuralNetwork"] 1793046017.07114 "Quantum_NeuralNetwork.aux" "Quantum_NeuralNetwork.bbl" "Quantum_NeuralNetwork" 1793046421.69132 0
+["bibtex Quantum_NeuralNetwork"] 1794513289.51201 "Quantum_NeuralNetwork.aux" "Quantum_NeuralNetwork.bbl" "Quantum_NeuralNetwork" 1794513292.35859 0
   "./reference.bib" 1793044324.82257 5899 e1ce90011979625ab35607e146b327ce ""
   "/usr/local/texlive/2026/texmf-dist/bibtex/bst/base/unsrt.bst" 1292289607 18030 1376b4b231b50c66211e47e42eda2875 ""
-  "Quantum_NeuralNetwork.aux" 1793046421.49542 15404 3d208ed623bec7a742e78259c34906cf "pdflatex"
+  "Quantum_NeuralNetwork.aux" 1794513292.11605 19319 eb5669ec1206be6c81a40dbf32db2fc1 "pdflatex"
   (generated)
   "Quantum_NeuralNetwork.bbl"
   "Quantum_NeuralNetwork.blg"
   (rewritten before read)
-["pdflatex"] 1793046419.04964 "/Users/yixiangwang/Desktop/CMU/Quantum_AI/QML/qnn/Quantum_NeuralNetwork.tex" "Quantum_NeuralNetwork.pdf" "Quantum_NeuralNetwork" 1793046421.69145 0
-  "/Users/yixiangwang/Desktop/CMU/Quantum_AI/QML/qnn/Quantum_NeuralNetwork.tex" 1793046418.85479 73132 3319af243a15762c9a9e3eadf56408ed ""
+["pdflatex"] 1794513289.59963 "/Users/yixiangwang/Desktop/CMU/Quantum_AI/QML/qnn/Quantum_NeuralNetwork.tex" "Quantum_NeuralNetwork.pdf" "Quantum_NeuralNetwork" 1794513292.35875 0
+  "/Users/yixiangwang/Desktop/CMU/Quantum_AI/QML/qnn/Quantum_NeuralNetwork.tex" 1794513286.23539 93046 599413073ea7e08bcba20ef9e047a124 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc" 1254269338 2375 baa924870cfb487815765f9094cf3728 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc" 1202520719 3486 c7eadf5dcc57b3b2d11736679f6636ba ""
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc" 1202520719 2405 5dcf2c1b967ee25cc46c58cd52244aed ""
@@ -46,6 +46,7 @@
   "/usr/local/texlive/2026/texmf-dist/fonts/tfm/public/lm/rm-lmr8.tfm" 1254269338 11864 309fd7f43e4a0ba39f6f7644d76e8edf ""
   "/usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb" 1248133631 34694 ad62b13721ee8eda1dcc8993c8bd7041 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmbx12.pfb" 1255129361 116908 1fca96723793882c2e0160350c192fc8 ""
+  "/usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmbx6.pfb" 1255129361 123928 f1dd00d394b594999dc15fd8014bed65 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmbx8.pfb" 1255129361 125241 1d6de6a4ab0d08571b46009b6426dace ""
   "/usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmex10.pfb" 1254269338 23055 2e5b42921de910eaa97b85df04ca4891 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmmi12.pfb" 1254269338 30696 2654571912f9cd384da9f7cb8a60c568 ""
@@ -251,10 +252,10 @@
   "/usr/local/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1788970897 5573038 b99aad5e4898a9034e953632f940512b ""
   "/usr/local/texlive/2026/texmf-var/web2c/pdftex/pdflatex.fmt" 1774209607 3636776 dc5fa9b6b1453b9d196cd42edf876004 ""
   "/usr/local/texlive/2026/texmf.cnf" 1774209515 577 648cd9f92f9c0eac486f4c71c85cfbbe ""
-  "Quantum_NeuralNetwork.aux" 1793046421.49542 15404 3d208ed623bec7a742e78259c34906cf "pdflatex"
-  "Quantum_NeuralNetwork.bbl" 1793046017.13228 3688 70c89b679f31e5d40c4b37c84c961a72 "bibtex Quantum_NeuralNetwork"
-  "Quantum_NeuralNetwork.out" 1793046421.49636 5525 dad4113aeac5a8db2e07bd86e34454af "pdflatex"
-  "Quantum_NeuralNetwork.tex" 1793046418.85479 73132 3319af243a15762c9a9e3eadf56408ed ""
+  "Quantum_NeuralNetwork.aux" 1794513292.11605 19319 eb5669ec1206be6c81a40dbf32db2fc1 "pdflatex"
+  "Quantum_NeuralNetwork.bbl" 1794513289.59704 3688 70c89b679f31e5d40c4b37c84c961a72 "bibtex Quantum_NeuralNetwork"
+  "Quantum_NeuralNetwork.out" 1794513292.11729 5473 9aab7e2ed2deadacc56756727f3297aa "pdflatex"
+  "Quantum_NeuralNetwork.tex" 1794513286.23539 93046 599413073ea7e08bcba20ef9e047a124 ""
   "figures/bell.png" 1791325615.48404 6512 7c698f8355998718c3079de3f1ec50b0 ""
   "figures/bloch.png" 1793045676.05741 509430 387a1d4bffa8bf8b0e98e4aba0176397 ""
   "figures/cnot.png" 1791336303.76098 10485 d31c5bbf06f5eee72405815eb24baa7c ""
@@ -263,6 +264,7 @@
   "figures/hidden3_1.png" 1791863781.72282 12920 a0c8f3531169c9503e0283ae843fb320 ""
   "figures/hidden3_2.png" 1792007321.88506 19832 60c75cb6a6076c6f080d0ba232bd818d ""
   "figures/mlps.png" 1793043613.8253 977229 b27af0f0de01ef1a8f998482eee0fee2 ""
+  "figures/qc_fourier.png" 1794453307.82052 151466 3e0b36d235bfc5036712ea577cabcf5c ""
   "figures/qnn_3.png" 1791861240.16704 32819 e346d3341d9919eb6ca490776c00c8e2 ""
   "figures/relu.png" 1793042933.74681 1072681 8a8dee1a59511555e71e9029931f1af2 ""
   (generated)

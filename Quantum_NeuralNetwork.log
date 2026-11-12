@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.22)  26 OCT 2026 16:26
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.22)  12 NOV 2026 14:54
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -847,7 +847,14 @@ Package translations Info: No language package found. I am going to use `english
 LaTeX Font Info:    Trying to load font information for T1+lmr on input line 60.
 (/usr/local/texlive/2026/texmf-dist/tex/latex/lm/t1lmr.fd
 File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-) (./Quantum_NeuralNetwork.aux)
+) (./Quantum_NeuralNetwork.aux
+
+LaTeX Warning: Label `eq:fourier_coefficients' multiply defined.
+
+
+LaTeX Warning: Label `eq:fourier_coefficients@cref' multiply defined.
+
+)
 \openout1 = `Quantum_NeuralNetwork.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 60.
@@ -1050,7 +1057,13 @@ Overfull \hbox (9.42567pt too wide) detected at line 1001
 [][][][][][]
  []
 
-[20 <./figures/hidden3_2.png>] [21] [22] [23] [24] [25] [26] (./Quantum_NeuralNetwork.bbl [27]) [28] (./Quantum_NeuralNetwork.aux)
+[20 <./figures/hidden3_2.png>] [21] [22] [23] [24] [25] [26]
+<figures/qc_fourier.png, id=415, 564.1075pt x 469.755pt>
+File: figures/qc_fourier.png Graphic file (type png)
+<use figures/qc_fourier.png>
+Package pdftex.def Info: figures/qc_fourier.png  used on input line 1366.
+(pdftex.def)             Requested size: 234.8775pt x 195.5898pt.
+ [27] [28 <./figures/qc_fourier.png>] [29] [30] [31] [32] [33] (./Quantum_NeuralNetwork.bbl [34]) [35] (./Quantum_NeuralNetwork.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
@@ -1059,22 +1072,25 @@ L3 programming layer <2026-01-19>
 
 LaTeX Warning: There were undefined references.
 
+
+LaTeX Warning: There were multiply-defined labels.
+
 Package rerunfilecheck Info: File `Quantum_NeuralNetwork.out' has not changed.
-(rerunfilecheck)             Checksum: DAD4113AEAC5A8DB2E07BD86E34454AF;5525.
+(rerunfilecheck)             Checksum: 9AAB7E2ED2DEADACC56756727F3297AA;5473.
  ) 
 Here is how much of TeX's memory you used:
- 37606 strings out of 467525
- 769818 string characters out of 5418982
+ 37724 strings out of 467525
+ 771485 string characters out of 5418982
  1253287 words of memory out of 5000000
- 65592 multiletter control sequences out of 15000+600000
- 694602 words of font info for 169 fonts, out of 8000000 for 9000
+ 65625 multiletter control sequences out of 15000+600000
+ 695584 words of font info for 180 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  84i,13n,108p,1997b,1175s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmbx8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmex10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmmi12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmmi6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmr12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmr17.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmr6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmr8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmri12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmsy6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on Quantum_NeuralNetwork.pdf (29 pages, 2082720 bytes).
+</usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmbx6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmbx8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmex10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmmi12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmmi6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmr12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmr17.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmr6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmr8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmri12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmsy6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on Quantum_NeuralNetwork.pdf (36 pages, 2261613 bytes).
 PDF statistics:
- 533 PDF objects out of 1000 (max. 8388607)
- 445 compressed objects within 5 object streams
- 158 named destinations out of 1000 (max. 500000)
- 35071 words of extra memory for PDF output out of 35830 (max. 10000000)
+ 653 PDF objects out of 1000 (max. 8388607)
+ 553 compressed objects within 6 object streams
+ 221 named destinations out of 1000 (max. 500000)
+ 35076 words of extra memory for PDF output out of 35830 (max. 10000000)
 

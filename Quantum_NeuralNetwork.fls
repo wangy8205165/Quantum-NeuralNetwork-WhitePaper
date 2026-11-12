@@ -481,6 +481,11 @@ INPUT ./figures/hidden3_2.png
 INPUT ./figures/hidden3_2.png
 INPUT ./figures/hidden3_2.png
 INPUT ./figures/hidden3_2.png
+INPUT ./figures/qc_fourier.png
+INPUT ./figures/qc_fourier.png
+INPUT ./figures/qc_fourier.png
+INPUT ./figures/qc_fourier.png
+INPUT ./figures/qc_fourier.png
 INPUT ./Quantum_NeuralNetwork.bbl
 INPUT ./Quantum_NeuralNetwork.bbl
 INPUT Quantum_NeuralNetwork.bbl
@@ -488,6 +493,7 @@ INPUT Quantum_NeuralNetwork.aux
 INPUT ./Quantum_NeuralNetwork.out
 INPUT ./Quantum_NeuralNetwork.out
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmbx12.pfb
+INPUT /usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmbx6.pfb
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmbx8.pfb
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmex10.pfb
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmmi12.pfb
