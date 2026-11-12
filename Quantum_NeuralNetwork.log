@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.22)  12 NOV 2026 14:54
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.22)  12 NOV 2026 15:45
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -854,6 +854,18 @@ LaTeX Warning: Label `eq:fourier_coefficients' multiply defined.
 
 LaTeX Warning: Label `eq:fourier_coefficients@cref' multiply defined.
 
+
+LaTeX Warning: Label `fig:5-qubit' multiply defined.
+
+
+LaTeX Warning: Label `fig:5-qubit@cref' multiply defined.
+
+
+LaTeX Warning: Label `eq:L-encoding' multiply defined.
+
+
+LaTeX Warning: Label `eq:L-encoding@cref' multiply defined.
+
 )
 \openout1 = `Quantum_NeuralNetwork.aux'.
 
@@ -971,7 +983,7 @@ Package hyperref Info: Link coloring ON on input line 60.
  [1
 
 {/usr/local/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}]
-<figures/mlps.png, id=116, 3067.46pt x 2188.175pt>
+<figures/mlps.png, id=144, 3067.46pt x 2188.175pt>
 File: figures/mlps.png Graphic file (type png)
 <use figures/mlps.png>
 Package pdftex.def Info: figures/mlps.png  used on input line 98.
@@ -986,43 +998,43 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has b
                    \relax 
 l.112 \end{equation}
                      [1{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc} <./figures/mlps.png>]
-<figures/relu.png, id=131, 1955.305pt x 1650.165pt>
+<figures/relu.png, id=159, 1955.305pt x 1650.165pt>
 File: figures/relu.png Graphic file (type png)
 <use figures/relu.png>
 Package pdftex.def Info: figures/relu.png  used on input line 158.
 (pdftex.def)             Requested size: 234.8775pt x 198.21269pt.
  [2{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}] [3 <./figures/relu.png>] [4]
-<figures/bloch.png, id=181, 3854.4pt x 4081.2475pt>
+<figures/bloch.png, id=209, 3854.4pt x 4081.2475pt>
 File: figures/bloch.png Graphic file (type png)
 <use figures/bloch.png>
 Package pdftex.def Info: figures/bloch.png  used on input line 273.
 (pdftex.def)             Requested size: 187.89914pt x 198.90552pt.
  [5 <./figures/bloch.png>] [6]
-<figures/bell.png, id=205, 282.05376pt x 174.6525pt>
+<figures/bell.png, id=233, 282.05376pt x 174.6525pt>
 File: figures/bell.png Graphic file (type png)
 <use figures/bell.png>
 Package pdftex.def Info: figures/bell.png  used on input line 441.
 (pdftex.def)             Requested size: 234.8775pt x 145.44122pt.
  [7] [8 <./figures/bell.png>]
-<figures/qnn_3.png, id=232, 920.43875pt x 304.13625pt>
+<figures/qnn_3.png, id=260, 920.43875pt x 304.13625pt>
 File: figures/qnn_3.png Graphic file (type png)
 <use figures/qnn_3.png>
 Package pdftex.def Info: figures/qnn_3.png  used on input line 540.
 (pdftex.def)             Requested size: 375.80544pt x 124.1769pt.
  [9 <./figures/qnn_3.png>] [10]
-<figures/encode_3.png, id=256, 217.81375pt x 238.8925pt>
+<figures/encode_3.png, id=284, 217.81375pt x 238.8925pt>
 File: figures/encode_3.png Graphic file (type png)
 <use figures/encode_3.png>
 Package pdftex.def Info: figures/encode_3.png  used on input line 606.
 (pdftex.def)             Requested size: 93.94957pt x 103.0389pt.
  [11 <./figures/encode_3.png>] [12] [13]
-<figures/hidden3_1.png, id=281, 282.05376pt x 238.8925pt>
+<figures/hidden3_1.png, id=309, 282.05376pt x 238.8925pt>
 File: figures/hidden3_1.png Graphic file (type png)
 <use figures/hidden3_1.png>
 Package pdftex.def Info: figures/hidden3_1.png  used on input line 749.
 (pdftex.def)             Requested size: 140.92793pt x 119.3621pt.
  [14]
-<figures/cnot.png, id=290, 347.2975pt x 174.6525pt>
+<figures/cnot.png, id=318, 347.2975pt x 174.6525pt>
 File: figures/cnot.png Graphic file (type png)
 <use figures/cnot.png>
 Package pdftex.def Info: figures/cnot.png  used on input line 769.
@@ -1031,7 +1043,7 @@ Package pdftex.def Info: figures/cnot.png  used on input line 769.
 
 LaTeX Warning: Reference `eq:entangle' on page 16 undefined on input line 802.
 
-<figures/entangle3.png, id=300, 411.5375pt x 238.8925pt>
+<figures/entangle3.png, id=329, 411.5375pt x 238.8925pt>
 File: figures/entangle3.png Graphic file (type png)
 <use figures/entangle3.png>
 Package pdftex.def Info: figures/entangle3.png  used on input line 826.
@@ -1047,7 +1059,7 @@ Overfull \hbox (54.36029pt too wide) detected at line 893
  []
 
 [17] [18]
-<figures/hidden3_2.png, id=336, 476.78125pt x 238.8925pt>
+<figures/hidden3_2.png, id=364, 476.78125pt x 238.8925pt>
 File: figures/hidden3_2.png Graphic file (type png)
 <use figures/hidden3_2.png>
 Package pdftex.def Info: figures/hidden3_2.png  used on input line 978.
@@ -1058,12 +1070,26 @@ Overfull \hbox (9.42567pt too wide) detected at line 1001
  []
 
 [20 <./figures/hidden3_2.png>] [21] [22] [23] [24] [25] [26]
-<figures/qc_fourier.png, id=415, 564.1075pt x 469.755pt>
+<figures/qc_fourier.png, id=444, 564.1075pt x 469.755pt>
 File: figures/qc_fourier.png Graphic file (type png)
 <use figures/qc_fourier.png>
 Package pdftex.def Info: figures/qc_fourier.png  used on input line 1366.
 (pdftex.def)             Requested size: 234.8775pt x 195.5898pt.
- [27] [28 <./figures/qc_fourier.png>] [29] [30] [31] [32] [33] (./Quantum_NeuralNetwork.bbl [34]) [35] (./Quantum_NeuralNetwork.aux)
+ [27] [28 <./figures/qc_fourier.png>] [29] [30] [31] [32] [33] [34]
+<figures/5-qubit.png, id=552, 1626.075pt x 603.25375pt>
+File: figures/5-qubit.png Graphic file (type png)
+<use figures/5-qubit.png>
+Package pdftex.def Info: figures/5-qubit.png  used on input line 1633.
+(pdftex.def)             Requested size: 281.85587pt x 104.55844pt.
+ [35 <./figures/5-qubit.png>] [36] [37] [38] [39]
+File: figures/5-qubit.png Graphic file (type png)
+<use figures/5-qubit.png>
+Package pdftex.def Info: figures/5-qubit.png  used on input line 1804.
+(pdftex.def)             Requested size: 281.85587pt x 104.55844pt.
+ [40] [41] [42]
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10.95> on input line 1917.
+ (./Quantum_NeuralNetwork.bbl [43]) [44] [45] (./Quantum_NeuralNetwork.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
@@ -1076,21 +1102,21 @@ LaTeX Warning: There were undefined references.
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `Quantum_NeuralNetwork.out' has not changed.
-(rerunfilecheck)             Checksum: 9AAB7E2ED2DEADACC56756727F3297AA;5473.
+(rerunfilecheck)             Checksum: 352C90496725D4FDDFC03D9E5682E57D;7225.
  ) 
 Here is how much of TeX's memory you used:
- 37724 strings out of 467525
- 771485 string characters out of 5418982
+ 37923 strings out of 467525
+ 774503 string characters out of 5418982
  1253287 words of memory out of 5000000
- 65625 multiletter control sequences out of 15000+600000
- 695584 words of font info for 180 fonts, out of 8000000 for 9000
+ 65687 multiletter control sequences out of 15000+600000
+ 708721 words of font info for 216 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  84i,13n,108p,1997b,1175s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmbx6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmbx8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmex10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmmi12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmmi6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmr12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmr17.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmr6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmr8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmri12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmsy6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on Quantum_NeuralNetwork.pdf (36 pages, 2261613 bytes).
+</usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmbx6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmbx8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmex10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmmi12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmmi6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmr12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmr17.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmr6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmr8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmri12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmsy6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on Quantum_NeuralNetwork.pdf (46 pages, 2403462 bytes).
 PDF statistics:
- 653 PDF objects out of 1000 (max. 8388607)
- 553 compressed objects within 6 object streams
- 221 named destinations out of 1000 (max. 500000)
- 35076 words of extra memory for PDF output out of 35830 (max. 10000000)
+ 838 PDF objects out of 1000 (max. 8388607)
+ 719 compressed objects within 8 object streams
+ 300 named destinations out of 1000 (max. 500000)
+ 41281 words of extra memory for PDF output out of 42996 (max. 10000000)
 

@@ -7,7 +7,7 @@
 \citation{scarselli2009graph}
 \citation{nielsen2010quantum}
 \citation{goodfellow2016deep}
-\@writefile{toc}{\contentsline {section}{\numberline {1}Background}{1}{section.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {2}Review of Classical Neural Networks}{1}{section.2}\protected@file@percent }
 \newlabel{sec:classical_nn}{{2}{1}{Review of Classical Neural Networks}{section.2}{}}
 \newlabel{sec:classical_nn@cref}{{[section][2][]2}{[1][1][]1}{}{}{}}
@@ -206,11 +206,63 @@
 \newlabel{eq:qnn_fourier@cref}{{[equation][48][4]4.48}{[1][33][]33}{}{}{}}
 \@writefile{toc}{\contentsline {paragraph}{Roles of the encoding and trainable blocks.}{33}{section*.20}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Example: Pauli-rotation encoding.}{33}{section*.21}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Expressivity and Frequency Expansion}{34}{subsection.4.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.4.1}Increasing Encoding Qubits}{34}{subsubsection.4.4.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {12}{\ignorespaces Architecture of the five-qubit QNN, consisting of a single encoding layer followed by two layers of parameterized rotation gates, each followed by a CNOT ring.}}{35}{figure.caption.22}\protected@file@percent }
+\newlabel{fig:5-qubit}{{12}{35}{Architecture of the five-qubit QNN, consisting of a single encoding layer followed by two layers of parameterized rotation gates, each followed by a CNOT ring}{figure.caption.22}{}}
+\newlabel{fig:5-qubit@cref}{{[figure][12][]12}{[1][35][]35}{}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.4.2}Data-Reuploading}{35}{subsubsection.4.4.2}\protected@file@percent }
+\newlabel{eq:L-encoding}{{4.57}{35}{Data-Reuploading}{equation.4.57}{}}
+\newlabel{eq:L-encoding@cref}{{[equation][57][4]4.57}{[1][35][]35}{}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.4.3}Encoding High Frequency}{36}{subsubsection.4.4.3}\protected@file@percent }
+\newlabel{eq:L-encoding-coefficient}{{4.67}{37}{Encoding High Frequency}{equation.4.67}{}}
+\newlabel{eq:L-encoding-coefficient@cref}{{[equation][67][4]4.67}{[1][37][]37}{}{}{}}
+\citation{schuld2021effect}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Expressivity and Frequency Expansion}{38}{subsection.4.5}\protected@file@percent }
+\newlabel{sec:freq_expansion}{{4.5}{38}{Expressivity and Frequency Expansion}{subsection.4.5}{}}
+\newlabel{sec:freq_expansion@cref}{{[subsection][5][4]4.5}{[1][38][]38}{}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.5.1}Parallel Encoding: Increasing the Number of Encoding Qubits}{39}{subsubsection.4.5.1}\protected@file@percent }
+\newlabel{sec:parallel_encoding}{{4.5.1}{39}{Parallel Encoding: Increasing the Number of Encoding Qubits}{subsubsection.4.5.1}{}}
+\newlabel{sec:parallel_encoding@cref}{{[subsubsection][1][4,5]4.5.1}{[1][38][]39}{}{}{}}
+\@writefile{toc}{\contentsline {paragraph}{One qubit.}{39}{section*.23}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Two qubits.}{39}{section*.24}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{$N$ qubits.}{39}{section*.25}\protected@file@percent }
+\newlabel{eq:parallel_spectrum}{{4.78}{39}{$N$ qubits}{equation.4.78}{}}
+\newlabel{eq:parallel_spectrum@cref}{{[equation][78][4]4.78}{[1][39][]39}{}{}{}}
+\@writefile{toc}{\contentsline {paragraph}{Example.}{40}{section*.26}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {13}{\ignorespaces Architecture of the five-qubit QNN, consisting of a single encoding layer followed by two layers of parameterized rotation gates, each followed by a CNOT ring.}}{40}{figure.caption.27}\protected@file@percent }
+\newlabel{fig:5-qubit}{{13}{40}{Architecture of the five-qubit QNN, consisting of a single encoding layer followed by two layers of parameterized rotation gates, each followed by a CNOT ring}{figure.caption.27}{}}
+\newlabel{fig:5-qubit@cref}{{[figure][13][]13}{[1][40][]40}{}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.5.2}Serial Encoding: Data Re-uploading}{40}{subsubsection.4.5.2}\protected@file@percent }
+\newlabel{sec:reuploading}{{4.5.2}{40}{Serial Encoding: Data Re-uploading}{subsubsection.4.5.2}{}}
+\newlabel{sec:reuploading@cref}{{[subsubsection][2][4,5]4.5.2}{[1][40][]40}{}{}{}}
+\newlabel{eq:L-encoding}{{4.79}{40}{Serial Encoding: Data Re-uploading}{equation.4.79}{}}
+\newlabel{eq:L-encoding@cref}{{[equation][79][4]4.79}{[1][40][]40}{}{}{}}
+\newlabel{eq:spectrum_from_sums}{{4.81}{40}{Serial Encoding: Data Re-uploading}{equation.4.81}{}}
+\newlabel{eq:spectrum_from_sums@cref}{{[equation][81][4]4.81}{[1][40][]40}{}{}{}}
+\@writefile{toc}{\contentsline {paragraph}{Two encoding layers.}{41}{section*.28}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{$L$ encoding layers.}{41}{section*.29}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Comparison with parallel encoding.}{41}{section*.30}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.5.3}Accessing High Frequencies through Input Scaling}{41}{subsubsection.4.5.3}\protected@file@percent }
+\newlabel{sec:input_scaling}{{4.5.3}{41}{Accessing High Frequencies through Input Scaling}{subsubsection.4.5.3}{}}
+\newlabel{sec:input_scaling@cref}{{[subsubsection][3][4,5]4.5.3}{[1][41][]41}{}{}{}}
+\@writefile{toc}{\contentsline {paragraph}{Two qubits.}{41}{section*.31}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{$N$ qubits.}{42}{section*.32}\protected@file@percent }
+\newlabel{eq:scaled_parallel_spectrum}{{4.89}{42}{$N$ qubits}{equation.4.89}{}}
+\newlabel{eq:scaled_parallel_spectrum@cref}{{[equation][89][4]4.89}{[1][42][]42}{}{}{}}
+\@writefile{toc}{\contentsline {paragraph}{The frequency budget.}{42}{section*.33}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Single qubit with scaled re-uploading.}{42}{section*.34}\protected@file@percent }
 \bibstyle{unsrt}
 \bibdata{reference}
 \bibcite{lecun2015deep}{1}
 \bibcite{vaswani2017attention}{2}
 \bibcite{scarselli2009graph}{3}
+\@writefile{toc}{\contentsline {paragraph}{Example.}{43}{section*.35}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Summary.}{43}{section*.36}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Frequency spectra of the encoding strategies discussed in this section, for Pauli-rotation encodings. In the scaled cases, $\nu _q, \nu _l \in \{-1, 0, 1\}$.}}{43}{table.caption.37}\protected@file@percent }
+\newlabel{tab:encoding_strategies}{{1}{43}{Frequency spectra of the encoding strategies discussed in this section, for Pauli-rotation encodings. In the scaled cases, $\nu _q, \nu _l \in \{-1, 0, 1\}$}{table.caption.37}{}}
+\newlabel{tab:encoding_strategies@cref}{{[table][1][]1}{[1][43][]43}{}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Applications}{43}{section.5}\protected@file@percent }
 \bibcite{nielsen2010quantum}{4}
 \bibcite{goodfellow2016deep}{5}
 \bibcite{rumelhart1986learning}{6}
@@ -218,12 +270,10 @@
 \bibcite{leshno1993multilayer}{8}
 \bibcite{telgarsky2016benefits}{9}
 \bibcite{mitarai2018quantum}{10}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Expressivity and Frequency Expansion}{34}{subsection.4.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {5}Applications}{34}{section.5}\protected@file@percent }
 \bibcite{benedetti2019parameterized}{11}
 \bibcite{perezsalinas2020data}{12}
 \bibcite{schuld2021effect}{13}
 \bibcite{barenco1995elementary}{14}
 \bibcite{sitzmann2020implicit}{15}
 \bibcite{stein2003fourier}{16}
-\gdef \@abspage@last{36}
+\gdef \@abspage@last{46}

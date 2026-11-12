@@ -76,7 +76,7 @@
     \vfill
 \end{titlepage}
 
-\section{Background}
+\section{Introduction}
 Classical machine learning has gained huge success in recent years especially deep learning models such as multi-layer perceptrons (MLP), Convolution Neural Networks (CNN), Recurrent Neural Netowrks (RNN), Transformers, and Graph Neural Netowrks (GNN) \cite{lecun2015deep,vaswani2017attention,scarselli2009graph}. These architectures, due to its inductive bias and with development of hardware accelerators, have been applied in many fieds such as image processing, audio-speech processing, language modeling, and fraud detection.
 % Citation needed: the following compute-growth and data-center spending claims
 % require a defined time period and quantitative evidence.
@@ -1599,9 +1599,335 @@ f(x) = \sum_{\omega=-L}^{L} c_\omega\, e^{i\omega x}.
 A model that encodes $x$ $L$ times through a single-qubit Pauli rotation is thus a truncated Fourier series of degree $L$. In particular, with a single encoding layer ($L = 1$), the model reduces to $f(x) = c_0 + 2|c_1|\cos(x + \arg c_1)$, a single sinusoid, irrespective of how expressive the trainable blocks are. Accessing higher frequencies requires encoding the input repeatedly, either sequentially (data re-uploading, larger $L$) or in parallel; for instance, applying $R_X(x)$ simultaneously to $N$ qubits gives $H = \frac{1}{2}\sum_{q=1}^{N} X_q$, whose eigenvalues range over $\{-\frac{N}{2}, \ldots, \frac{N}{2}\}$, so a single such layer already yields the spectrum $\{-N, \ldots, N\}$.
 
 \subsection{Expressivity and Frequency Expansion}
+Now, we have seen that the frequency component QNN can learn depends on the encoding Hamiltonian. However, the purpose of deep learning is to approximate any functions. For an arbitrary function, the frequency components are also arbitrary. Then, we need to expand and enrich the frequency spectrum QNN can learn. In another word, we must make sure QNN can learn an arbitrary combination of frequency independent in order to make it an Universal Function Approximator. The question is how do we do it? There are 2 ways: (1) Encoding inputs using more qubits and (2) Encoding the input more times on the same qubits. Let's see how it works in the following. 
+
+\subsubsection{Increasing Encoding Qubits}
+As established above, the frequencies accessible to the model are determined by the differences between the eigenvalues of the encoding Hamiltonian. Consequently, the frequency spectrum can be enlarged either by increasing the number of qubits on which the input is encoded (the width) or by increasing the number of times the input is re-uploaded (the depth). The following example illustrates the former.
+
+\textbf{Example.} Consider first a single encoding qubit. The encoding gate is given by
+\begin{equation}
+S_1(x) = e^{-ixH}, \qquad H = \frac{1}{2}X = \frac{1}{2}\begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix},
+\end{equation}
+where $X$ denotes the Pauli-$X$ operator. The eigenvalues of $H$ are $\lambda(H) = \{-\tfrac{1}{2}, \tfrac{1}{2}\}$, and the resulting frequency spectrum, obtained from all pairwise eigenvalue differences, is $\Omega = \{-1, 0, 1\}$. If the number of encoding qubits is increased to two, with $H_1 = H_2 = \tfrac{1}{2}X$ acting on the respective qubits, the encoding becomes
+\begin{equation}
+S_2(x) = e^{-ixH_2} \otimes e^{-ixH_1} = e^{-ix\left(H_2 \otimes I + I \otimes H_1\right)},
+\end{equation}
+where the second equality holds because $H_2 \otimes I$ and $I \otimes H_1$ commute. The effective encoding Hamiltonian is therefore
+\begin{equation}
+H = \frac{1}{2}\left(X \otimes I + I \otimes X\right),
+\end{equation}
+whose distinct eigenvalues are $\lambda(H) = \{-1, 0, 1\}$, yielding the frequency spectrum $\Omega = \{-2, -1, 0, 1, 2\}$. More generally, for $N$ qubits, each encoded exactly once, the distinct eigenvalues of the encoding Hamiltonian are
+\begin{equation}
+\lambda_k(H) = \frac{N}{2} - k, \qquad k = 0, 1, \ldots, N,
+\end{equation}
+and the corresponding frequency spectrum is
+\begin{equation}
+\Omega(H) = \{-N, -N+1, \ldots, -1, 0, 1, \ldots, N-1, N\}.
+\end{equation}
+Hence, $N$ encoding qubits give access to $2N+1$ integer frequencies. Since the spectrum is symmetric about zero and the model output is real-valued, this corresponds to $N+1$ independent non-negative frequencies, namely $\{0, 1, \ldots, N\}$.
+
+An example is shown in Figure~\ref{fig:5-qubit}. The unscaled input $x$ is encoded once Each trainable layer consists of parameterized single-qubit rotations $R_X$, $R_Y$, and $R_Z$, followed by a ring of CNOT gates that couples each qubit to its neighbor, with the last qubit connected back to the first, thereby generating entanglement across the register. Theoretically, the accessible frequencies are $\{0,\pm1,\pm2,\pm3,\pm4,\pm5\}$. 
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/5-qubit.png}
+\caption{Architecture of the five-qubit QNN, consisting of a single encoding layer followed by two layers of parameterized rotation gates, each followed by a CNOT ring.}
+\label{fig:5-qubit}
+\end{figure}
+
+\subsubsection{Data-Reuploading}
+Now, a natural question rises. If we are limited on the budget of qubits, and only has 1, can the circuit still learn multiple frequencies? The answer is Yes and the approach is called \textbf{Data-Reuploading}, which simply is encoding the same $x$ multiple times on a single qubit. 
+\begin{equation}
+U(x)=W(\theta_1)S^1(x)W(\theta_2)S^2(x)W(\theta_3)S(x)\cdots W(\theta_L)S^L(x)M
+\label{eq:L-encoding}
+\end{equation}
+Let's say we encode $x$ twice on a qubit, then we have 2 encoding hamiltonians as follows
+
+\begin{equation}
+\begin{aligned}
+H_1 &= H_2 = \frac{1}{2}X = \frac{1}{2}
+\begin{bmatrix}0 & 1\\1 & 0 \end{bmatrix},\\
+\operatorname{spec}(H_1)
+&= \operatorname{spec}(H_2) = \left\{-\frac{1}{2},\frac{1}{2}\right\},\\
+\Lambda &= \left\{\lambda_{j_1}^{(1)}+\lambda_{j_2}^{(2)}
+\;\middle|\; j_1,j_2\in\{0,1\} \right\}
+= \{-1,0,1\},\\
+\Omega &= \left\{\sum_{\ell=1}^{2}\left(\lambda_{j_\ell}^{(\ell)}-\lambda_{k_\ell}^{(\ell)}\right)\;\middle|\;j_\ell,k_\ell\in\{0,1\}\right\}\\
+&= \left\{\lambda-\lambda'\;\middle|\;\lambda,\lambda'\in\Lambda\right\}\\
+&= \{-2,-1,0,1,2\}.
+\end{aligned}
+\end{equation}
+
+Where $j,k$ are the independent indexes. If we generalize to $L$ encodings as shown in Equation~\ref{eq:L-encoding}, we have
+\begin{equation}
+H_{1,\cdots,L}=\{-\frac{1}{2},\frac{1}{2}\}
+\end{equation}
+The set of all possible sums of eigenvalues across the $L$
+encoding layers is given by
+\begin{equation}
+\begin{aligned}
+\Lambda(H_1,\ldots,H_L)&=\left\{\sum_{l=1}^{L}\lambda_{j_l}^{(l)}\;\middle|\;
+\lambda_{j_l}^{(l)}\in\operatorname{spec}(H_l)\right\}\\
+&=\left\{-\frac{L}{2},-\frac{L}{2}+1,\ldots,\frac{L}{2}\right\},
+\end{aligned}
+\end{equation}
+Then, accessible frequencies are
+\begin{equation}
+\Omega=\Lambda_J-\lambda_K=\{0,\pm1,\pm2,\cdots,\pm L\}
+\end{equation}
+
+\subsubsection{Encoding High Frequency}
+So far have focused on target functions that contain only low frequencies. In many applications, however, high-frequency components must also be captured. Under the encoding scheme considered previously, in which $x$ is encoded once on each of $N$ qubits, the largest accessible frequency is $N$; a target containing the frequency $\omega = 1000$ would therefore require 1000 qubits. This requirement can be avoided by multiplying the input $x$ by a constant coefficient before it is encoded.
+
+\textbf{Example.} Consider a two-qubit QNN in which $x$ is encoded once on each qubit. As shown previously, the accessible frequencies are $\{-2, -1, 0, 1, 2\}$. If the inputs to the two qubits are instead scaled by coefficients $a, b \in \mathbb{R}$, the encoding becomes
+\begin{equation}
+S(x) = e^{-iaxH_1} \otimes e^{-ibxH_2} = e^{-ix\left(aH_1 \otimes I + I \otimes bH_2\right)}, \qquad H_1 = H_2 = \frac{1}{2}X,
+\end{equation}
+so that the effective encoding Hamiltonian is
+\begin{equation}
+H = aH_1 \otimes I + I \otimes bH_2.
+\end{equation}
+Its eigenvalues are
+\begin{equation}
+\lambda(H) = \left\{ \frac{a+b}{2},\ \frac{a-b}{2},\ \frac{-a+b}{2},\ \frac{-a-b}{2} \right\},
+\end{equation}
+and the accessible frequencies are therefore
+\begin{equation}
+\Omega = \left\{ 0,\ \pm a,\ \pm b,\ \pm(a+b),\ \pm(a-b) \right\}.
+\end{equation}
+High frequencies thus become accessible without increasing the number of qubits. For instance, the frequency $\omega = 1000$ is accessible if $a = 1000$, or if $a$ and $b$ are chosen such that $a + b = 1000$ or $a - b = 1000$.
+
+The same argument extends to $N$ qubits, where the $j$-th qubit encodes $a_j x$. The encoding Hamiltonian, its eigenvalues, and the resulting frequency spectrum are
+\begin{equation}
+\begin{aligned}
+H &= \frac{1}{2}\sum_{j=1}^{N} a_j X_j, \\
+\lambda &= \frac{1}{2}\sum_{j=1}^{N} \epsilon_j a_j, \qquad \epsilon_j \in \{-1, 1\}, \\
+\Omega &= \left\{ \sum_{j=1}^{N} m_j a_j \;\middle|\; m_j \in \{-1, 0, 1\} \right\},
+\end{aligned}
+\end{equation}
+where $X_j$ denotes the Pauli-$X$ operator acting on the $j$-th qubit. The scaled encoding used in the previous experiments corresponds to $N = 5$ and $a_j = j$, for which $\Omega = \{-15, \ldots, 15\}$.
+
+High frequencies can also be accessed with a single qubit by re-uploading the input several times, with each encoding scaled by its own coefficient. For a single-qubit QNN with $L$ re-uploading layers, the circuit is
+\begin{equation}
+U(x) = W(\theta_{L+1})\, S^{(L)}(x)\, W(\theta_L) \cdots W(\theta_2)\, S^{(1)}(x)\, W(\theta_1),
+\label{eq:L-encoding-coefficient}
+\end{equation}
+where each $W(\theta_l)$ is a trainable block, and the model output is $f(x) = \langle 0 | U^\dagger(x)\, M\, U(x) | 0 \rangle$ for an observable $M$. The $l$-th encoding unitary is
+\begin{equation}
+S^{(l)}(x) = R_X(s_l x) = e^{-ixH_l}, \qquad H_l = \frac{s_l}{2}X,
+\end{equation}
+where $s_l \in \mathbb{R}$ denotes the encoding coefficient of the $l$-th layer. The eigenvalues of $H_l$ are
+\begin{equation}
+\operatorname{spec}(H_l) = \left\{ \lambda_0^{(l)}, \lambda_1^{(l)} \right\} = \left\{ -\frac{s_l}{2}, \frac{s_l}{2} \right\}.
+\end{equation}
+The set of all sums of eigenvalues across the $L$ encoding layers is
+\begin{equation}
+\begin{aligned}
+\Lambda &= \left\{ \sum_{l=1}^{L} \lambda_{j_l}^{(l)} \;\middle|\; j_l \in \{0, 1\} \right\} \\
+&= \left\{ \frac{1}{2}\sum_{l=1}^{L} \epsilon_l s_l \;\middle|\; \epsilon_l \in \{-1, 1\} \right\}.
+\end{aligned}
+\end{equation}
+Consequently, the set of accessible Fourier frequencies is
+\begin{equation}
+\begin{aligned}
+\Omega &= \left\{ \sum_{l=1}^{L} \left( \lambda_{j_l}^{(l)} - \lambda_{k_l}^{(l)} \right) \;\middle|\; j_l, k_l \in \{0, 1\} \right\} \\
+&= \left\{ \sum_{l=1}^{L} m_l s_l \;\middle|\; m_l \in \{-1, 0, 1\} \right\},
+\end{aligned}
+\end{equation}
+which has the same form as the $N$-qubit spectrum with $N = L$ and $a_j = s_j$. Encoding in parallel across qubits and encoding serially through re-uploading therefore give access to the same set of frequencies.
+
+For example, for two encoding layers with coefficient $a,b$, the accessible frequencies are:
+\begin{equation*}
+\Omega=\{0,\pm a,\pm b,\pm(a+b),\pm(a-b)\}
+\end{equation*}
+Therefore, a circuit like following can learn $\omega=1,1000$:
+\begin{equation*}
+U(x) = W(\theta_1)S(x)W(\theta_1)S(1000x)
+\end{equation*}
+
+
+\subsection{Expressivity and Frequency Expansion}
+\label{sec:freq_expansion}
+
+Section~\ref{sec:qnn_fourier} established that a QNN computes a finite Fourier series,
+\begin{equation}
+f(x) = \sum_{\omega \in \Omega} c_\omega\, e^{i\omega x},
+\end{equation}
+in which the frequency spectrum $\Omega$ is fixed by the eigenvalues of the encoding Hamiltonians and the number of encoding gates, while the trainable blocks determine only the coefficients $c_\omega$. A direct consequence is that the model can represent only functions whose frequency content lies within $\Omega$: no choice of trainable parameters can produce a frequency outside this set. A general target function, however, may contain many frequency components, some of them high. For a QNN to act as a universal function approximator, two conditions must therefore hold: (i) the spectrum $\Omega$ must be rich enough to contain the frequencies required by the target, and (ii) the trainable blocks must be expressive enough to realize the required coefficients $c_\omega$. Schuld et al.~\cite{schuld2021effect} showed that, when both conditions are met and the spectrum is allowed to grow, a QNN can approximate any square-integrable function on a bounded interval arbitrarily well. This section addresses condition~(i).
+
+Because $\Omega$ consists of differences of eigenvalue sums, it can be enlarged only by enlarging the set of eigenvalue sums. We examine three strategies for doing so:
+\begin{enumerate}
+\item \emph{parallel encoding}, in which the input is encoded on more qubits (increasing the circuit width);
+\item \emph{serial encoding}, or data re-uploading, in which the input is encoded repeatedly on the same qubits (increasing the circuit depth); and
+\item \emph{input scaling}, in which the input is multiplied by constant coefficients before encoding, which relocates the frequencies rather than adding encoding gates.
+\end{enumerate}
+Throughout this section, the encoding gates are single-qubit Pauli rotations. Every Pauli rotation $R_P(x) = e^{-i\frac{x}{2}P}$, with $P \in \{X, Y, Z\}$, has encoding Hamiltonian $H = \frac{1}{2}P$ and eigenvalues $\pm\frac{1}{2}$. For concreteness, we write all examples with $P = X$.
+
+\subsubsection{Parallel Encoding: Increasing the Number of Encoding Qubits}
+\label{sec:parallel_encoding}
+
+\paragraph{One qubit.} Consider first a single encoding qubit with
+\begin{equation}
+S(x) = R_X(x) = e^{-ixH}, \qquad H = \frac{1}{2}X = \frac{1}{2}\begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}.
+\end{equation}
+The eigenvalues of $H$ are $\operatorname{spec}(H) = \{-\frac{1}{2}, \frac{1}{2}\}$, and their pairwise differences give the spectrum $\Omega = \{-1, 0, 1\}$. By the conjugate symmetry $c_{-\omega} = c_\omega^*$ established in Section~\ref{sec:qnn_fourier}, the model therefore reduces to a single sinusoid, $f(x) = c_0 + 2|c_1|\cos(x + \arg c_1)$.
+
+\paragraph{Two qubits.} Suppose now that $x$ is encoded once on each of two qubits. Let $X_q$ denote the Pauli-$X$ operator acting on qubit $q$ (and the identity on the other qubit), so that $X_1 = X \otimes I$ and $X_2 = I \otimes X$. The encoding gate is
+\begin{equation}
+S(x) = R_X(x) \otimes R_X(x) = e^{-i\frac{x}{2}X_1}\, e^{-i\frac{x}{2}X_2} = e^{-ixH}, \qquad
+H = \frac{1}{2}\left(X_1 + X_2\right).
+\end{equation}
+The first equality uses $e^{A} \otimes e^{B} = (e^{A} \otimes I)(I \otimes e^{B})$ together with $e^{A} \otimes I = e^{A \otimes I}$; the second holds because $X_1$ and $X_2$ commute, so that $e^{A}e^{B} = e^{A+B}$. Since $X_1$ and $X_2$ commute, they are simultaneously diagonalized by the product basis $\{\ket{+}, \ket{-}\}^{\otimes 2}$, on which $X_q$ takes the value $\epsilon_q \in \{-1, +1\}$. The eigenvalues of $H$ are therefore $\frac{1}{2}(\epsilon_1 + \epsilon_2)$, namely $-1$, $0$ (twice), and $1$. The set of distinct eigenvalues is $\{-1, 0, 1\}$, and its pairwise differences give the enlarged spectrum
+\begin{equation}
+\Omega = \{-2, -1, 0, 1, 2\}.
+\end{equation}
+
+\paragraph{$N$ qubits.} The same argument applies when $x$ is encoded once on each of $N$ qubits. The encoding Hamiltonian is
+\begin{equation}
+H = \frac{1}{2}\sum_{q=1}^{N} X_q,
+\end{equation}
+with eigenvalues $\frac{1}{2}\sum_{q} \epsilon_q$, $\epsilon_q \in \{-1, +1\}$. If $k$ of the $N$ signs are negative, the eigenvalue equals $\frac{1}{2}\big((N-k) - k\big)$, so the distinct eigenvalues are
+\begin{equation}
+\lambda_k = \frac{N}{2} - k, \qquad k = 0, 1, \ldots, N,
+\end{equation}
+where $\lambda_k$ has multiplicity $\binom{N}{k}$. Consecutive eigenvalues differ by one, and the largest and smallest differ by $N$; hence
+\begin{equation}
+\Omega = \{-N, -N+1, \ldots, -1, 0, 1, \ldots, N-1, N\}.
+\label{eq:parallel_spectrum}
+\end{equation}
+Encoding on $N$ qubits thus gives access to $2N+1$ integer frequencies. Because the spectrum is symmetric and $c_{-\omega} = c_\omega^*$, only the $N+1$ non-negative frequencies $\{0, 1, \ldots, N\}$ are independent; the model is a real trigonometric polynomial of degree $N$. The number of accessible frequencies grows linearly with the number of encoding qubits.
+
+\paragraph{Example.} Figure~\ref{fig:5-qubit} shows a five-qubit QNN. The unscaled input $x$ is encoded once on each qubit through a Pauli rotation, and the circuit begins directly with this encoding layer ($W^{(1)} = I$, which does not affect the spectrum). The encoding layer is followed by two trainable layers. Each trainable layer applies parameterized single-qubit rotations $R_X$, $R_Y$, and $R_Z$ to every qubit, followed by a ring of CNOT gates that couples each qubit to its neighbour and the last qubit back to the first, thereby generating entanglement across the register. By Eq.~\eqref{eq:parallel_spectrum} with $N = 5$, the accessible frequencies are $\{0, \pm1, \pm2, \pm3, \pm4, \pm5\}$. Which of these frequencies carry non-zero coefficients in practice depends on the trainable layers.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/5-qubit.png}
+\caption{Architecture of the five-qubit QNN, consisting of a single encoding layer followed by two layers of parameterized rotation gates, each followed by a CNOT ring.}
+\label{fig:5-qubit}
+\end{figure}
+
+\subsubsection{Serial Encoding: Data Re-uploading}
+\label{sec:reuploading}
+
+Parallel encoding requires one qubit per encoding gate. When the number of available qubits is limited, a model with only a single qubit can still access multiple frequencies by \emph{data re-uploading}: the same input $x$ is encoded repeatedly on the same qubit, with trainable blocks interleaved between the encodings. For a single qubit with $L$ encoding layers, the circuit takes the form of Eq.~\eqref{eq:circuit},
+\begin{equation}
+U(x) = W^{(L+1)} S^{(L)}(x)\, W^{(L)} \cdots W^{(2)} S^{(1)}(x)\, W^{(1)},
+\label{eq:L-encoding}
+\end{equation}
+with model output $f(x) = \bra{0} U^{\dagger}(x)\, M\, U(x) \ket{0}$. Here $S^{(l)}(x) = e^{-ixH_l}$ denotes the $l$-th encoding gate; in this subsection all encoding gates are identical, $S^{(l)}(x) = R_X(x)$ with $H_l = \frac{1}{2}X$. We allow the encoding Hamiltonians to depend on $l$ in anticipation of Section~\ref{sec:input_scaling}.
+
+As noted in Section~\ref{sec:qnn_fourier}, the derivation of the Fourier representation carries over to layer-dependent encoding Hamiltonians. Each eigenvalue sum then takes one eigenvalue from each layer, and we denote the set of all such sums by
+\begin{equation}
+\mathcal{E} = \left\{ \sum_{l=1}^{L} \lambda^{(l)} \;\middle|\; \lambda^{(l)} \in \operatorname{spec}(H_l) \right\}.
+\end{equation}
+The spectrum consists of all pairwise differences of elements of $\mathcal{E}$:
+\begin{equation}
+\Omega = \left\{ \Lambda - \Lambda' \;\middle|\; \Lambda, \Lambda' \in \mathcal{E} \right\}.
+\label{eq:spectrum_from_sums}
+\end{equation}
+
+\paragraph{Two encoding layers.} For $L = 2$ with $H_1 = H_2 = \frac{1}{2}X$, each layer contributes an eigenvalue $\pm\frac{1}{2}$, so
+\begin{equation}
+\mathcal{E} = \left\{ \pm\tfrac{1}{2} \pm \tfrac{1}{2} \right\} = \{-1, 0, 1\},
+\qquad
+\Omega = \{-2, -1, 0, 1, 2\}.
+\end{equation}
+This is exactly the spectrum obtained with two qubits in Section~\ref{sec:parallel_encoding}.
+
+\paragraph{$L$ encoding layers.} For general $L$ with $H_l = \frac{1}{2}X$ for all $l$, each eigenvalue sum consists of $L$ terms equal to $\pm\frac{1}{2}$. If $k$ of these terms are negative, the sum equals $\frac{L}{2} - k$, so that
+\begin{equation}
+\mathcal{E} = \left\{ -\frac{L}{2}, -\frac{L}{2}+1, \ldots, \frac{L}{2} \right\},
+\end{equation}
+and by Eq.~\eqref{eq:spectrum_from_sums},
+\begin{equation}
+\Omega = \{0, \pm1, \pm2, \ldots, \pm L\}.
+\end{equation}
+
+\paragraph{Comparison with parallel encoding.} A single qubit re-uploaded $L$ times and $N = L$ qubits each encoded once have identical spectra. The reason is that, in both cases, every eigenvalue sum is a sum of $\pm\frac{1}{2}$ terms, one contributed by each encoding gate; the spectrum depends only on the total number of encoding gates and not on whether they are arranged in parallel or in series. The two strategies differ in their resource cost: parallel encoding consumes qubits, whereas serial encoding consumes circuit depth, which increases execution time and exposure to noise on hardware. The strategies can also be combined: encoding on $N$ qubits in each of $L$ layers yields $NL$ encoding gates and hence the spectrum $\{-NL, \ldots, NL\}$.
+
+\subsubsection{Accessing High Frequencies through Input Scaling}
+\label{sec:input_scaling}
+
+In the encodings considered so far, the spectrum consists of consecutive integers up to the total number of encoding gates. Many applications, however, require high-frequency components to be captured. A target function containing the frequency $\omega = 1000$ would then require 1000 encoding qubits, or 1000 re-uploading layers. This cost can be avoided by multiplying the input $x$ by a constant coefficient before it is encoded. Scaling the input rescales the encoding Hamiltonian, since $R_X(ax) = e^{-ix\frac{a}{2}X}$ corresponds to $H = \frac{a}{2}X$ with eigenvalues $\pm\frac{a}{2}$. The scaling coefficients may be fixed in advance or treated as trainable parameters; in the latter case, the spectrum itself becomes trainable.
+
+\paragraph{Two qubits.} Consider a two-qubit QNN in which the input to the first qubit is scaled by $a \in \mathbb{R}$ and the input to the second qubit by $b \in \mathbb{R}$. The encoding gate is
+\begin{equation}
+S(x) = R_X(ax) \otimes R_X(bx) = e^{-ixH}, \qquad
+H = \frac{1}{2}\left(a X_1 + b X_2\right),
+\end{equation}
+where the second equality follows exactly as in Section~\ref{sec:parallel_encoding}. In the product basis $\{\ket{+},\ket{-}\}^{\otimes 2}$, the eigenvalues of $H$ are $\frac{1}{2}(\epsilon_1 a + \epsilon_2 b)$ with $\epsilon_1, \epsilon_2 \in \{-1, +1\}$:
+\begin{equation}
+\operatorname{spec}(H) = \left\{ \frac{a+b}{2},\ \frac{a-b}{2},\ \frac{-a+b}{2},\ \frac{-a-b}{2} \right\}.
+\end{equation}
+The difference between two eigenvalues, labelled by signs $(\epsilon_1, \epsilon_2)$ and $(\epsilon_1', \epsilon_2')$, is
+\begin{equation}
+\frac{\epsilon_1 - \epsilon_1'}{2}\, a + \frac{\epsilon_2 - \epsilon_2'}{2}\, b,
+\end{equation}
+where each factor $\frac{1}{2}(\epsilon_q - \epsilon_q')$ takes a value in $\{-1, 0, 1\}$. The accessible frequencies are therefore
+\begin{equation}
+\Omega = \left\{ 0,\ \pm a,\ \pm b,\ \pm(a+b),\ \pm(a-b) \right\}.
+\end{equation}
+High frequencies thus become accessible without additional qubits. For instance, $\omega = 1000$ lies in $\Omega$ if $a = 1000$, or if $a$ and $b$ are chosen such that $a + b = 1000$ or $a - b = 1000$. Setting $a = b = 1$ recovers the unscaled spectrum $\{-2, \ldots, 2\}$.
+
+\paragraph{$N$ qubits.} The argument extends directly to $N$ qubits, where qubit $q$ encodes $a_q x$. The encoding Hamiltonian, its eigenvalues, and the resulting spectrum are
+\begin{equation}
+\begin{aligned}
+H &= \frac{1}{2}\sum_{q=1}^{N} a_q X_q, \\
+\lambda &= \frac{1}{2}\sum_{q=1}^{N} \epsilon_q a_q, \qquad \epsilon_q \in \{-1, +1\}, \\
+\Omega &= \left\{ \sum_{q=1}^{N} \nu_q a_q \;\middle|\; \nu_q \in \{-1, 0, 1\} \right\},
+\end{aligned}
+\label{eq:scaled_parallel_spectrum}
+\end{equation}
+where $\nu_q = \frac{1}{2}(\epsilon_q - \epsilon_q')$ as in the two-qubit case. The unscaled encoding corresponds to $a_q = 1$ for all $q$, which recovers Eq.~\eqref{eq:parallel_spectrum}. The scaled encoding used in our experiments corresponds to $N = 5$ and $a_q = q$; since every integer from $0$ to $15$ is a sum of distinct elements of $\{1, \ldots, 5\}$, this choice yields $\Omega = \{-15, \ldots, 15\}$.
+
+\paragraph{The frequency budget.} Input scaling changes \emph{where} the frequencies lie but not \emph{how many} there can be. Since each $\nu_q$ in Eq.~\eqref{eq:scaled_parallel_spectrum} takes one of three values, $|\Omega| \le 3^N$ for any choice of coefficients. The choice of $\{a_q\}$ therefore trades density against reach. With $a_q = 1$, the spectrum is the dense range $\{-N, \ldots, N\}$, and many sign combinations produce the same frequency. With $a_q = q$, it extends to $\pm N(N+1)/2$. With $a_q = 3^{q-1}$, the bound is attained: every integer in $[-\frac{3^N-1}{2}, \frac{3^N-1}{2}]$ has a unique balanced-ternary representation, so $\Omega$ contains all of them, for example $\{-121, \ldots, 121\}$ when $N = 5$. Conversely, coefficients chosen to reach a single high frequency leave gaps: frequencies between those in $\Omega$ cannot be represented. If the coefficients are not commensurate, the frequencies are no longer integer multiples of a common fundamental, and $f$ is not periodic.
+
+\paragraph{Single qubit with scaled re-uploading.} High frequencies can also be accessed with a single qubit by assigning each re-uploading layer in Eq.~\eqref{eq:L-encoding} its own coefficient. The $l$-th encoding gate is then
+\begin{equation}
+S^{(l)}(x) = R_X(s_l x) = e^{-ixH_l}, \qquad H_l = \frac{s_l}{2}X, \qquad
+\operatorname{spec}(H_l) = \left\{ -\frac{s_l}{2}, \frac{s_l}{2} \right\},
+\end{equation}
+where $s_l \in \mathbb{R}$ is the scaling coefficient of the $l$-th layer. The set of eigenvalue sums is
+\begin{equation}
+\mathcal{E} = \left\{ \frac{1}{2}\sum_{l=1}^{L} \epsilon_l s_l \;\middle|\; \epsilon_l \in \{-1, +1\} \right\},
+\end{equation}
+and, by Eq.~\eqref{eq:spectrum_from_sums} and the same argument as above,
+\begin{equation}
+\Omega = \left\{ \sum_{l=1}^{L} \nu_l s_l \;\middle|\; \nu_l \in \{-1, 0, 1\} \right\}.
+\end{equation}
+This expression has the same form as Eq.~\eqref{eq:scaled_parallel_spectrum} with $N = L$ and $a_q = s_q$. As in the unscaled case, parallel encoding across qubits and serial encoding through re-uploading give access to the same set of frequencies, and the frequency budget $|\Omega| \le 3^L$ applies.
+
+\paragraph{Example.} With two re-uploading layers and coefficients $s_1 = 1$ and $s_2 = 1000$, the circuit
+\begin{equation}
+U(x) = W^{(3)}\, R_X(1000x)\, W^{(2)}\, R_X(x)\, W^{(1)}
+\end{equation}
+has the spectrum
+\begin{equation}
+\Omega = \{0, \pm 1, \pm 999, \pm 1000, \pm 1001\}.
+\end{equation}
+A single qubit can therefore represent both the frequency $\omega = 1$ and the frequency $\omega = 1000$. The combinations $\omega = 999$ and $\omega = 1001$ are accessible as well, whereas the intermediate frequencies $2, \ldots, 998$ are not, in accordance with the frequency budget discussed above.
+
+\paragraph{Summary.} Table~\ref{tab:encoding_strategies} summarizes the three strategies. In every case, the spectrum is determined by the set of eigenvalue sums of the encoding Hamiltonians, and the trainable blocks act only on the coefficients.
+
+\begin{table}[htbp]
+\centering
+\caption{Frequency spectra of the encoding strategies discussed in this section, for Pauli-rotation encodings. In the scaled cases, $\nu_q, \nu_l \in \{-1, 0, 1\}$.}
+\label{tab:encoding_strategies}
+\small
+\begin{tabular}{llll}
+\hline
+Strategy & Encoding & Spectrum $\Omega$ & Resource cost \\
+\hline
+Parallel & $N$ qubits, once each & $\{-N, \ldots, N\}$ & $N$ qubits \\
+Serial (re-uploading) & 1 qubit, $L$ layers & $\{-L, \ldots, L\}$ & depth $L$ \\
+Scaled parallel & $N$ qubits, inputs $a_q x$ & $\{\sum_q \nu_q a_q\}$ & $N$ qubits \\
+Scaled serial & 1 qubit, inputs $s_l x$ & $\{\sum_l \nu_l s_l\}$ & depth $L$ \\
+\hline
+\end{tabular}
+\end{table}
+
 
 % \subsection{Frequency Pinching}
-
 % \subsection{Training and Barren Plateu}
 
 \section{Applications}
