@@ -77,12 +77,60 @@
 \end{titlepage}
 
 \section{Introduction}
-Classical machine learning has gained huge success in recent years especially deep learning models such as multi-layer perceptrons (MLP), Convolution Neural Networks (CNN), Recurrent Neural Netowrks (RNN), Transformers, and Graph Neural Netowrks (GNN) \cite{lecun2015deep,vaswani2017attention,scarselli2009graph}. These architectures, due to its inductive bias and with development of hardware accelerators, have been applied in many fieds such as image processing, audio-speech processing, language modeling, and fraud detection.
-% Citation needed: the following compute-growth and data-center spending claims
-% require a defined time period and quantitative evidence.
-However, as the models are getting larger and larger, the computing power required is also growing exponentially. Governments and private companies are spending billions of dollar on building data center to satisfy the compute needs of now.
+\label{sec:introduction}
 
-On the other hand, a new paradigm of computing started to shine on the stage -- quantum computing \cite{nielsen2010quantum}.
+\subsection{Deep Learning and the Cost of Scale}
+\label{sec:intro_scale}
+
+Over the past decade and a half, deep learning has evolved from a specialized research topic into a general-purpose technology~\cite{lecun2015deep}. Convolutional and residual networks transformed image recognition~\cite{krizhevsky2012imagenet, he2016deep}, Transformers~\cite{vaswani2017attention} underpin large language models that translate, summarize, and write code~\cite{brown2020language}, deep networks predict protein structures with near-experimental accuracy~\cite{jumper2021highly}, and graph neural networks~\cite{scarselli2009graph} learn from relational data such as molecules and financial transaction graphs. These architectures differ in their inductive biases, yet they share a common foundation: each is a parameterized function approximator whose parameters are learned from data by gradient-based optimization~\cite{rumelhart1986learning, goodfellow2016deep}.
+
+Much of this progress has been achieved through scale. Empirical scaling laws show that model performance improves predictably, as a power law, with model size, dataset size, and training compute~\cite{kaplan2020scaling}, and the compute used to train notable models has doubled roughly every six months since the beginning of the deep learning era~\cite{sevilla2022compute}. This growth has tangible physical costs~\cite{strubell2019energy}: according to the International Energy Agency, global data-center electricity consumption grew by 17\% in 2025 and is projected to roughly double by 2030, while the capital expenditure of five large technology companies exceeded \$400 billion in 2025, driven largely by data-center investment~\cite{iea2026keyquestions}. These trends raise a natural question: beyond building ever-larger machines that follow classical rules, are there fundamentally different models of computation that could complement them?
+
+\subsection{A Different Kind of Computer}
+\label{sec:intro_quantum}
+
+In 1982, Feynman observed that simulating quantum systems on classical computers appears to require resources that grow exponentially with system size, and he proposed instead building computers whose components are themselves quantum mechanical~\cite{feynman1982simulating}. Shor's algorithm factors integers in polynomial time, exponentially faster than the best known classical algorithms~\cite{shor1997polynomial}, and Grover's algorithm offers a quadratic speedup for unstructured search~\cite{grover1996fast}. These algorithms draw on resources that have no classical counterpart: superposition, entanglement, and interference~\cite{nielsen2010quantum}. A register of $n$ qubits is described by $2^n$ complex amplitudes, so the state space of even a modest quantum computer is far larger than the memory of any classical machine.
+
+This exponential state space, however, does not translate directly into exponential computational power: a measurement of $n$ qubits returns only $n$ classical bits, and the amplitudes can be estimated only statistically through repeated measurements. This tension between a vast internal state and a narrow measurement channel recurs throughout this paper.
+
+On the hardware side, present-day devices belong to what Preskill termed the \emph{noisy intermediate-scale quantum} (NISQ) era: processors with tens to a few hundred qubits that operate without full error correction~\cite{preskill2018quantum}. In 2019, a 53-qubit superconducting processor performed a random-circuit sampling task that was argued to be intractable for the classical supercomputers of the time~\cite{arute2019quantum}. More recently, surface-code experiments demonstrated logical error rates that \emph{decrease} as the code distance is increased from three to five to seven, an essential prerequisite for scalable fault-tolerant quantum computation~\cite{google2025quantum}. Until large-scale fault-tolerant machines arrive, \emph{variational quantum algorithms} offer a way to use noisy devices of moderate size~\cite{cerezo2021variational}: a parameterized quantum circuit is executed on quantum hardware, and its parameters are optimized by a classical computer in a hybrid feedback loop.
+
+\subsection{Quantum Neural Networks}
+\label{sec:intro_qnn}
+
+Quantum machine learning lies at the intersection of these two developments~\cite{biamonte2017quantum, schuld2021machine}, and its most widely studied model is the \emph{quantum neural network} (QNN), also known as a variational or parameterized quantum circuit~\cite{farhi2018classification, mitarai2018quantum, benedetti2019parameterized}. The structure of a QNN deliberately mirrors that of a classical neural network. Classical input data $\mathbf{x}$ are encoded into a quantum state, typically as rotation angles; layers of trainable rotations and entangling gates transform this state; and the expectation value of an observable $O$ is measured to produce a classical output:
+\begin{equation}
+f_{\boldsymbol{\theta}}(\mathbf{x}) = \bra{0}^{\otimes n}\, U^{\dagger}(\mathbf{x}, \boldsymbol{\theta})\, O\, U(\mathbf{x}, \boldsymbol{\theta})\, \ket{0}^{\otimes n}.
+\label{eq:intro_qnn}
+\end{equation}
+The model is trained in the same way as its classical counterpart: a loss function is defined, its gradients with respect to the circuit parameters $\boldsymbol{\theta}$ are estimated on the quantum device~\cite{mitarai2018quantum}, and the parameters are updated by a classical optimizer.
+
+QNNs can use the exponentially large Hilbert space as a feature space~\cite{havlicek2019supervised, schuld2019quantum}; a single qubit that repeatedly re-encodes its input can act as a universal classifier~\cite{perezsalinas2020data}; and certain QNNs have been shown to possess a larger effective dimension than comparable classical networks~\cite{abbas2021power}. At the same time, the field faces serious open questions. Randomly initialized circuits can exhibit \emph{barren plateaus}, in which gradients vanish exponentially with the number of qubits and training stalls~\cite{mcclean2018barren}. Classical learners that have access to data can often match quantum models~\cite{huang2021power}, many QNNs can be closely approximated by classical random-Fourier-feature models~\cite{landman2023classically}, and the very structure that allows a circuit to avoid barren plateaus may also allow it to be simulated classically~\cite{cerezo2025does}. Whether QNNs offer a practical advantage on classical data therefore remains open, and a more productive starting point is a more fundamental question: \emph{what kind of functions does a QNN compute, and how is this function class shaped by the design of the circuit?}
+
+\subsection{A Fourier Perspective}
+\label{sec:intro_fourier}
+
+This question is the central theme of this paper, and Fourier analysis provides a remarkably clear answer. Schuld, Sweke, and Meyer~\cite{schuld2021effect} showed that, when a scalar input $x$ enters the circuit through gates generated by a Hamiltonian, the output of a QNN is a finite Fourier series:
+\begin{equation}
+f_{\boldsymbol{\theta}}(x) = \sum_{\omega \in \Omega} c_\omega(\boldsymbol{\theta})\, e^{i\omega x}.
+\label{eq:intro_fourier}
+\end{equation}
+This representation reveals a clean division of labor. The set of frequencies $\Omega$ is determined entirely by the eigenvalues of the encoding Hamiltonians and by how many times the input is encoded; the trainable parameters $\boldsymbol{\theta}$ only shape the coefficients $c_\omega$. The consequences are striking. A single qubit that encodes $x$ once through the rotation $R_X(x)$ can represent only a single sinusoid, $c_0 + 2|c_1|\cos(x + \varphi)$, no matter how many trainable layers surround the encoding gate. The expressivity of a QNN is therefore governed less by the depth of its trainable layers than by \emph{how the data are encoded}, which makes the encoding strategy (the number of encoding qubits, the number of re-uploading layers, and the scaling of the input) the principal design lever.
+
+This perspective also invites a direct comparison with classical networks. Multilayer perceptrons exhibit a \emph{spectral bias}: they learn low-frequency components first and struggle to fit high-frequency detail~\cite{rahaman2019spectral}. Classical remedies, such as Fourier feature mappings~\cite{tancik2020fourier} and periodic activation functions as in SIREN~\cite{sitzmann2020implicit}, effectively allow the network to learn or select the frequencies it uses. A QNN inverts this arrangement: its frequencies are fixed in advance by the architecture, chosen by the designer rather than discovered during training, and learning adjusts only their amplitudes and phases. Is such a predetermined spectrum a fundamental limitation, since the model can never represent a frequency outside $\Omega$, or is it an advantage, since it provides an explicit, interpretable, and controllable spectral inductive bias? This question runs throughout the paper.
+
+\subsection{Scope and Organization}
+\label{sec:intro_organization}
+
+This white paper is intended as a self-contained, pedagogical bridge between classical deep learning and quantum computing for readers familiar with one field and new to the other. Rather than surveying the literature, we construct QNNs from first principles and work through small examples explicitly, so that every claim can be verified step by step. In particular, this paper:
+\begin{itemize}
+\item frames QNNs and multilayer perceptrons as two families of parameterized function approximators, using the universal approximation theorem as a common reference point;
+\item dissects a standard QNN layer by layer (encoding, trainable rotations, entanglement, and measurement), showing explicitly, for example, how CNOT gates propagate information between qubits;
+\item presents a complete, step-by-step derivation of the finite Fourier series representation of QNNs; and
+\item analyzes how parallel encoding, data re-uploading, and input scaling shape the accessible frequency spectrum, together with the resource trade-offs among them.
+\end{itemize}
+
+The remainder of the paper is organized as follows. Section~\ref{sec:classical_nn} reviews multilayer perceptrons and the universal approximation theorem. Section~\ref{sec:quantum_basics} introduces the essentials of quantum computing and dissects the architecture of a QNN. Section~\ref{sec:qnn_fourier} develops the Fourier analysis of QNNs and examines how the encoding strategy determines their expressivity. Section~\ref{sec:applications} discusses applications.
 
 \section{Review of Classical Neural Networks}
 \label{sec:classical_nn}
@@ -225,9 +273,9 @@ These questions motivate the following investigation into the mathematical repre
 
 
 \section{Quantum Neural Networks}
-
-\subsection{Basics of Quantum Computing}
 \label{sec:quantum_basics}
+\subsection{Basics of Quantum Computing}
+
 
 Quantum computing is built upon the principles of quantum mechanics, which provide a fundamentally different computational framework from classical computing. Unlike classical computers, which process information using binary bits, quantum computers manipulate quantum bits, or qubits, through unitary transformations and quantum measurements. This section introduces the essential concepts of quantum computing, including quantum states, quantum gates, tensor products, entanglement, and measurement. These concepts form the mathematical foundation of Quantum Neural Networks (QNNs). The following discussion is based on the standard quantum computing formalism presented in \cite[Chaps.~2 and~4]{nielsen2010quantum}.
 
@@ -1233,6 +1281,7 @@ Beyond Pauli-Z measurements, other observables, such as Pauli-X, Pauli-Y, and mu
 In summary, quantum measurement provides the essential bridge between the quantum representation and the classical output of a QNN. More importantly, expressing the QNN output as the expectation value of an observable establishes the mathematical foundation for analyzing its function representation, particularly through Fourier analysis.
 
 \section{Fourier Analysis of Quanutm Neural Networks and Expressivity}
+\label{sec:qnn_fourier}
 
 \subsection{Basics of Fourier Series and Fourier Transform}
 Fourier analysis provides a powerful mathematical framework for representing and analyzing functions in terms of their frequency components. Standard treatments cover both Fourier series and Fourier transforms \cite{stein2003fourier}. The fundamental idea is that a function can be decomposed into a combination of oscillatory basis functions, such as sines, cosines, or complex exponentials. Instead of examining a function solely in its original domain, Fourier analysis allows us to study its behavior in the frequency domain.
@@ -1344,7 +1393,6 @@ Therefore, Fourier analysis provides a natural framework for investigating two f
 In the following section, we will examine how these properties emerge from quantum data encoding and how circuit depth and width influence the accessible frequency spectrum.
 
 \subsection{Quantum Neural Networks as Finite Fourier Series}
-\label{sec:qnn_fourier}
 
 This section presents a detailed derivation of a result due to Schuld, Sweke, and Meyer~\cite{schuld2021effect}: the output of a quantum neural network (QNN) in which the input is encoded through Hamiltonian-generated gates can be expressed as a finite Fourier series in that input. The argument proceeds in four stages. First, we fix the general form of the circuit and show that the encoding gates may, without loss of generality, be taken to be diagonal. Second, we compute the state vector for one, two, and finally $L$ encoding layers, and show that every amplitude is a sum of complex exponentials whose frequencies are sums of eigenvalues of the encoding Hamiltonian. Third, we evaluate the measured expectation value and show that the frequencies of the model output are \emph{differences} of these eigenvalue sums. Finally, we collect terms of equal frequency to obtain the Fourier representation and illustrate it with Pauli-rotation encoding.
 
@@ -1930,7 +1978,110 @@ Scaled serial & 1 qubit, inputs $s_l x$ & $\{\sum_l \nu_l s_l\}$ & depth $L$ \\
 % \subsection{Frequency Pinching}
 % \subsection{Training and Barren Plateu}
 
-\section{Applications}
+% Requires \usepackage{array} in the preamble (for the table column format).
+\section{Applications of Quantum Neural Networks}
+\label{sec:applications}
+
+The preceding sections established a precise characterization of what a QNN computes: a finite Fourier series whose frequencies are fixed by the data encoding and whose coefficients are learned by the trainable blocks. This section uses that characterization to address a practical question: \emph{which tasks and applications are QNNs well suited to?} Rather than cataloguing every domain in which QNNs have been tried, we derive suitability criteria from the Fourier picture and examine representative application areas against them, distinguishing throughout what QNNs can represent in principle from what has been demonstrated in practice.
+
+\subsection{From Fourier Properties to Task Suitability}
+\label{sec:app_criteria}
+
+\paragraph{Multivariate inputs.} Section~\ref{sec:qnn_fourier} considered a scalar input. Most applications, however, involve an input vector $\mathbf{x} = (x_1, \ldots, x_D) \in \mathbb{R}^D$. When each feature $x_k$ is encoded through its own Hamiltonian-generated gates, the same derivation yields a multivariate Fourier series~\cite{schuld2021effect, casas2023multidimensional},
+\begin{equation}
+f_{\boldsymbol{\theta}}(\mathbf{x}) = \sum_{\boldsymbol{\omega} \in \Omega} c_{\boldsymbol{\omega}}(\boldsymbol{\theta})\, e^{i\boldsymbol{\omega} \cdot \mathbf{x}},
+\qquad
+\Omega = \Omega_1 \times \Omega_2 \times \cdots \times \Omega_D,
+\label{eq:multivariate_fourier}
+\end{equation}
+where $\Omega_k$ is the spectrum generated by the encodings of feature $x_k$, and $\boldsymbol{\omega} = (\omega_1, \ldots, \omega_D)$ is a frequency vector. If every feature is encoded so that $\Omega_k = \{-K, \ldots, K\}$, the model contains $(2K+1)^D$ frequency vectors. Both the spectrum and the number of coefficients to be controlled therefore grow exponentially with the input dimension, and Casas and Cervera-Lierta showed that, for several common circuit families, the degrees of freedom required to fit a general multidimensional Fourier series grow faster than those available in the circuit~\cite{casas2023multidimensional}.
+
+\paragraph{Suitability criteria.} Combining Eq.~\eqref{eq:multivariate_fourier} with the results of Sections~\ref{sec:qnn_fourier} and~\ref{sec:freq_expansion}, we identify five properties that make a task a natural fit for a QNN:
+\begin{enumerate}
+\item \textbf{Low input dimension.} Small $D$ keeps the spectrum and the encoding cost manageable.
+\item \textbf{Known, sparse, or structured spectral content.} When the dominant frequencies of the target are known in advance, the encoding can place $\Omega$ exactly where the signal lives, using the scaling strategies of Section~\ref{sec:input_scaling}.
+\item \textbf{Smoothness or periodicity.} A truncated Fourier series represents smooth and periodic functions efficiently, whereas discontinuities produce persistent oscillations near the jump (the Gibbs phenomenon~\cite{stein2003fourier}).
+\item \textbf{Modest data volume.} Every data point requires many circuit executions to estimate an expectation value.
+\item \textbf{Quantum-native data.} When the input is itself a quantum state, the encoding problem disappears. This criterion lies outside the Fourier picture, but it is where the case for quantum advantage is strongest.
+\end{enumerate}
+The following subsections examine application domains in roughly decreasing order of fit.
+
+\subsection{Implicit Neural Representations: Images, Audio, and Beyond}
+\label{sec:app_inr}
+
+An implicit neural representation (INR) replaces a discrete signal, such as a grid of pixels or a sequence of audio samples, with a continuous function learned by a neural network. The network maps coordinates to signal values: $(x, y) \mapsto$ RGB for an image, $t \mapsto$ amplitude for an audio clip, $(x, y, z) \mapsto$ signed distance for a 3D shape~\cite{park2019deepsdf}, or position and viewing direction to colour and density in neural radiance fields~\cite{mildenhall2020nerf}.
+
+INRs satisfy the first three criteria almost ideally: the input dimension is small ($D = 1$ to $5$), and the quality of an INR is judged precisely by how well it reproduces the signal's spectral content. This is also where classical networks struggle most visibly, since spectral bias causes ReLU multilayer perceptrons to produce blurry reconstructions that miss fine detail~\cite{rahaman2019spectral}. The leading classical remedies are themselves Fourier constructions: Fourier feature mappings pass the coordinates through sinusoids before an MLP~\cite{tancik2020fourier}, and SIREN uses sinusoidal activations throughout~\cite{sitzmann2020implicit}. A QNN provides this structure natively, with a spectrum designed through the encoding.
+
+This connection has been explored directly. Zhao et al.\ proposed the Quantum Implicit Representation Network (QIREN), which combines data re-uploading circuits with classical layers, and reported that it outperforms classical INR baselines on image and sound representation, particularly in modelling high-frequency components, while using fewer parameters; they also explored image super-resolution and image generation~\cite{zhao2024quantum}. Because these results were obtained with classical simulation of small circuits, they establish representational promise rather than a hardware advantage.
+
+Two obstacles remain. First, INRs are trained on every coordinate of the signal: a $256 \times 256$ image already contains $65{,}536$ training points, each requiring many circuit executions on hardware. Second, sharp edges give rise to Gibbs oscillations in any truncated Fourier representation. Moreover, with integer spectra the model is $2\pi$-periodic, so coordinates should be mapped to a sub-interval of $[0, 2\pi)$, as recommended for angle encoding in Section~\ref{sec:qnn}, to avoid forcing the two ends of the signal to agree. Nevertheless, among classical-data applications, INRs are arguably the most natural match between task requirements and the QNN's inductive bias.
+
+\subsection{Audio and Time-Series Signals}
+\label{sec:app_timeseries}
+
+Audio and many time series are superpositions of oscillations. Voiced and musical sounds consist of a fundamental frequency and its harmonics, and many time series exhibit known periodicities, such as daily and weekly cycles in electricity load, traffic, and transaction volumes. Classical forecasting practice already models such seasonality with explicit Fourier terms~\cite{hyndman2021forecasting}. For a QNN, known periodicities translate directly into encoding design: choosing the scaling coefficients of Section~\ref{sec:input_scaling} so that $\Omega$ contains the seasonal frequencies and their low harmonics.
+
+Several studies have applied QNNs to such signals. Emmanoulopoulos and Dimoska reported that parameterized quantum circuits with only a few parameters forecast periodic signals with small noise components about as well as classical bidirectional LSTM networks~\cite{emmanoulopoulos2022quantum}. In speech recognition, Yang et al.\ used quantum circuits as convolutional feature extractors on Mel-spectrograms within a hybrid model and reported competitive accuracy on a limited-vocabulary keyword-recognition benchmark~\cite{yang2021decentralizing}. In both cases the quantum component is small and evaluated in simulation.
+
+The Fourier perspective also suggests a property that has received less attention: a fixed spectrum acts as a built-in band limit. A model whose spectrum is $\{-K, \ldots, K\}$ cannot represent signal components above frequency $K$, so it cannot fit high-frequency noise outside its band, regardless of how the parameters are trained. This gives a concrete answer to the question raised in the Introduction: a predetermined spectrum is an advantage when the designer knows where the signal lives. Noise within the band can still be fitted, and the interplay between spectrum design, overfitting, and generalization in quantum Fourier models is subtle~\cite{peters2023generalization}.
+
+\subsection{Scientific Computing and Differential Equations}
+\label{sec:app_scientific}
+
+Spectral methods, which represent the solution of a differential equation as a truncated Fourier or Chebyshev series, are among the most accurate numerical techniques for problems with smooth solutions~\cite{boyd2001chebyshev}. A QNN whose output is a truncated Fourier series can therefore be viewed as a trainable spectral solver. Physics-informed neural networks (PINNs) train a network to satisfy a differential equation by including the equation's residual in the loss~\cite{raissi2019physics}, and the same strategy applies to QNNs. Because the QNN output is an analytic function of $x$, its input derivatives can be computed exactly, without finite differences.
+
+Kyriienko, Paine, and Elfving developed this idea as \emph{differentiable quantum circuits} (DQCs): functions are represented as expectation values of parameterized circuits, their derivatives are obtained analytically, and the circuits are trained to satisfy the equation and its boundary conditions~\cite{kyriienko2021solving}. They introduced a Chebyshev feature map and applied the method to nonlinear problems, including an instance of the Navier--Stokes equations for flow in a convergent--divergent nozzle. The Chebyshev map illustrates how the Fourier picture can be adapted to non-periodic domains: encoding $\varphi(x) = \arccos x$ instead of $x$ turns $\cos(k\varphi)$ into the Chebyshev polynomial $T_k(x)$, so the Fourier series in $\varphi$ becomes a Chebyshev series in $x$. Jaderberg et al.\ subsequently made the encoding generators trainable, allowing the model to adapt its own frequencies, and reported improved accuracy on the Navier--Stokes problem with only one additional parameter per encoding gate~\cite{jaderberg2023let}.
+
+Scientific computing fits the criteria well when the domain is low-dimensional and the solution is smooth or oscillatory, as in wave propagation and problems with periodic boundary conditions; problems in three spatial dimensions plus time, however, quickly encounter the exponential growth of the multivariate spectrum.
+
+\subsection{High-Dimensional Classical Data: Vision, Tabular Data, and Finance}
+\label{sec:app_highdim}
+
+The tasks that dominate classical deep learning, such as image classification and large-scale tabular prediction, satisfy the criteria least well. A $28 \times 28$ greyscale image is a 784-dimensional input: encoding every pixel requires hundreds of qubits or aggressive dimensionality reduction, and the resulting spectrum is astronomically large while the target, a class label, bears no obvious relation to its frequency structure.
+
+\paragraph{Computer vision.} Practical quantum vision models are therefore hybrid: quanvolutional networks apply small quantum circuits to local image patches, like convolutional filters~\cite{henderson2020quanvolutional}, and transfer-learning approaches place a small QNN on top of a pretrained classical feature extractor~\cite{mari2020transfer}. A large-scale benchmark by Bowles, Ahmed, and Schuld, however, found that out-of-the-box classical models systematically outperformed prototypical quantum classifiers on small classification tasks, that hybrid models performed similarly to their classical hosts, and that removing entanglement often did not reduce performance~\cite{bowles2024better}. Claims of advantage on standard vision benchmarks should therefore be treated with caution.
+
+\paragraph{Tabular data and finance.} Finance has been a prominent target for quantum machine learning~\cite{herman2023quantum}. Fraud detection illustrates both the opportunities and the constraints. Grossi et al.\ applied a quantum support vector machine, a kernel-based relative of the QNN, to real card-payment data and found that results depended strongly on feature selection; the quantum model contributed complementary information within a hybrid ensemble, but only on a drastically reduced dataset that fitted the hardware of the time~\cite{grossi2022mixed}. Fraud datasets are also large and highly imbalanced, which conflicts with the fourth criterion. The Fourier perspective nevertheless identifies a natural niche: \emph{cyclic features}. Transaction timestamps carry hour-of-day and day-of-week patterns, and classical pipelines typically encode such features through sine and cosine transforms. A QNN represents periodic dependence on these features natively; for example, encoding $x = 2\pi h/24$ for hour $h$ makes the model exactly periodic over a day. Relational structure in transaction networks can be addressed by quantum graph neural networks~\cite{verdon2019quantum}, although these face the same scaling constraints.
+
+In summary, for high-dimensional classical data the realistic role of a QNN today is that of a small, specialized component within a hybrid model, operating on a compact set of features whose structure matches its inductive bias.
+
+\subsection{Quantum-Native Data}
+\label{sec:app_quantum_data}
+
+When the data are themselves quantum states, for instance the output of a quantum simulation, sensor, or physical experiment, no classical-to-quantum encoding is required and the obstacles associated with criteria~1 and~4 largely disappear. Cong, Choi, and Lukin introduced quantum convolutional neural networks and showed that they can recognize quantum phases of matter using a number of parameters that grows only logarithmically with system size~\cite{cong2019quantum}. Huang et al.\ proved, and demonstrated experimentally, that for certain tasks learning from quantum experiments can require exponentially fewer experiments when quantum data are processed coherently by a quantum computer than when they are first measured and processed classically~\cite{huang2022quantum}. In addition, quantum models have been shown to generalize from relatively few training examples~\cite{caro2022generalization}. For quantum data, the question of advantage rests on firmer theoretical ground than for any classical-data application discussed above.
+
+\subsection{Limitations and Outlook}
+\label{sec:app_limitations}
+
+\begin{table}[t]
+\centering
+\caption{Suitability of QNNs across application domains, assessed against the criteria of Section~\ref{sec:app_criteria}.}
+\label{tab:applications}
+\small
+\begin{tabular}{>{\raggedright\arraybackslash}p{2.8cm}>{\raggedright\arraybackslash}p{1.8cm}>{\raggedright\arraybackslash}p{3.5cm}>{\raggedright\arraybackslash}p{1.4cm}>{\raggedright\arraybackslash}p{3.9cm}}
+\hline
+Domain & Input dim. & Spectral structure & Fit & Main obstacle \\
+\hline
+Implicit neural representations & 1--5 & Rich but structured; edges are problematic & High & Number of coordinates; Gibbs oscillations at edges \\
+Audio and time series & 1--few & Known periodicities and harmonics & High & Broadband noise and non-stationarity \\
+Differential equations & 1--4 & Smooth or oscillatory solutions & High & Multivariate spectrum growth in higher dimensions \\
+Computer vision & $10^2$--$10^6$ & Weakly related to the target & Low & Encoding cost; classical baselines are strong \\
+Tabular data and finance & $10$--$10^3$ & Mostly unstructured, except cyclic features & Medium & Large, imbalanced datasets \\
+Quantum-native data & n/a & Outside the Fourier framework & Highest & Access to quantum data sources \\
+\hline
+\end{tabular}
+\end{table}
+
+\paragraph{Data loading and measurement cost.} Many proposed quantum speedups assume that classical data can be loaded into quantum states efficiently, an assumption that often dominates the true cost~\cite{aaronson2015read}. At the output, estimating an expectation value to precision $\epsilon$ requires on the order of $1/\epsilon^2$ circuit executions, so every prediction carries a sampling overhead that classical networks do not incur.
+
+\paragraph{Trainability and noise.} Barren plateaus make gradients vanish exponentially in the number of qubits for sufficiently random circuits~\cite{mcclean2018barren}, and hardware noise can induce barren plateaus of its own~\cite{wang2021noise}.
+
+\paragraph{Constrained expressivity.} A large spectrum does not imply that all coefficients are freely adjustable. Mhiri et al.\ showed that the variance of a Fourier coefficient depends on the redundancy of its frequency, that is, on how many pairs of eigenvalue sums produce it, and that some coefficients can vanish exponentially as the number of qubits grows~\cite{mhiri2025constrained}. For uniform Pauli encodings, redundancy is highest at low frequencies, which suggests that QNNs can exhibit a form of spectral bias of their own. Exponential encodings~\cite{shin2023exponential, kordzanganeh2023exponentially} reduce the number of gates needed for a given spectrum but also reduce redundancy, a trade-off that should be assessed explicitly.
+
+\paragraph{Classical surrogates and dequantization.} The Fourier structure that makes QNNs interpretable also makes them vulnerable to classical approximation. If the spectrum is known, a classical model can fit the same function class, either by constructing a classical surrogate from the quantum model~\cite{schreiber2023classical} or by sampling frequencies with random Fourier features~\cite{landman2023classically}. Sweke et al.\ characterized the conditions under which random Fourier features efficiently dequantize variational QML for regression~\cite{sweke2025potential}. Consequently, the applications most worth pursuing are those in which the relevant spectrum is hard to sample classically or the data are quantum-native.
+
+\paragraph{Outlook.} Table~\ref{tab:applications} summarizes the analysis. The domains with the best fit share low-dimensional inputs, structured spectral content, and moderate data volume: INRs, periodic signal modelling, and spectral solvers for differential equations are the most promising classical-data applications, and quantum-native data the most promising overall. For high-dimensional classical data, QNNs are best viewed as specialized components within hybrid architectures. The Fourier perspective thus offers more than a description of what QNNs compute; it provides a principled way to decide where they should be applied.
 
 \bibliographystyle{unsrt}
 \bibliography{reference}

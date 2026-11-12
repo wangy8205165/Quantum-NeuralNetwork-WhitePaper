@@ -5,30 +5,190 @@ Yann LeCun, Yoshua Bengio, and Geoffrey Hinton.
 \newblock Deep learning.
 \newblock {\em Nature}, 521:436--444, 2015.
 
+\bibitem{krizhevsky2012imagenet}
+Alex Krizhevsky, Ilya Sutskever, and Geoffrey~E. Hinton.
+\newblock {ImageNet} classification with deep convolutional neural networks.
+\newblock In {\em Advances in Neural Information Processing Systems}, volume~25, pages 1097--1105, 2012.
+
+\bibitem{he2016deep}
+Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun.
+\newblock Deep residual learning for image recognition.
+\newblock In {\em Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR)}, pages 770--778, 2016.
+
 \bibitem{vaswani2017attention}
 Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan~N. Gomez, {\L}ukasz Kaiser, and Illia Polosukhin.
 \newblock Attention is all you need.
 \newblock In {\em Advances in Neural Information Processing Systems}, volume~30, 2017.
+
+\bibitem{brown2020language}
+Tom~B. Brown, Benjamin Mann, Nick Ryder, Melanie Subbiah, Jared Kaplan, Prafulla Dhariwal, Arvind Neelakantan, Pranav Shyam, Girish Sastry, Amanda Askell, et~al.
+\newblock Language models are few-shot learners.
+\newblock In {\em Advances in Neural Information Processing Systems}, volume~33, pages 1877--1901, 2020.
+
+\bibitem{jumper2021highly}
+John Jumper, Richard Evans, Alexander Pritzel, Tim Green, Michael Figurnov, Olaf Ronneberger, Kathryn Tunyasuvunakool, Russ Bates, Augustin {\v{Z}}{\'\i}dek, Anna Potapenko, et~al.
+\newblock Highly accurate protein structure prediction with {AlphaFold}.
+\newblock {\em Nature}, 596:583--589, 2021.
 
 \bibitem{scarselli2009graph}
 Franco Scarselli, Marco Gori, Ah~Chung Tsoi, Markus Hagenbuchner, and Gabriele Monfardini.
 \newblock The graph neural network model.
 \newblock {\em IEEE Transactions on Neural Networks}, 20(1):61--80, 2009.
 
-\bibitem{nielsen2010quantum}
-Michael~A. Nielsen and Isaac~L. Chuang.
-\newblock {\em Quantum Computation and Quantum Information}.
-\newblock Cambridge University Press, 10th anniversary edition, 2010.
+\bibitem{rumelhart1986learning}
+David~E. Rumelhart, Geoffrey~E. Hinton, and Ronald~J. Williams.
+\newblock Learning representations by back-propagating errors.
+\newblock {\em Nature}, 323:533--536, 1986.
 
 \bibitem{goodfellow2016deep}
 Ian Goodfellow, Yoshua Bengio, and Aaron Courville.
 \newblock {\em Deep Learning}.
 \newblock MIT Press, 2016.
 
-\bibitem{rumelhart1986learning}
-David~E. Rumelhart, Geoffrey~E. Hinton, and Ronald~J. Williams.
-\newblock Learning representations by back-propagating errors.
-\newblock {\em Nature}, 323:533--536, 1986.
+\bibitem{kaplan2020scaling}
+Jared Kaplan, Sam McCandlish, Tom Henighan, Tom~B. Brown, Benjamin Chess, Rewon Child, Scott Gray, Alec Radford, Jeffrey Wu, and Dario Amodei.
+\newblock Scaling laws for neural language models.
+\newblock {\em arXiv preprint arXiv:2001.08361}, 2020.
+
+\bibitem{sevilla2022compute}
+Jaime Sevilla, Lennart Heim, Anson Ho, Tamay Besiroglu, Marius Hobbhahn, and Pablo Villalobos.
+\newblock Compute trends across three eras of machine learning.
+\newblock In {\em 2022 International Joint Conference on Neural Networks (IJCNN)}, pages 1--8. IEEE, 2022.
+
+\bibitem{strubell2019energy}
+Emma Strubell, Ananya Ganesh, and Andrew McCallum.
+\newblock Energy and policy considerations for deep learning in {NLP}.
+\newblock In {\em Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics}, pages 3645--3650, 2019.
+
+\bibitem{iea2026keyquestions}
+{International Energy Agency}.
+\newblock Key questions on energy and {AI}.
+\newblock Technical report, IEA, Paris, 2026.
+
+\bibitem{feynman1982simulating}
+Richard~P. Feynman.
+\newblock Simulating physics with computers.
+\newblock {\em International Journal of Theoretical Physics}, 21(6/7):467--488, 1982.
+
+\bibitem{shor1997polynomial}
+Peter~W. Shor.
+\newblock Polynomial-time algorithms for prime factorization and discrete logarithms on a quantum computer.
+\newblock {\em SIAM Journal on Computing}, 26(5):1484--1509, 1997.
+
+\bibitem{grover1996fast}
+Lov~K. Grover.
+\newblock A fast quantum mechanical algorithm for database search.
+\newblock In {\em Proceedings of the 28th Annual ACM Symposium on Theory of Computing (STOC)}, pages 212--219, 1996.
+
+\bibitem{nielsen2010quantum}
+Michael~A. Nielsen and Isaac~L. Chuang.
+\newblock {\em Quantum Computation and Quantum Information}.
+\newblock Cambridge University Press, 10th anniversary edition, 2010.
+
+\bibitem{preskill2018quantum}
+John Preskill.
+\newblock Quantum computing in the {NISQ} era and beyond.
+\newblock {\em Quantum}, 2:79, 2018.
+
+\bibitem{arute2019quantum}
+Frank Arute, Kunal Arya, Ryan Babbush, Dave Bacon, Joseph~C. Bardin, Rami Barends, Rupak Biswas, Sergio Boixo, Fernando G. S.~L. Brandao, David~A. Buell, et~al.
+\newblock Quantum supremacy using a programmable superconducting processor.
+\newblock {\em Nature}, 574:505--510, 2019.
+
+\bibitem{google2025quantum}
+{Google Quantum AI and Collaborators}.
+\newblock Quantum error correction below the surface code threshold.
+\newblock {\em Nature}, 638(8052):920--926, 2025.
+
+\bibitem{cerezo2021variational}
+M.~Cerezo, Andrew Arrasmith, Ryan Babbush, Simon~C. Benjamin, Suguru Endo, Keisuke Fujii, Jarrod~R. McClean, Kosuke Mitarai, Xiao Yuan, Lukasz Cincio, and Patrick~J. Coles.
+\newblock Variational quantum algorithms.
+\newblock {\em Nature Reviews Physics}, 3:625--644, 2021.
+
+\bibitem{biamonte2017quantum}
+Jacob Biamonte, Peter Wittek, Nicola Pancotti, Patrick Rebentrost, Nathan Wiebe, and Seth Lloyd.
+\newblock Quantum machine learning.
+\newblock {\em Nature}, 549:195--202, 2017.
+
+\bibitem{schuld2021machine}
+Maria Schuld and Francesco Petruccione.
+\newblock {\em Machine Learning with Quantum Computers}.
+\newblock Springer, 2nd edition, 2021.
+
+\bibitem{farhi2018classification}
+Edward Farhi and Hartmut Neven.
+\newblock Classification with quantum neural networks on near term processors.
+\newblock {\em arXiv preprint arXiv:1802.06002}, 2018.
+
+\bibitem{mitarai2018quantum}
+Kosuke Mitarai, Makoto Negoro, Masahiro Kitagawa, and Keisuke Fujii.
+\newblock Quantum circuit learning.
+\newblock {\em Physical Review A}, 98(3):032309, 2018.
+
+\bibitem{benedetti2019parameterized}
+Marcello Benedetti, Erika Lloyd, Stefan Sack, and Mattia Fiorentini.
+\newblock Parameterized quantum circuits as machine learning models.
+\newblock {\em Quantum Science and Technology}, 4(4):043001, 2019.
+
+\bibitem{havlicek2019supervised}
+Vojt{\v{e}}ch Havl{\'\i}{\v{c}}ek, Antonio~D. C{\'o}rcoles, Kristan Temme, Aram~W. Harrow, Abhinav Kandala, Jerry~M. Chow, and Jay~M. Gambetta.
+\newblock Supervised learning with quantum-enhanced feature spaces.
+\newblock {\em Nature}, 567:209--212, 2019.
+
+\bibitem{schuld2019quantum}
+Maria Schuld and Nathan Killoran.
+\newblock Quantum machine learning in feature {Hilbert} spaces.
+\newblock {\em Physical Review Letters}, 122(4):040504, 2019.
+
+\bibitem{perezsalinas2020data}
+Adri{\'a}n P{\'e}rez-Salinas, Alba Cervera-Lierta, Elies Gil-Fuster, and Jos{\'e}~I. Latorre.
+\newblock Data re-uploading for a universal quantum classifier.
+\newblock {\em Quantum}, 4:226, 2020.
+
+\bibitem{abbas2021power}
+Amira Abbas, David Sutter, Christa Zoufal, Aur{\'e}lien Lucchi, Alessio Figalli, and Stefan Woerner.
+\newblock The power of quantum neural networks.
+\newblock {\em Nature Computational Science}, 1:403--409, 2021.
+
+\bibitem{mcclean2018barren}
+Jarrod~R. McClean, Sergio Boixo, Vadim~N. Smelyanskiy, Ryan Babbush, and Hartmut Neven.
+\newblock Barren plateaus in quantum neural network training landscapes.
+\newblock {\em Nature Communications}, 9:4812, 2018.
+
+\bibitem{huang2021power}
+Hsin-Yuan Huang, Michael Broughton, Masoud Mohseni, Ryan Babbush, Sergio Boixo, Hartmut Neven, and Jarrod~R. McClean.
+\newblock Power of data in quantum machine learning.
+\newblock {\em Nature Communications}, 12:2631, 2021.
+
+\bibitem{landman2023classically}
+Jonas Landman, Slimane Thabet, Constantin Dalyac, Hela Mhiri, and Elham Kashefi.
+\newblock Classically approximating variational quantum machine learning with random {Fourier} features.
+\newblock In {\em International Conference on Learning Representations (ICLR)}, 2023.
+
+\bibitem{cerezo2025does}
+M.~Cerezo, Martin Larocca, Diego Garc{\'\i}a-Mart{\'\i}n, N.~L. Diaz, Paolo Braccia, Enrico Fontana, Manuel~S. Rudolph, Pablo Bermejo, Aroosa Ijaz, Supanut Thanasilp, Eric~R. Anschuetz, and Zo{\"e} Holmes.
+\newblock Does provable absence of barren plateaus imply classical simulability?
+\newblock {\em Nature Communications}, 16:7907, 2025.
+
+\bibitem{schuld2021effect}
+Maria Schuld, Ryan Sweke, and Johannes~Jakob Meyer.
+\newblock Effect of data encoding on the expressive power of variational quantum-machine-learning models.
+\newblock {\em Physical Review A}, 103(3):032430, 2021.
+
+\bibitem{rahaman2019spectral}
+Nasim Rahaman, Aristide Baratin, Devansh Arpit, Felix Draxler, Min Lin, Fred Hamprecht, Yoshua Bengio, and Aaron Courville.
+\newblock On the spectral bias of neural networks.
+\newblock In {\em Proceedings of the 36th International Conference on Machine Learning}, volume~97 of {\em Proceedings of Machine Learning Research}, pages 5301--5310. PMLR, 2019.
+
+\bibitem{tancik2020fourier}
+Matthew Tancik, Pratul~P. Srinivasan, Ben Mildenhall, Sara Fridovich-Keil, Nithin Raghavan, Utkarsh Singhal, Ravi Ramamoorthi, Jonathan~T. Barron, and Ren Ng.
+\newblock Fourier features let networks learn high frequency functions in low dimensional domains.
+\newblock In {\em Advances in Neural Information Processing Systems}, volume~33, pages 7537--7547, 2020.
+
+\bibitem{sitzmann2020implicit}
+Vincent Sitzmann, Julien N.~P. Martel, Alexander~W. Bergman, David~B. Lindell, and Gordon Wetzstein.
+\newblock Implicit neural representations with periodic activation functions.
+\newblock In {\em Advances in Neural Information Processing Systems}, volume~33, 2020.
 
 \bibitem{cybenko1989approximation}
 George Cybenko.
@@ -45,39 +205,154 @@ Matus Telgarsky.
 \newblock Benefits of depth in neural networks.
 \newblock In {\em 29th Annual Conference on Learning Theory}, volume~49 of {\em Proceedings of Machine Learning Research}, pages 1517--1539. PMLR, 2016.
 
-\bibitem{mitarai2018quantum}
-Kosuke Mitarai, Makoto Negoro, Masahiro Kitagawa, and Keisuke Fujii.
-\newblock Quantum circuit learning.
-\newblock {\em Physical Review A}, 98(3):032309, 2018.
-
-\bibitem{benedetti2019parameterized}
-Marcello Benedetti, Erika Lloyd, Stefan Sack, and Mattia Fiorentini.
-\newblock Parameterized quantum circuits as machine learning models.
-\newblock {\em Quantum Science and Technology}, 4(4):043001, 2019.
-
-\bibitem{perezsalinas2020data}
-Adri{\'a}n P{\'e}rez-Salinas, Alba Cervera-Lierta, Elies Gil-Fuster, and Jos{\'e}~I. Latorre.
-\newblock Data re-uploading for a universal quantum classifier.
-\newblock {\em Quantum}, 4:226, 2020.
-
-\bibitem{schuld2021effect}
-Maria Schuld, Ryan Sweke, and Johannes~Jakob Meyer.
-\newblock Effect of data encoding on the expressive power of variational quantum-machine-learning models.
-\newblock {\em Physical Review A}, 103(3):032430, 2021.
-
 \bibitem{barenco1995elementary}
 Adriano Barenco, Charles~H. Bennett, Richard Cleve, David~P. DiVincenzo, Norman Margolus, Peter Shor, Tycho Sleator, John~A. Smolin, and Harald Weinfurter.
 \newblock Elementary gates for quantum computation.
 \newblock {\em Physical Review A}, 52(5):3457--3467, 1995.
 
-\bibitem{sitzmann2020implicit}
-Vincent Sitzmann, Julien N.~P. Martel, Alexander~W. Bergman, David~B. Lindell, and Gordon Wetzstein.
-\newblock Implicit neural representations with periodic activation functions.
-\newblock In {\em Advances in Neural Information Processing Systems}, volume~33, 2020.
-
 \bibitem{stein2003fourier}
 Elias~M. Stein and Rami Shakarchi.
 \newblock {\em Fourier Analysis: An Introduction}, volume~1 of {\em Princeton Lectures in Analysis}.
 \newblock Princeton University Press, 2003.
+
+\bibitem{casas2023multidimensional}
+Berta Casas and Alba Cervera-Lierta.
+\newblock Multidimensional {Fourier} series with quantum circuits.
+\newblock {\em Physical Review A}, 107:062612, 2023.
+
+\bibitem{park2019deepsdf}
+Jeong~Joon Park, Peter Florence, Julian Straub, Richard Newcombe, and Steven Lovegrove.
+\newblock {DeepSDF}: Learning continuous signed distance functions for shape representation.
+\newblock In {\em Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)}, pages 165--174, 2019.
+
+\bibitem{mildenhall2020nerf}
+Ben Mildenhall, Pratul~P. Srinivasan, Matthew Tancik, Jonathan~T. Barron, Ravi Ramamoorthi, and Ren Ng.
+\newblock {NeRF}: Representing scenes as neural radiance fields for view synthesis.
+\newblock In {\em European Conference on Computer Vision (ECCV)}, pages 405--421, 2020.
+
+\bibitem{zhao2024quantum}
+Jiaming Zhao, Wenbo Qiao, Peng Zhang, and Hui Gao.
+\newblock Quantum implicit neural representations.
+\newblock In {\em Proceedings of the 41st International Conference on Machine Learning}, volume 235 of {\em Proceedings of Machine Learning Research}, pages 60940--60956. PMLR, 2024.
+
+\bibitem{hyndman2021forecasting}
+Rob~J. Hyndman and George Athanasopoulos.
+\newblock {\em Forecasting: Principles and Practice}.
+\newblock OTexts, Melbourne, Australia, 3rd edition, 2021.
+
+\bibitem{emmanoulopoulos2022quantum}
+Dimitrios Emmanoulopoulos and Sofija Dimoska.
+\newblock Quantum machine learning in finance: Time series forecasting.
+\newblock {\em arXiv preprint arXiv:2202.00599}, 2022.
+
+\bibitem{yang2021decentralizing}
+Chao-Han~Huck Yang, Jun Qi, Samuel Yen-Chi Chen, Pin-Yu Chen, Sabato~Marco Siniscalchi, Xiaoli Ma, and Chin-Hui Lee.
+\newblock Decentralizing feature extraction with quantum convolutional neural network for automatic speech recognition.
+\newblock In {\em 2021 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)}, pages 6523--6527, 2021.
+
+\bibitem{peters2023generalization}
+Evan Peters and Maria Schuld.
+\newblock Generalization despite overfitting in quantum machine learning models.
+\newblock {\em Quantum}, 7:1210, 2023.
+
+\bibitem{boyd2001chebyshev}
+John~P. Boyd.
+\newblock {\em Chebyshev and {Fourier} Spectral Methods}.
+\newblock Dover Publications, 2nd edition, 2001.
+
+\bibitem{raissi2019physics}
+Maziar Raissi, Paris Perdikaris, and George~E. Karniadakis.
+\newblock Physics-informed neural networks: A deep learning framework for solving forward and inverse problems involving nonlinear partial differential equations.
+\newblock {\em Journal of Computational Physics}, 378:686--707, 2019.
+
+\bibitem{kyriienko2021solving}
+Oleksandr Kyriienko, Annie~E. Paine, and Vincent~E. Elfving.
+\newblock Solving nonlinear differential equations with differentiable quantum circuits.
+\newblock {\em Physical Review A}, 103:052416, 2021.
+
+\bibitem{jaderberg2023let}
+Ben Jaderberg, Antonio~A. Gentile, Youssef Achari~Berrada, Elvira Shishenina, and Vincent~E. Elfving.
+\newblock Let quantum neural networks choose their own frequencies.
+\newblock {\em arXiv preprint arXiv:2309.03279}, 2023.
+
+\bibitem{henderson2020quanvolutional}
+Maxwell Henderson, Samriddhi Shakya, Shashindra Pradhan, and Tristan Cook.
+\newblock Quanvolutional neural networks: Powering image recognition with quantum circuits.
+\newblock {\em Quantum Machine Intelligence}, 2:2, 2020.
+
+\bibitem{mari2020transfer}
+Andrea Mari, Thomas~R. Bromley, Josh Izaac, Maria Schuld, and Nathan Killoran.
+\newblock Transfer learning in hybrid classical-quantum neural networks.
+\newblock {\em Quantum}, 4:340, 2020.
+
+\bibitem{bowles2024better}
+Joseph Bowles, Shahnawaz Ahmed, and Maria Schuld.
+\newblock Better than classical? {The} subtle art of benchmarking quantum machine learning models.
+\newblock {\em arXiv preprint arXiv:2403.07059}, 2024.
+
+\bibitem{herman2023quantum}
+Dylan Herman, Cody Googin, Xiaoyuan Liu, Yue Sun, Alexey Galda, Ilya Safro, Marco Pistoia, and Yuri Alexeev.
+\newblock Quantum computing for finance.
+\newblock {\em Nature Reviews Physics}, 5:450--465, 2023.
+
+\bibitem{grossi2022mixed}
+Michele Grossi, Noelle Ibrahim, Voica Radescu, Robert Loredo, Kirsten Voigt, Constantin von Altrock, and Andreas Rudnik.
+\newblock Mixed quantum--classical method for fraud detection with quantum feature selection.
+\newblock {\em IEEE Transactions on Quantum Engineering}, 3:1--12, 2022.
+
+\bibitem{verdon2019quantum}
+Guillaume Verdon, Trevor McCourt, Enxhell Luzhnica, Vikash Singh, Stefan Leichenauer, and Jack Hidary.
+\newblock Quantum graph neural networks.
+\newblock {\em arXiv preprint arXiv:1909.12264}, 2019.
+
+\bibitem{cong2019quantum}
+Iris Cong, Soonwon Choi, and Mikhail~D. Lukin.
+\newblock Quantum convolutional neural networks.
+\newblock {\em Nature Physics}, 15:1273--1278, 2019.
+
+\bibitem{huang2022quantum}
+Hsin-Yuan Huang, Michael Broughton, Jordan Cotler, Sitan Chen, Jerry Li, Masoud Mohseni, Hartmut Neven, Ryan Babbush, Richard Kueng, John Preskill, and Jarrod~R. McClean.
+\newblock Quantum advantage in learning from experiments.
+\newblock {\em Science}, 376(6598):1182--1186, 2022.
+
+\bibitem{caro2022generalization}
+Matthias~C. Caro, Hsin-Yuan Huang, M.~Cerezo, Kunal Sharma, Andrew Sornborger, Lukasz Cincio, and Patrick~J. Coles.
+\newblock Generalization in quantum machine learning from few training data.
+\newblock {\em Nature Communications}, 13:4919, 2022.
+
+\bibitem{aaronson2015read}
+Scott Aaronson.
+\newblock Read the fine print.
+\newblock {\em Nature Physics}, 11:291--293, 2015.
+
+\bibitem{wang2021noise}
+Samson Wang, Enrico Fontana, M.~Cerezo, Kunal Sharma, Akira Sone, Lukasz Cincio, and Patrick~J. Coles.
+\newblock Noise-induced barren plateaus in variational quantum algorithms.
+\newblock {\em Nature Communications}, 12:6961, 2021.
+
+\bibitem{mhiri2025constrained}
+Hela Mhiri, L{\'e}o Monbroussou, Mario Herrero-Gonz{\'a}lez, Slimane Thabet, Elham Kashefi, and Jonas Landman.
+\newblock Constrained and vanishing expressivity of quantum {Fourier} models.
+\newblock {\em Quantum}, 9:1847, 2025.
+
+\bibitem{shin2023exponential}
+S.~Shin, Y.~S. Teo, and H.~Jeong.
+\newblock Exponential data encoding for quantum supervised learning.
+\newblock {\em Physical Review A}, 107:012422, 2023.
+
+\bibitem{kordzanganeh2023exponentially}
+Mo~Kordzanganeh, Pavel Sekatski, Leonid Fedichkin, and Alexey Melnikov.
+\newblock An exponentially-growing family of universal quantum circuits.
+\newblock {\em Machine Learning: Science and Technology}, 4(3):035036, 2023.
+
+\bibitem{schreiber2023classical}
+Franz~J. Schreiber, Jens Eisert, and Johannes~Jakob Meyer.
+\newblock Classical surrogates for quantum learning models.
+\newblock {\em Physical Review Letters}, 131:100803, 2023.
+
+\bibitem{sweke2025potential}
+Ryan Sweke, Erik Recio-Armengol, Sofiene Jerbi, Elies Gil-Fuster, Bryce Fuller, Jens Eisert, and Johannes~Jakob Meyer.
+\newblock Potential and limitations of random {Fourier} features for dequantizing quantum machine learning.
+\newblock {\em Quantum}, 9:1640, 2025.
 
 \end{thebibliography}
