@@ -210,6 +210,11 @@ Adriano Barenco, Charles~H. Bennett, Richard Cleve, David~P. DiVincenzo, Norman 
 \newblock Elementary gates for quantum computation.
 \newblock {\em Physical Review A}, 52(5):3457--3467, 1995.
 
+\bibitem{jaderberg2023let}
+Ben Jaderberg, Antonio~A. Gentile, Youssef Achari~Berrada, Elvira Shishenina, and Vincent~E. Elfving.
+\newblock Let quantum neural networks choose their own frequencies.
+\newblock {\em arXiv preprint arXiv:2309.03279}, 2023.
+
 \bibitem{stein2003fourier}
 Elias~M. Stein and Rami Shakarchi.
 \newblock {\em Fourier Analysis: An Introduction}, volume~1 of {\em Princeton Lectures in Analysis}.
@@ -269,11 +274,6 @@ Maziar Raissi, Paris Perdikaris, and George~E. Karniadakis.
 Oleksandr Kyriienko, Annie~E. Paine, and Vincent~E. Elfving.
 \newblock Solving nonlinear differential equations with differentiable quantum circuits.
 \newblock {\em Physical Review A}, 103:052416, 2021.
-
-\bibitem{jaderberg2023let}
-Ben Jaderberg, Antonio~A. Gentile, Youssef Achari~Berrada, Elvira Shishenina, and Vincent~E. Elfving.
-\newblock Let quantum neural networks choose their own frequencies.
-\newblock {\em arXiv preprint arXiv:2309.03279}, 2023.
 
 \bibitem{henderson2020quanvolutional}
 Maxwell Henderson, Samriddhi Shakya, Shashindra Pradhan, and Tristan Cook.

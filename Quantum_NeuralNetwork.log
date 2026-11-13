@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.22)  12 NOV 2026 18:25
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.22)  12 NOV 2026 19:27
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -843,8 +843,8 @@ Package cleveref Info: include cross-reference names in hyperlinks on input line
 \c@definition=\count390
 \c@theorem=\count391
 \c@remark=\count392
-Package translations Info: No language package found. I am going to use `english' as default language. on input line 60.
-LaTeX Font Info:    Trying to load font information for T1+lmr on input line 60.
+Package translations Info: No language package found. I am going to use `english' as default language. on input line 62.
+LaTeX Font Info:    Trying to load font information for T1+lmr on input line 62.
 (/usr/local/texlive/2026/texmf-dist/tex/latex/lm/t1lmr.fd
 File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) (./Quantum_NeuralNetwork.aux
@@ -854,39 +854,27 @@ LaTeX Warning: Label `eq:fourier_coefficients' multiply defined.
 
 LaTeX Warning: Label `eq:fourier_coefficients@cref' multiply defined.
 
-
-LaTeX Warning: Label `fig:5-qubit' multiply defined.
-
-
-LaTeX Warning: Label `fig:5-qubit@cref' multiply defined.
-
-
-LaTeX Warning: Label `eq:L-encoding' multiply defined.
-
-
-LaTeX Warning: Label `eq:L-encoding@cref' multiply defined.
-
 )
 \openout1 = `Quantum_NeuralNetwork.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 62.
+LaTeX Font Info:    ... okay on input line 62.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 62.
+LaTeX Font Info:    ... okay on input line 62.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 62.
+LaTeX Font Info:    ... okay on input line 62.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 62.
+LaTeX Font Info:    ... okay on input line 62.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 62.
+LaTeX Font Info:    ... okay on input line 62.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 62.
+LaTeX Font Info:    ... okay on input line 62.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 62.
+LaTeX Font Info:    ... okay on input line 62.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 62.
+LaTeX Font Info:    ... okay on input line 62.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 62.
+LaTeX Font Info:    ... okay on input line 62.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -922,13 +910,13 @@ LaTeX Font Info:    ... okay on input line 60.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Info: Redefining \microtypecontext on input line 60.
-Package microtype Info: Applying patch `item' on input line 60.
-Package microtype Info: Applying patch `toc' on input line 60.
-Package microtype Info: Applying patch `eqnum' on input line 60.
-Package microtype Info: Applying patch `footnote' on input line 60.
-Package microtype Info: Applying patch `verbatim' on input line 60.
-LaTeX Info: Redefining \microtypesetup on input line 60.
+LaTeX Info: Redefining \microtypecontext on input line 62.
+Package microtype Info: Applying patch `item' on input line 62.
+Package microtype Info: Applying patch `toc' on input line 62.
+Package microtype Info: Applying patch `eqnum' on input line 62.
+Package microtype Info: Applying patch `footnote' on input line 62.
+Package microtype Info: Applying patch `verbatim' on input line 62.
+LaTeX Info: Redefining \microtypesetup on input line 62.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
@@ -974,8 +962,8 @@ Package caption Info: End \AtBeginDocument code.
  (/usr/local/texlive/2026/texmf-dist/tex/latex/translations/translations-basic-dictionary-english.trsl
 File: translations-basic-dictionary-english.trsl (english translation file `translations-basic-dictionary')
 )
-Package translations Info: loading dictionary `translations-basic-dictionary' for `english'. on input line 60.
-Package hyperref Info: Link coloring ON on input line 60.
+Package translations Info: loading dictionary `translations-basic-dictionary' for `english'. on input line 62.
+Package hyperref Info: Link coloring ON on input line 62.
  (./Quantum_NeuralNetwork.out) (./Quantum_NeuralNetwork.out)
 \@outlinefile=\write4
 \openout4 = `Quantum_NeuralNetwork.out'.
@@ -990,115 +978,130 @@ File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.97 
-      [1{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}] [2{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}]
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 127.
+l.107 
+       [1{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}] [2{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}]
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 137.
  (/usr/local/texlive/2026/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) [3{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}]
-<figures/mlps.png, id=295, 3067.46pt x 2188.175pt>
+<figures/mlps.png, id=279, 3067.46pt x 2188.175pt>
 File: figures/mlps.png Graphic file (type png)
 <use figures/mlps.png>
-Package pdftex.def Info: figures/mlps.png  used on input line 146.
+Package pdftex.def Info: figures/mlps.png  used on input line 156.
 (pdftex.def)             Requested size: 234.8775pt x 167.54509pt.
  [4 <./figures/mlps.png>]
-<figures/relu.png, id=306, 1955.305pt x 1650.165pt>
+<figures/relu.png, id=290, 1955.305pt x 1650.165pt>
 File: figures/relu.png Graphic file (type png)
 <use figures/relu.png>
-Package pdftex.def Info: figures/relu.png  used on input line 206.
+Package pdftex.def Info: figures/relu.png  used on input line 216.
 (pdftex.def)             Requested size: 234.8775pt x 198.21269pt.
  [5 <./figures/relu.png>] [6]
-<figures/bloch.png, id=339, 3854.4pt x 4081.2475pt>
+<figures/bloch.png, id=323, 3854.4pt x 4081.2475pt>
 File: figures/bloch.png Graphic file (type png)
 <use figures/bloch.png>
-Package pdftex.def Info: figures/bloch.png  used on input line 321.
+Package pdftex.def Info: figures/bloch.png  used on input line 331.
 (pdftex.def)             Requested size: 187.89914pt x 198.90552pt.
  [7] [8 <./figures/bloch.png>] [9]
-<figures/bell.png, id=370, 282.05376pt x 174.6525pt>
+<figures/bell.png, id=354, 282.05376pt x 174.6525pt>
 File: figures/bell.png Graphic file (type png)
 <use figures/bell.png>
-Package pdftex.def Info: figures/bell.png  used on input line 489.
+Package pdftex.def Info: figures/bell.png  used on input line 499.
 (pdftex.def)             Requested size: 234.8775pt x 145.44122pt.
  [10 <./figures/bell.png>] [11]
-<figures/qnn_3.png, id=397, 920.43875pt x 304.13625pt>
+<figures/qnn_3.png, id=381, 920.43875pt x 304.13625pt>
 File: figures/qnn_3.png Graphic file (type png)
 <use figures/qnn_3.png>
-Package pdftex.def Info: figures/qnn_3.png  used on input line 588.
+Package pdftex.def Info: figures/qnn_3.png  used on input line 599.
 (pdftex.def)             Requested size: 375.80544pt x 124.1769pt.
- [12 <./figures/qnn_3.png>] [13]
-<figures/encode_3.png, id=420, 217.81375pt x 238.8925pt>
+
+
+LaTeX Warning: Reference `eq:bloch' on page 12 undefined on input line 613.
+
+[12 <./figures/qnn_3.png>]
+
+LaTeX Warning: Reference `sec:entanglement' on page 13 undefined on input line 615.
+
+
+LaTeX Warning: Reference `eq:cnot_q0q1' on page 13 undefined on input line 630.
+
+
+LaTeX Warning: Reference `sec:entanglement' on page 13 undefined on input line 644.
+
+[13]
+
+LaTeX Warning: Reference `sec:fourier' on page 14 undefined on input line 659.
+
+<figures/encode_3.png, id=413, 217.81375pt x 238.8925pt>
 File: figures/encode_3.png Graphic file (type png)
 <use figures/encode_3.png>
-Package pdftex.def Info: figures/encode_3.png  used on input line 654.
+Package pdftex.def Info: figures/encode_3.png  used on input line 671.
 (pdftex.def)             Requested size: 93.94957pt x 103.0389pt.
- [14 <./figures/encode_3.png>] [15] [16]
-<figures/hidden3_1.png, id=442, 282.05376pt x 238.8925pt>
+[14] [15 <./figures/encode_3.png>]
+
+LaTeX Warning: Reference `sec:fourier' on page 16 undefined on input line 756.
+
+[16]
+
+LaTeX Warning: Reference `sec:fourier' on page 17 undefined on input line 758.
+
+<figures/hidden3_1.png, id=455, 282.05376pt x 238.8925pt>
 File: figures/hidden3_1.png Graphic file (type png)
 <use figures/hidden3_1.png>
-Package pdftex.def Info: figures/hidden3_1.png  used on input line 797.
+Package pdftex.def Info: figures/hidden3_1.png  used on input line 767.
 (pdftex.def)             Requested size: 140.92793pt x 119.3621pt.
- [17 <./figures/hidden3_1.png>]
-<figures/cnot.png, id=451, 347.2975pt x 174.6525pt>
+[17 <./figures/hidden3_1.png>]
+
+LaTeX Warning: Reference `sec:fourier' on page 18 undefined on input line 806.
+
+[18]
+<figures/cnot.png, id=495, 347.2975pt x 174.6525pt>
 File: figures/cnot.png Graphic file (type png)
 <use figures/cnot.png>
-Package pdftex.def Info: figures/cnot.png  used on input line 817.
+Package pdftex.def Info: figures/cnot.png  used on input line 871.
 (pdftex.def)             Requested size: 140.92793pt x 70.87245pt.
+ [19]
 
+LaTeX Warning: Reference `eq:entangle' on page 20 undefined on input line 917.
 
-LaTeX Warning: Reference `eq:entangle' on page 18 undefined on input line 850.
-
-[18 <./figures/cnot.png>]
-<figures/entangle3.png, id=463, 411.5375pt x 238.8925pt>
+<figures/entangle3.png, id=512, 411.5375pt x 238.8925pt>
 File: figures/entangle3.png Graphic file (type png)
 <use figures/entangle3.png>
-Package pdftex.def Info: figures/entangle3.png  used on input line 874.
+Package pdftex.def Info: figures/entangle3.png  used on input line 938.
 (pdftex.def)             Requested size: 140.92793pt x 81.8056pt.
-
-Overfull \hbox (59.69354pt too wide) detected at line 906
-[][][][][][]
- []
-
-[19 <./figures/entangle3.png>]
-Overfull \hbox (54.36029pt too wide) detected at line 941
-[][][][][] \OMS/lmsy/m/n/12 ^^B [] \OT1/lmr/m/n/12 = []
- []
-
-[20] [21]
-<figures/hidden3_2.png, id=496, 476.78125pt x 238.8925pt>
+[20 <./figures/cnot.png>] [21 <./figures/entangle3.png>] [22] [23] [24]
+<figures/hidden3_2.png, id=585, 476.78125pt x 238.8925pt>
 File: figures/hidden3_2.png Graphic file (type png)
 <use figures/hidden3_2.png>
-Package pdftex.def Info: figures/hidden3_2.png  used on input line 1026.
+Package pdftex.def Info: figures/hidden3_2.png  used on input line 1098.
 (pdftex.def)             Requested size: 234.8775pt x 117.68896pt.
- [22]
-Overfull \hbox (9.42567pt too wide) detected at line 1049
-[][][][][][]
- []
+ [25 <./figures/hidden3_2.png>]
 
-[23 <./figures/hidden3_2.png>] [24] [25] [26] [27] [28] [29]
-<figures/qc_fourier.png, id=574, 564.1075pt x 469.755pt>
+LaTeX Warning: Reference `sec:fourier' on page 26 undefined on input line 1147.
+
+[26] [27] [28]
+
+LaTeX Warning: Reference `sec:fourier' on page 29 undefined on input line 1239.
+
+[29] [30] [31]
+<figures/qc_fourier.png, id=670, 564.1075pt x 469.755pt>
 File: figures/qc_fourier.png Graphic file (type png)
 <use figures/qc_fourier.png>
-Package pdftex.def Info: figures/qc_fourier.png  used on input line 1414.
+Package pdftex.def Info: figures/qc_fourier.png  used on input line 1373.
 (pdftex.def)             Requested size: 234.8775pt x 195.5898pt.
- [30] [31 <./figures/qc_fourier.png>] [32] [33] [34] [35] [36] [37]
-<figures/5-qubit.png, id=683, 1626.075pt x 603.25375pt>
+ [32] [33 <./figures/qc_fourier.png>] [34] [35] [36] [37] [38] [39]
+<figures/5-qubit.png, id=788, 1626.075pt x 603.25375pt>
 File: figures/5-qubit.png Graphic file (type png)
 <use figures/5-qubit.png>
-Package pdftex.def Info: figures/5-qubit.png  used on input line 1681.
+Package pdftex.def Info: figures/5-qubit.png  used on input line 1663.
 (pdftex.def)             Requested size: 281.85587pt x 104.55844pt.
- [38 <./figures/5-qubit.png>] [39] [40] [41] [42]
-File: figures/5-qubit.png Graphic file (type png)
-<use figures/5-qubit.png>
-Package pdftex.def Info: figures/5-qubit.png  used on input line 1852.
-(pdftex.def)             Requested size: 281.85587pt x 104.55844pt.
- [43] [44] [45]
+ [40 <./figures/5-qubit.png>] [41] [42]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.95> on input line 1965.
- [46] [47]
+(Font)              <10.95> on input line 1776.
+ [43] [44]
 
-LaTeX Warning: Reference `sec:qnn' on page 48 undefined on input line 2018.
+LaTeX Warning: Reference `sec:qnn' on page 45 undefined on input line 1829.
 
-[48] [49] [50] (./Quantum_NeuralNetwork.bbl [51] [52] [53] [54] [55] [56]) [57] (./Quantum_NeuralNetwork.aux)
+[45] [46] [47] [48] (./Quantum_NeuralNetwork.bbl [49] [50] [51] [52] [53] [54]) [55] (./Quantum_NeuralNetwork.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
@@ -1111,21 +1114,21 @@ LaTeX Warning: There were undefined references.
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `Quantum_NeuralNetwork.out' has not changed.
-(rerunfilecheck)             Checksum: 2CAE0A74DF2AB68A9DDB622333F5E686;10270.
+(rerunfilecheck)             Checksum: 1E26EC08762B409661826318FD14DFAB;9638.
  ) 
 Here is how much of TeX's memory you used:
- 38206 strings out of 467525
- 779807 string characters out of 5418982
- 1235287 words of memory out of 5000000
- 65826 multiletter control sequences out of 15000+600000
- 711318 words of font info for 238 fonts, out of 8000000 for 9000
+ 38323 strings out of 467525
+ 781530 string characters out of 5418982
+ 1218287 words of memory out of 5000000
+ 65882 multiletter control sequences out of 15000+600000
+ 713086 words of font info for 255 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 84i,13n,108p,1997b,1177s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,14n,108p,1997b,1236s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmbx6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmbx8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmex10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmmi12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmmi6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmmib10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmr12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmr17.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmr6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmr8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmri12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmsy6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on Quantum_NeuralNetwork.pdf (58 pages, 2468260 bytes).
+Output written on Quantum_NeuralNetwork.pdf (56 pages, 2470998 bytes).
 PDF statistics:
- 1124 PDF objects out of 1200 (max. 8388607)
- 987 compressed objects within 10 object streams
- 397 named destinations out of 1000 (max. 500000)
- 43425 words of extra memory for PDF output out of 51595 (max. 10000000)
+ 1183 PDF objects out of 1200 (max. 8388607)
+ 1047 compressed objects within 11 object streams
+ 424 named destinations out of 1000 (max. 500000)
+ 43393 words of extra memory for PDF output out of 51595 (max. 10000000)
 

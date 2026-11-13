@@ -412,10 +412,10 @@ OUTPUT Quantum_NeuralNetwork.out
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/public/lm/ec-lmr17.tfm
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/public/lm/ec-lmbx12.tfm
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/public/lm/ec-lmr17.tfm
+INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/public/lm/ec-lmr12.tfm
 INPUT /usr/local/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/public/lm/ec-lmbx12.tfm
-INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/public/lm/ec-lmr12.tfm
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/public/lm/ec-lmbx12.tfm
 INPUT /usr/local/texlive/2026/texmf-dist/tex/latex/microtype/mt-msa.cfg
 INPUT /usr/local/texlive/2026/texmf-dist/tex/latex/microtype/mt-msa.cfg
@@ -491,10 +491,6 @@ INPUT ./figures/qc_fourier.png
 INPUT ./figures/qc_fourier.png
 INPUT ./figures/qc_fourier.png
 INPUT ./figures/qc_fourier.png
-INPUT ./figures/5-qubit.png
-INPUT ./figures/5-qubit.png
-INPUT ./figures/5-qubit.png
-INPUT ./figures/5-qubit.png
 INPUT ./figures/5-qubit.png
 INPUT ./figures/5-qubit.png
 INPUT ./figures/5-qubit.png
