@@ -2,7 +2,7 @@ PWD /Users/yixiangwang/Desktop/CMU/Quantum_AI/QML/qnn
 INPUT /usr/local/texlive/2026/texmf.cnf
 INPUT /usr/local/texlive/2026/texmf-dist/web2c/texmf.cnf
 INPUT /usr/local/texlive/2026/texmf-var/web2c/pdftex/pdflatex.fmt
-INPUT Quantum_NeuralNetwork.tex
+INPUT /Users/yixiangwang/Desktop/CMU/Quantum_AI/QML/qnn/Quantum_NeuralNetwork.tex
 OUTPUT Quantum_NeuralNetwork.log
 INPUT /usr/local/texlive/2026/texmf-dist/tex/latex/base/article.cls
 INPUT /usr/local/texlive/2026/texmf-dist/tex/latex/base/article.cls
