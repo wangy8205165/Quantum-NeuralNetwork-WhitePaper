@@ -3,44 +3,44 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: Quantum_NeuralNetwork.aux
 The style file: unsrt.bst
 Database file #1: reference.bib
-You've used 71 entries,
+You've used 74 entries,
             1791 wiz_defined-function locations,
-            825 strings with 17483 characters,
-and the built_in function-call counts, 19384 in all, are:
-= -- 1606
-> -- 1137
+            838 strings with 18036 characters,
+and the built_in function-call counts, 20087 in all, are:
+= -- 1658
+> -- 1185
 < -- 22
-+ -- 406
-- -- 335
-* -- 1452
-:= -- 3108
-add.period$ -- 217
-call.type$ -- 71
-change.case$ -- 70
++ -- 423
+- -- 349
+* -- 1511
+:= -- 3232
+add.period$ -- 226
+call.type$ -- 74
+change.case$ -- 73
 chr.to.int$ -- 0
-cite$ -- 71
-duplicate$ -- 819
-empty$ -- 1735
-format.name$ -- 335
-if$ -- 4259
+cite$ -- 74
+duplicate$ -- 846
+empty$ -- 1797
+format.name$ -- 349
+if$ -- 4407
 int.to.chr$ -- 0
-int.to.str$ -- 71
-missing$ -- 76
-newline$ -- 358
-num.names$ -- 71
-pop$ -- 184
+int.to.str$ -- 74
+missing$ -- 79
+newline$ -- 373
+num.names$ -- 74
+pop$ -- 187
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 404
+skip$ -- 413
 stack$ -- 0
-substring$ -- 1291
-swap$ -- 230
+substring$ -- 1330
+swap$ -- 233
 text.length$ -- 22
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 0
-while$ -- 173
-width$ -- 73
-write$ -- 787
+while$ -- 179
+width$ -- 76
+write$ -- 820

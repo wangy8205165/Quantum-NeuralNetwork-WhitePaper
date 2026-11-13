@@ -269,6 +269,30 @@ Elias~M. Stein and Rami Shakarchi.
   Lectures in Analysis}.
 \newblock Princeton University Press, 2003.
 
+\bibitem{schuld2019evaluating}
+Maria Schuld, Ville Bergholm, Christian Gogolin, Josh Izaac, and Nathan
+  Killoran.
+\newblock Evaluating analytic gradients on quantum hardware.
+\newblock {\em Physical Review A}, 99(3):032331, 2019.
+
+\bibitem{cerezo2021cost}
+M.~Cerezo, Akira Sone, Tyler Volkoff, Lukasz Cincio, and Patrick~J. Coles.
+\newblock Cost function dependent barren plateaus in shallow parametrized
+  quantum circuits.
+\newblock {\em Nature Communications}, 12:1791, 2021.
+
+\bibitem{wang2021noise}
+Samson Wang, Enrico Fontana, M.~Cerezo, Kunal Sharma, Akira Sone, Lukasz
+  Cincio, and Patrick~J. Coles.
+\newblock Noise-induced barren plateaus in variational quantum algorithms.
+\newblock {\em Nature Communications}, 12:6961, 2021.
+
+\bibitem{grant2019initialization}
+Edward Grant, Leonard Wossnig, Mateusz Ostaszewski, and Marcello Benedetti.
+\newblock An initialization strategy for addressing barren plateaus in
+  parametrized quantum circuits.
+\newblock {\em Quantum}, 3:214, 2019.
+
 \bibitem{casas2023multidimensional}
 Berta Casas and Alba Cervera-Lierta.
 \newblock Multidimensional {Fourier} series with quantum circuits.
@@ -397,12 +421,6 @@ Matthias~C. Caro, Hsin-Yuan Huang, M.~Cerezo, Kunal Sharma, Andrew Sornborger,
 Scott Aaronson.
 \newblock Read the fine print.
 \newblock {\em Nature Physics}, 11:291--293, 2015.
-
-\bibitem{wang2021noise}
-Samson Wang, Enrico Fontana, M.~Cerezo, Kunal Sharma, Akira Sone, Lukasz
-  Cincio, and Patrick~J. Coles.
-\newblock Noise-induced barren plateaus in variational quantum algorithms.
-\newblock {\em Nature Communications}, 12:6961, 2021.
 
 \bibitem{mhiri2025constrained}
 Hela Mhiri, L{\'e}o Monbroussou, Mario Herrero-Gonz{\'a}lez, Slimane Thabet,

@@ -11,47 +11,20 @@
 % ---------- Math ----------
 \usepackage{amsmath}
 \usepackage{amssymb}              % \mathbb, extra symbols
-\usepackage{amsthm}               % theorem environments
 \usepackage{mathtools}            % amsmath extensions
 \usepackage{bm}                   % bold math: \bm{\theta}
 \usepackage{braket}               % Dirac notation: \ket{0}, \bra{\psi}, \braket{\phi|\psi}
-\setcounter{MaxMatrixCols}{16}    % allow the 16-column four-qubit matrix below
 \numberwithin{equation}{section}  % equations numbered as <section>.<n>
 
-% ---------- Figures, tables, circuits ----------
+% ---------- Figures and tables ----------
 \usepackage{graphicx}
 \usepackage{float}                % [H] placement
 \usepackage{caption}
-\usepackage{subcaption}           % side-by-side subfigures
 \usepackage{booktabs}             % \toprule, \midrule, \bottomrule
-\usepackage{tabularx}
-\usepackage{multirow}
-\usepackage{tikz}
-\usepackage{quantikz}             % quantum circuit diagrams
-
-% ---------- Algorithms & code ----------
-\usepackage{algorithm}
-\usepackage{algpseudocode}
-\usepackage{listings}             % code blocks (e.g. Python/PennyLane)
-\lstset{basicstyle=\ttfamily\small, breaklines=true, frame=single,
-        keywordstyle=\color{blue}, commentstyle=\color{gray}}
-
-% ---------- Units ----------
-\usepackage{siunitx}
+\usepackage{array}                % column formats in the applications table
 
 % ---------- References (load last) ----------
 \usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
-\usepackage[capitalise, nameinlink]{cleveref}  % \cref{eq:rx} -> "Equation (3.1)"
-
-% ---------- Theorem environments ----------
-\theoremstyle{definition}
-\newtheorem{definition}{Definition}[section]
-\theoremstyle{plain}
-\newtheorem{theorem}{Theorem}[section]
-\newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{proposition}[theorem]{Proposition}
-\theoremstyle{remark}
-\newtheorem{remark}{Remark}[section]
 
 % Edit these lines to customize the title page.
 \newcommand{\DocumentTitle}{Quantum Neural Networks}
@@ -86,6 +59,10 @@
     \vfill
 \end{titlepage}
 
+\begin{abstract}
+Quantum neural networks (QNNs), also known as variational or parameterized quantum circuits, are the most widely studied model in quantum machine learning. This white paper provides a self-contained, pedagogical introduction to QNNs for readers with a background in either deep learning or quantum computing. We construct a QNN from first principles and compute each of its layers explicitly on a three-qubit example: angle encoding, trainable rotations, entangling CNOT gates, and measurement. This calculation shows, in particular, how CNOT gates propagate information between qubits. We then present a step-by-step derivation of the result that a QNN computes a finite Fourier series, whose frequencies are fixed by the eigenvalues of the data-encoding Hamiltonians and whose coefficients are set by the trainable parameters. In this picture, expressivity is governed by the encoding strategy rather than by the depth of the trainable layers, and we analyze how parallel encoding, data re-uploading, and input scaling shape the accessible frequency spectrum and at what resource cost. The same Fourier structure yields the parameter-shift rule for training, which we discuss together with the barren plateau problem. Finally, we use the Fourier picture to derive criteria for task suitability and assess representative application domains against them. We conclude that QNNs are best suited to low-dimensional problems with structured spectral content, such as implicit neural representations, periodic signals, and differential equations, and, most promisingly, to quantum-native data.
+\end{abstract}
+
 \section{Introduction}
 \label{sec:introduction}
 
@@ -113,7 +90,7 @@ Quantum machine learning lies at the intersection of these two developments~\cit
 f_{\boldsymbol{\theta}}(\mathbf{x}) = \bra{0}^{\otimes n}\, U^{\dagger}(\mathbf{x}, \boldsymbol{\theta})\, O\, U(\mathbf{x}, \boldsymbol{\theta})\, \ket{0}^{\otimes n}.
 \label{eq:intro_qnn}
 \end{equation}
-The model is trained in the same way as its classical counterpart: a loss function is defined, its gradients with respect to the circuit parameters $\boldsymbol{\theta}$ are estimated on the quantum device~\cite{mitarai2018quantum}, and the parameters are updated by a classical optimizer.
+The model is trained in the same way as its classical counterpart: a loss function is defined, its gradients with respect to the circuit parameters $\boldsymbol{\theta}$ are estimated on the quantum device~\cite{mitarai2018quantum} (Section~\ref{sec:training}), and the parameters are updated by a classical optimizer.
 
 QNNs can use the exponentially large Hilbert space as a feature space~\cite{havlicek2019supervised, schuld2019quantum}; a single qubit that repeatedly re-encodes its input can act as a universal classifier~\cite{perezsalinas2020data}; and certain QNNs have been shown to possess a larger effective dimension than comparable classical networks~\cite{abbas2021power}. At the same time, the field faces serious open questions. Randomly initialized circuits can exhibit \emph{barren plateaus}, in which gradients vanish exponentially with the number of qubits and training stalls~\cite{mcclean2018barren}. Classical learners that have access to data can often match quantum models~\cite{huang2021power}, many QNNs can be closely approximated by classical random-Fourier-feature models~\cite{landman2023classically}, and the very structure that allows a circuit to avoid barren plateaus may also allow it to be simulated classically~\cite{cerezo2025does}. Whether QNNs offer a practical advantage on classical data therefore remains open, and a more productive starting point is a more fundamental question: \emph{what kind of functions does a QNN compute, and how is this function class shaped by the design of the circuit?}
 
@@ -125,7 +102,7 @@ This question is the central theme of this paper, and Fourier analysis provides 
 f_{\boldsymbol{\theta}}(x) = \sum_{\omega \in \Omega} c_\omega(\boldsymbol{\theta})\, e^{i\omega x}.
 \label{eq:intro_fourier}
 \end{equation}
-This representation reveals a clean division of labor. The set of frequencies $\Omega$ is determined entirely by the eigenvalues of the encoding Hamiltonians and by how many times the input is encoded; the trainable parameters $\boldsymbol{\theta}$ only shape the coefficients $c_\omega$. The consequences are striking. A single qubit that encodes $x$ once through the rotation $R_X(x)$ can represent only a single sinusoid, $c_0 + 2|c_1|\cos(x + \varphi)$, no matter how many trainable layers surround the encoding gate. The expressivity of a QNN is therefore governed less by the depth of its trainable layers than by \emph{how the data are encoded}, which makes the encoding strategy (the number of encoding qubits, the number of re-uploading layers, and the scaling of the input) the principal design lever.
+This representation reveals a clean division of labor. The set of frequencies $\Omega$ is determined entirely by the eigenvalues of the encoding Hamiltonians and by how many times the input is encoded; the trainable parameters $\boldsymbol{\theta}$ only shape the coefficients $c_\omega$. The consequences are striking. A single qubit that encodes $x$ once through the rotation $R_x(x)$ can represent only a single sinusoid, $c_0 + 2|c_1|\cos(x + \varphi)$, no matter how many trainable layers surround the encoding gate. The expressivity of a QNN is therefore governed less by the depth of its trainable layers than by \emph{how the data are encoded}, which makes the encoding strategy (the number of encoding qubits, the number of re-uploading layers, and the scaling of the input) the principal design lever.
 
 This perspective also invites a direct comparison with classical networks. Multilayer perceptrons exhibit a \emph{spectral bias}: they learn low-frequency components first and struggle to fit high-frequency detail~\cite{rahaman2019spectral}. Classical remedies, such as Fourier feature mappings~\cite{tancik2020fourier} and periodic activation functions as in SIREN~\cite{sitzmann2020implicit}, effectively allow the network to learn or select the frequencies it uses. A QNN inverts this arrangement: its frequencies are fixed in advance by the architecture, chosen by the designer rather than discovered during training, and learning adjusts only their amplitudes and phases. Is such a predetermined spectrum a fundamental limitation, since the model can never represent a frequency outside $\Omega$, or is it an advantage, since it provides an explicit, interpretable, and controllable spectral inductive bias? This question runs throughout the paper.
 
@@ -136,11 +113,13 @@ This white paper is intended as a self-contained, pedagogical bridge between cla
 \begin{itemize}
 \item frames QNNs and multilayer perceptrons as two families of parameterized function approximators, using the universal approximation theorem as a common reference point;
 \item dissects a standard QNN layer by layer (encoding, trainable rotations, entanglement, and measurement), showing explicitly, for example, how CNOT gates propagate information between qubits;
-\item presents a complete, step-by-step derivation of the finite Fourier series representation of QNNs; and
-\item analyzes how parallel encoding, data re-uploading, and input scaling shape the accessible frequency spectrum, together with the resource trade-offs among them.
+\item presents a complete, step-by-step derivation of the finite Fourier series representation of QNNs;
+\item analyzes how parallel encoding, data re-uploading, and input scaling shape the accessible frequency spectrum, together with the resource trade-offs among them;
+\item derives the parameter-shift rule for training directly from the Fourier representation and discusses the barren plateau problem; and
+\item derives criteria for task suitability from the Fourier picture and assesses representative application domains against them.
 \end{itemize}
 
-The remainder of the paper is organized as follows. Section~\ref{sec:classical_nn} reviews multilayer perceptrons and the universal approximation theorem. Section~\ref{sec:quantum_basics} introduces the essentials of quantum computing and dissects the architecture of a QNN. Section~\ref{sec:qnn_fourier} develops the Fourier analysis of QNNs and examines how the encoding strategy determines their expressivity. Section~\ref{sec:applications} discusses applications.
+The remainder of the paper is organized as follows. Section~\ref{sec:classical_nn} reviews multilayer perceptrons and the universal approximation theorem. Section~\ref{sec:quantum_basics} introduces the essentials of quantum computing and dissects the architecture of a QNN. Section~\ref{sec:qnn_fourier} develops the Fourier analysis of QNNs, examines how the encoding strategy determines their expressivity, and briefly discusses training. Section~\ref{sec:applications} discusses applications and limitations, and Section~\ref{sec:conclusion} concludes.
 
 \section{Review of Classical Neural Networks}
 \label{sec:classical_nn}
@@ -149,7 +128,7 @@ Before exploring Quantum Neural Networks (QNNs), it is essential to understand t
 
 \subsection{Architecture of Multilayer Perceptrons}
 
-An MLP is a feedforward neural network consisting of an input layer, one or more hidden layers, and an output layer, as illustrated in Fig.~\ref{fig:mlps} \cite[Chap.~6]{goodfellow2016deep}. Each layer consists of multiple neurons, which perform affine transformations followed by nonlinear activation functions.
+An MLP is a feedforward neural network consisting of an input layer, one or more hidden layers, and an output layer, as illustrated in Figure~\ref{fig:mlps} \cite[Chap.~6]{goodfellow2016deep}. Each hidden layer consists of multiple neurons, which perform affine transformations followed by nonlinear activation functions; the output layer is typically affine.
 
 \begin{figure}[htbp]
     \centering
@@ -159,57 +138,50 @@ An MLP is a feedforward neural network consisting of an input layer, one or more
 \end{figure}
 
 Mathematically, the output of the $l$-th hidden layer can be expressed as
-
 \begin{equation}
     \mathbf{h}^{(l)}
     =\sigma\left(
     W^{(l)}\mathbf{h}^{(l-1)}
     +\mathbf{b}^{(l)}
-    \right)
+    \right),
     \label{eq:mlp_layer}
 \end{equation}
-
 where $\mathbf{h}^{(0)}=\mathbf{x}$ denotes the input vector, $W^{(l)}$ and $\mathbf{b}^{(l)}$ are the trainable weight matrix and bias vector, respectively, and $\sigma$ is a nonlinear activation function. Common choices include the sigmoid, the hyperbolic tangent (tanh), and the rectified linear unit (ReLU).
 
 By composing multiple layers, an MLP constructs a parameterized mapping from the input space to the output space. Let $A^{(l)}(\mathbf{h})=W^{(l)}\mathbf{h} +\mathbf{b}^{(l)}$ denote the affine transformation at layer $l$. An MLP with $L$ affine layers and a linear output layer can then be represented as
-
 \begin{equation}
-    f_{\theta}(\mathbf{x})
+    f_{\boldsymbol{\theta}}(\mathbf{x})
     =
     A^{(L)}\circ\sigma\circ
     A^{(L-1)}\circ\cdots\circ
-    \sigma\circ A^{(1)}(\mathbf{x})
+    \sigma\circ A^{(1)}(\mathbf{x}),
     \label{eq:mlp_composition}
 \end{equation}
-
-where $\theta$ represents all trainable parameters and $\circ$ denotes function composition.
+where $\boldsymbol{\theta}$ represents all trainable parameters and $\circ$ denotes function composition.
 
 An important observation is that the nonlinear activation function is essential. Without nonlinearities, any composition of affine transformations remains an affine transformation, regardless of the number of layers. Therefore, nonlinear activations are what enable MLPs to represent functions beyond simple linear mappings.
 
 \subsection{MLPs as Function Approximators}
 
-The fundamental objective of an MLP is to approximate an unknown target function $f^*(\mathbf{x})$ using a parameterized function $f_{\theta}(\mathbf{x})$.
+The fundamental objective of an MLP is to approximate an unknown target function $f^*(\mathbf{x})$ using a parameterized function $f_{\boldsymbol{\theta}}(\mathbf{x})$.
 
 To understand how this works, consider a single-hidden-layer MLP with a scalar output:
-
 \begin{equation}
-    f_{\theta}(\mathbf{x})
+    f_{\boldsymbol{\theta}}(\mathbf{x})
     =\sum_{j=1}^{m}
-    a_j\sigma(\mathbf{w}_j^T\mathbf{x}+b_j)+c
+    a_j\sigma(\mathbf{w}_j^T\mathbf{x}+b_j)+c,
     \label{eq:mlp_function_approx}
 \end{equation}
-
 where $m$ is the number of hidden neurons, $\mathbf{w}_j$ and $b_j$ determine the transformation applied by the $j$-th neuron, and $a_j$ controls its contribution to the final output.
 
 This expression reveals a fundamental principle: an MLP approximates a complex function by combining multiple simpler nonlinear functions. Each hidden neuron generates a parameterized basis-like function, and the output layer constructs a weighted combination of these functions.
 
 For example, consider the ReLU activation:
-
 \begin{equation}
-    \sigma(x)=\max(0,x)
+    \sigma(x)=\max(0,x).
 \end{equation}
 
-Each ReLU neuron introduces a piecewise-linear component. By combining sufficiently many such components, an MLP can construct increasingly complex piecewise-linear functions that approximate nonlinear target functions, as illustrated in Fig.~\ref{fig:relu}.
+Each ReLU neuron introduces a piecewise-linear component. By combining sufficiently many such components, an MLP can construct increasingly complex piecewise-linear functions that approximate nonlinear target functions, as illustrated in Figure~\ref{fig:relu}.
 
 \begin{figure}[htbp]
     \centering
@@ -219,12 +191,11 @@ Each ReLU neuron introduces a piecewise-linear component. By combining sufficien
 \end{figure}
 
 Given a training dataset $\mathcal{D}=\{(\mathbf{x}_i,y_i)\}_{i=1}^{N}$, the network learns its parameters by minimizing a loss function. For example, in regression tasks, the parameters are obtained by minimizing the mean squared error (MSE):
-
 \begin{equation}
-    \theta^*
-    =\arg\min_{\theta}
+    \boldsymbol{\theta}^*
+    =\arg\min_{\boldsymbol{\theta}}
     \frac{1}{N}\sum_{i=1}^{N}
-    \left(f_{\theta}(\mathbf{x}_i)-y_i\right)^2
+    \left(f_{\boldsymbol{\theta}}(\mathbf{x}_i)-y_i\right)^2.
     \label{eq:mlp_training}
 \end{equation}
 
@@ -237,14 +208,13 @@ A natural question arises: how complex a function can an MLP approximate?
 One of the most important theoretical results in neural network research is the Universal Approximation Theorem (UAT), established through a series of foundational works \cite{cybenko1989approximation,leshno1993multilayer}.
 
 In particular, consider a continuous target function $f^*:K\rightarrow\mathbb{R}$, where $K\subset\mathbb{R}^d$ is compact. For any approximation tolerance $\epsilon>0$, there exists a single-hidden-layer ReLU network with sufficiently many hidden neurons such that
-
 \begin{equation}
     \boxed{
     \sup_{\mathbf{x}\in K}
     \left|f^*(\mathbf{x})
-    -f_{\theta}(\mathbf{x})\right|
+    -f_{\boldsymbol{\theta}}(\mathbf{x})\right|
     <\epsilon
-    }
+    }.
     \label{eq:universal_approximation}
 \end{equation}
 
@@ -262,20 +232,7 @@ Modern deep learning has extended the basic principles of MLPs into numerous spe
 
 This naturally leads to an intriguing question: can quantum computers also serve as function approximators?
 
-While classical MLPs construct functions through compositions of affine transformations and nonlinear activations, variational QNNs construct functions through quantum data encoding, parameterized unitary transformations, and measurements. A typical QNN output can be expressed as \cite{mitarai2018quantum,benedetti2019parameterized}
-
-\begin{equation}
-    f_{\theta}(\mathbf{x})
-    =
-    \bra{0}^{\otimes n}
-    U^{\dagger}(\mathbf{x},\theta)
-    \mathcal{O}
-    U(\mathbf{x},\theta)
-    \ket{0}^{\otimes n}
-    \label{eq:qnn_function_approx}
-\end{equation}
-
-where $U(\mathbf{x},\theta)$ represents the parameterized quantum circuit and $\mathcal{O}$ denotes a measurement observable.
+While classical MLPs construct functions through compositions of affine transformations and nonlinear activations, variational QNNs construct functions through quantum data encoding, parameterized unitary transformations, and measurements. As previewed in Eq.~\eqref{eq:intro_qnn}, a QNN produces its output as the expectation value of a measurement observable $O$ in the state prepared by a parameterized quantum circuit $U(\mathbf{x},\boldsymbol{\theta})$~\cite{mitarai2018quantum,benedetti2019parameterized}.
 
 Thus, both MLPs and QNNs can be viewed as parameterized function approximators, yet they rely on fundamentally different computational mechanisms. This raises several important questions: How do QNNs represent functions? What determines their expressive power? And how does their function approximation capability compare with that of classical MLPs?
 
@@ -292,15 +249,12 @@ Quantum computing is built upon the principles of quantum mechanics, which provi
 \subsubsection{Qubits and Quantum States}
 
 In classical computing, a bit can take one of two possible values, either 0 or 1. In contrast, a qubit can exist in a superposition of two computational basis states, denoted by $\ket{0}$ and $\ket{1}$. The general state of a single qubit is expressed as
-
 \begin{equation}
     \ket{\psi}=\alpha\ket{0}+\beta\ket{1},
-    \qquad |\alpha|^2+|\beta|^2=1
+    \qquad |\alpha|^2+|\beta|^2=1,
     \label{eq:qubit_state}
 \end{equation}
-
 where $\alpha,\beta\in\mathbb{C}$ are complex probability amplitudes. In vector notation,
-
 \begin{equation}
     \ket{0}=
     \begin{bmatrix}1\\0\end{bmatrix},
@@ -309,21 +263,19 @@ where $\alpha,\beta\in\mathbb{C}$ are complex probability amplitudes. In vector 
     \begin{bmatrix}0\\1\end{bmatrix},
     \quad
     \ket{\psi}=
-    \begin{bmatrix}\alpha\\\beta\end{bmatrix}
+    \begin{bmatrix}\alpha\\\beta\end{bmatrix}.
 \end{equation}
 
 According to the Born rule, the probabilities of measuring $\ket{0}$ and $\ket{1}$ are $|\alpha|^2$ and $|\beta|^2$, respectively. Importantly, the probability amplitudes also contain phase information, which plays a crucial role in quantum interference.
 
-Ignoring an unobservable global phase, any pure single-qubit state can be represented geometrically on the Bloch sphere, as illustrated in Fig.~\ref{fig:bloch}:
-
+Ignoring an unobservable global phase, any pure single-qubit state can be represented geometrically on the Bloch sphere, as illustrated in Figure~\ref{fig:bloch}:
 \begin{equation}
     \ket{\psi}
     =\cos\left(\frac{\vartheta}{2}\right)\ket{0}
     +e^{i\varphi}
-    \sin\left(\frac{\vartheta}{2}\right)\ket{1}
+    \sin\left(\frac{\vartheta}{2}\right)\ket{1},
     \label{eq:bloch_state}
 \end{equation}
-
 where $\vartheta$ and $\varphi$ represent the polar and azimuthal angles, respectively.
 
 \begin{figure}[htbp]
@@ -337,15 +289,13 @@ where $\vartheta$ and $\varphi$ represent the polar and azimuthal angles, respec
 \end{figure}
 
 For a system containing $n$ qubits, the quantum state belongs to a $2^n$-dimensional Hilbert space and can be expressed as
-
 \begin{equation}
     \ket{\psi}
     =\sum_{j=0}^{2^n-1}a_j\ket{j},
     \qquad
-    \sum_{j=0}^{2^n-1}|a_j|^2=1
+    \sum_{j=0}^{2^n-1}|a_j|^2=1,
     \label{eq:multi_qubit_state}
 \end{equation}
-
 where $\ket{j}$ denotes the computational basis state corresponding to the binary representation of $j$.
 
 Throughout this paper, we adopt the \textit{little-endian convention}, in which the computational basis is ordered as $\ket{q_{n-1}\cdots q_1q_0}$, with $q_0$ being the least significant bit.
@@ -355,17 +305,14 @@ Although the dimension of the quantum state space grows exponentially with the n
 \subsubsection{Quantum Gates and Unitary Operations}
 
 Quantum states are manipulated through quantum gates, which are mathematically represented by unitary matrices. A quantum gate $U$ transforms an initial state $\ket{\psi}$ into
-
 \begin{equation}
     \ket{\psi'}=U\ket{\psi},
-    \qquad U^\dagger U=I
+    \qquad U^\dagger U=I,
     \label{eq:unitary_gate}
 \end{equation}
-
 where $U^\dagger$ is the conjugate transpose of $U$. The unitary condition ensures that the normalization of the quantum state is preserved throughout the evolution of an ideal quantum circuit.
 
 Several fundamental single-qubit gates are widely used in quantum computing. For example, the Pauli-X gate acts similarly to a classical NOT gate, while the Hadamard gate transforms computational basis states into equal superpositions:
-
 \begin{equation}
     X=
     \begin{bmatrix}
@@ -375,45 +322,28 @@ Several fundamental single-qubit gates are widely used in quantum computing. For
     H=\frac{1}{\sqrt{2}}
     \begin{bmatrix}
         1&1\\1&-1
-    \end{bmatrix}
+    \end{bmatrix}.
 \end{equation}
 
 In particular,
-
 \begin{equation}
     H\ket{0}
     =\frac{1}{\sqrt{2}}
-    \left(\ket{0}+\ket{1}\right)
+    \left(\ket{0}+\ket{1}\right).
 \end{equation}
 
 Another important class of gates consists of the rotation gates, which rotate quantum states around different axes of the Bloch sphere. They can be expressed as
-
 \begin{equation}
     R_{\nu}(\theta)
     =e^{-i\theta\sigma_{\nu}/2},
-    \qquad \nu\in\{x,y,z\}
+    \qquad \nu\in\{x,y,z\},
     \label{eq:rotation_gate}
 \end{equation}
-
-where $\sigma_{\nu}$ denotes the corresponding Pauli operator. For example, the rotation about the $x$-axis is
-
-\begin{equation}
-    R_x(\theta)=
-    \begin{bmatrix}
-        \cos\frac{\theta}{2}
-        &-i\sin\frac{\theta}{2}\\
-        -i\sin\frac{\theta}{2}
-        &\cos\frac{\theta}{2}
-    \end{bmatrix}
-    \label{eq:rx_gate}
-\end{equation}
-
-Rotation gates are particularly important in QNNs because their rotation angles can encode classical input features or represent trainable model parameters.
+where $\sigma_{\nu}$ denotes the corresponding Pauli operator; their explicit matrices are given in Section~\ref{sec:qnn_dissection}. Rotation gates are particularly important in QNNs because their rotation angles can encode classical input features or represent trainable model parameters.
 
 When multiple qubits are involved, the combined state space is constructed using the tensor product. If independent single-qubit gates $U_0,U_1,\ldots,U_{n-1}$ act on their respective qubits, the overall operation is represented, under our little-endian convention, as
-
 \begin{equation}
-    U=U_{n-1}\otimes\cdots\otimes U_1\otimes U_0
+    U=U_{n-1}\otimes\cdots\otimes U_1\otimes U_0.
     \label{eq:tensor_product_gates}
 \end{equation}
 
@@ -423,18 +353,15 @@ The tensor product provides a systematic way to construct multi-qubit operations
 \label{sec:entanglement}
 
 One of the most fundamental multi-qubit gates is the Controlled-NOT (CNOT) gate, which operates on two qubits: a control qubit and a target qubit. The target is flipped if and only if the control is in state $\ket{1}$. Its action on computational basis states is defined as
-
 \begin{equation}
     \ket{c,t}
     \xrightarrow{\mathrm{CNOT}}
-    \ket{c,t\oplus c}
+    \ket{c,t\oplus c},
     \label{eq:cnot_operation}
 \end{equation}
-
 where $\oplus$ denotes modulo-2 addition.
 
 For a two-qubit system following the little-endian convention $\ket{q_1q_0}$, if $q_1$ is the control and $q_0$ is the target, the corresponding matrix is
-
 \begin{equation}
     \mathrm{CNOT}_{q_1\rightarrow q_0}
     =
@@ -443,14 +370,13 @@ For a two-qubit system following the little-endian convention $\ket{q_1q_0}$, if
         0&1&0&0\\
         0&0&0&1\\
         0&0&1&0
-    \end{bmatrix}
+    \end{bmatrix}.
     \label{eq:cnot_10}
 \end{equation}
 
 For example, $\mathrm{CNOT}_{q_1\rightarrow q_0} \ket{10}=\ket{11}$.
 
 Conversely, if $q_0$ is the control and $q_1$ is the target, the matrix becomes
-
 \begin{equation}
     \mathrm{CNOT}_{q_0\rightarrow q_1}
     =
@@ -459,37 +385,34 @@ Conversely, if $q_0$ is the control and $q_1$ is the target, the matrix becomes
         0&0&0&1\\
         0&0&1&0\\
         0&1&0&0
-    \end{bmatrix}
+    \end{bmatrix}.
     \label{eq:cnot_01}
 \end{equation}
 
 Notice that reversing the control and target qubits changes the matrix representation. For instance,
-
 \begin{equation}
     \mathrm{CNOT}_{q_0\rightarrow q_1}
-    \ket{01}=\ket{11}
+    \ket{01}=\ket{11}.
 \end{equation}
 
-Beyond conditional bit flipping, the CNOT gate plays a crucial role in creating quantum entanglement. Consider two qubits initially prepared in $\ket{00}$. As illustrated in Fig.~\ref{fig:bell}, we first apply a Hadamard gate to $q_0$:
-
+Beyond conditional bit flipping, the CNOT gate plays a crucial role in creating quantum entanglement. Consider two qubits initially prepared in $\ket{00}$. As illustrated in Figure~\ref{fig:bell}, we first apply a Hadamard gate to $q_0$:
 \begin{equation}
 \begin{aligned}
     \ket{\psi}
     &=(I\otimes H)\ket{00}\\
     &=\frac{1}{\sqrt{2}}
-    \left(\ket{00}+\ket{01}\right)
+    \left(\ket{00}+\ket{01}\right).
 \end{aligned}
 \end{equation}
 
 Next, applying a CNOT gate with $q_0$ as the control and $q_1$ as the target produces
-
 \begin{equation}
 \begin{aligned}
     \ket{\psi_{\mathrm{Bell}}}
     &=\mathrm{CNOT}_{q_0\rightarrow q_1}
       \ket{\psi}\\
     &=\frac{1}{\sqrt{2}}
-      \left(\ket{00}+\ket{11}\right)
+      \left(\ket{00}+\ket{11}\right).
 \end{aligned}
 \label{eq:bell_state}
 \end{equation}
@@ -508,31 +431,27 @@ Next, applying a CNOT gate with $q_0$ as the control and $q_1$ as the target pro
 The resulting Bell state is entangled, meaning that it cannot be expressed as the tensor product of two individual single-qubit states. Measuring both qubits in the computational basis produces either $\ket{00}$ or $\ket{11}$, each with probability $1/2$.
 
 More generally, for an arbitrary two-qubit pure state
-
 \begin{equation}
     \ket{\psi}
     =a\ket{00}+b\ket{01}
-    +c\ket{10}+d\ket{11}
+    +c\ket{10}+d\ket{11},
 \end{equation}
-
 entanglement can be determined by examining the coefficient matrix
-
 \begin{equation}
     A=
     \begin{bmatrix}
         a&b\\c&d
-    \end{bmatrix}
+    \end{bmatrix}.
 \end{equation}
 
 The state is separable if and only if $A$ has rank one or, equivalently, if its determinant vanishes:
-
 \begin{equation}
     \boxed{
     \begin{cases}
         ad-bc=0, & \text{Separable}\\
         ad-bc\neq0, & \text{Entangled}
     \end{cases}
-    }
+    }.
     \label{eq:entangle2}
 \end{equation}
 
@@ -540,55 +459,17 @@ This criterion applies specifically to two-qubit pure states. For the Bell state
 
 Entangling gates such as CNOT are important building blocks of QNNs, as they enable quantum circuits to establish interactions among qubits that cannot be generated by independent single-qubit operations alone.
 
-\subsubsection{Quantum Measurement and Connection to QNNs}
+\subsubsection{Quantum Measurement}
 
-Unlike in classical computation, where the values of computational variables can generally be accessed directly, extracting information from a quantum system requires measurement.
-
-For a single qubit $\ket{\psi}=\alpha\ket{0}+\beta\ket{1}$, a computational-basis measurement yields either 0 or 1, with probabilities
-
+Unlike in classical computation, where the values of computational variables can generally be accessed directly, extracting information from a quantum system requires measurement. A computational-basis measurement of the qubit in Eq.~\eqref{eq:qubit_state} yields 0 or 1 with the Born-rule probabilities $|\alpha|^2$ and $|\beta|^2$, and a single measurement does not reveal the underlying complex amplitudes. Instead, repeated preparation and measurement of the same quantum state allow us to estimate measurement probabilities and expectation values statistically. In particular, the expectation value of a Hermitian observable $O$ for a quantum state $\ket{\psi}$ is
 \begin{equation}
-    P(0)=|\alpha|^2,
-    \qquad
-    P(1)=|\beta|^2
-\end{equation}
-
-A single measurement does not reveal the underlying complex probability amplitudes. Instead, repeated preparation and measurement of the same quantum state allow us to estimate measurement probabilities and expectation values statistically.
-
-In particular, the expectation value of a Hermitian observable $\mathcal{O}$ for a quantum state $\ket{\psi}$ is
-
-\begin{equation}
-    \langle\mathcal{O}\rangle
-    =\bra{\psi}\mathcal{O}\ket{\psi}
+    \langle O\rangle
+    =\bra{\psi} O \ket{\psi}.
     \label{eq:observable_expectation}
 \end{equation}
+This provides a natural mechanism for converting quantum information into classical numerical outputs, and it is how a QNN produces its output in Eq.~\eqref{eq:intro_qnn}. Section~\ref{sec:measurement} treats measurement in detail.
 
-This provides a natural mechanism for converting quantum information into classical numerical outputs.
-
-The concepts introduced in this section form the foundation of variational QNNs. In a typical QNN, classical input data $\mathbf{x}$ are encoded into quantum states, trainable quantum gates transform these states, entangling operations introduce interactions among qubits, and quantum measurements produce classical outputs.
-
-Mathematically, such a model can be expressed as
-
-\begin{equation}
-    \ket{\psi(\mathbf{x},\theta)}
-    =U(\mathbf{x},\theta)\ket{0}^{\otimes n}
-\end{equation}
-
-with the corresponding output function
-
-\begin{equation}
-    f_{\theta}(\mathbf{x})
-    =
-    \bra{0}^{\otimes n}
-    U^\dagger(\mathbf{x},\theta)
-    \mathcal{O}
-    U(\mathbf{x},\theta)
-    \ket{0}^{\otimes n}
-    \label{eq:qnn_basics_output}
-\end{equation}
-
-where $\theta$ denotes the trainable circuit parameters.
-
-Thus, quantum states, unitary operations, entanglement, and measurement collectively provide the building blocks for constructing parameterized quantum models. The following subsections examine how these principles are combined to form Quantum Neural Networks and how quantum circuits can be used for function approximation.
+Thus, quantum states, unitary operations, entanglement, and measurement collectively provide the building blocks of QNNs: classical input data are encoded into quantum states, trainable gates transform these states, entangling operations introduce interactions among qubits, and measurements produce classical outputs. The following subsections examine how these building blocks are combined into a QNN.
 
 \subsection{Dissection of a Quantum Neural Network}
 \label{sec:qnn_dissection}
@@ -602,7 +483,7 @@ Like their classical counterparts, QNNs serve as parameterized function approxim
 \label{fig:qnn}
 \end{figure}
 
-\paragraph{Rotation gates.} Every single-qubit gate is a $2 \times 2$ unitary matrix. The rotation gates $R_x$, $R_y$, and $R_z$ are generated by the Pauli matrices $X$, $Y$, and $Z$, respectively:
+\paragraph{Rotation gates.} Every single-qubit gate is a $2 \times 2$ unitary matrix. Writing out Eq.~\eqref{eq:rotation_gate} for each axis, the rotation gates $R_x$, $R_y$, and $R_z$ are generated by the Pauli matrices $X$, $Y$, and $Z$, respectively:
 \begin{align}
 R_x(\theta) &\equiv e^{-i\theta X/2} = \cos\!\left(\frac{\theta}{2}\right) I - i\sin\!\left(\frac{\theta}{2}\right) X
 = \begin{bmatrix} \cos\frac{\theta}{2} & -i\sin\frac{\theta}{2} \\[2pt] -i\sin\frac{\theta}{2} & \cos\frac{\theta}{2} \end{bmatrix}, \label{eq:rx} \\[4pt]
@@ -613,38 +494,9 @@ R_z(\theta) &\equiv e^{-i\theta Z/2} = \cos\!\left(\frac{\theta}{2}\right) I - i
 \end{align}
 The second equality in each line follows from the Taylor series of the exponential, because every Pauli matrix squares to the identity: even powers of $P \in \{X, Y, Z\}$ reduce to $I$ and contribute the cosine, while odd powers reduce to $P$ and contribute the sine. Geometrically, $R_x(\theta)$, $R_y(\theta)$, and $R_z(\theta)$ rotate the Bloch vector of a qubit by an angle $\theta$ (in radians) about the $x$-, $y$-, and $z$-axes of the Bloch sphere, respectively. The factor $\frac{1}{2}$ in the exponent reflects the half-angle parameterization of the Bloch sphere in Eq.~\eqref{eq:bloch_state}: a change of $\theta$ in the gate angle corresponds to a change of $\theta/2$ in the amplitudes and hence to a rotation by $\theta$ on the sphere. Rotation gates play two distinct roles in a QNN. When the angle is set by an input feature, $\theta = x$, the gate encodes data; when the angle is a trainable parameter, the gate plays the role of a weight in a classical neural network.
 
-\paragraph{The CNOT gate.} As introduced in Section~\ref{sec:entanglement}, the CNOT gate acts on a control qubit $c$ and a target qubit $t$ according to
-\begin{equation}
-\ket{c}\ket{t} \longmapsto \ket{c}\ket{t \oplus c},
-\end{equation}
-that is, it flips the target if and only if the control is in state $\ket{1}$. Its matrix representation depends on the ordering of the basis. Under the little-endian convention adopted in this paper, two-qubit basis states are written as $\ket{q_1 q_0}$ and ordered as $\ket{00}, \ket{01}, \ket{10}, \ket{11}$, so that the state $\ket{q_1 q_0}$ corresponds to the basis vector with index $2q_1 + q_0$. With $q_0$ as the control and $q_1$ as the target, the CNOT matrix is
-\begin{equation}
-\mathrm{CNOT}_{q_0 \to q_1} =
-\begin{bmatrix}
-1 & 0 & 0 & 0 \\
-0 & 0 & 0 & 1 \\
-0 & 0 & 1 & 0 \\
-0 & 1 & 0 & 0
-\end{bmatrix},
-\label{eq:cnot_dissection}
-\end{equation}
-which coincides with Eq.~\eqref{eq:cnot_01}. The matrix leaves $\ket{00}$ and $\ket{10}$, the states with $q_0 = 0$, unchanged and exchanges $\ket{01}$ and $\ket{11}$, the states with $q_0 = 1$. For example, the state $\ket{11}$ corresponds to the basis vector $(0, 0, 0, 1)^{T}$, and
-\begin{equation}
-\mathrm{CNOT}_{q_0 \to q_1} \ket{11} =
-\begin{bmatrix}
-1 & 0 & 0 & 0 \\
-0 & 0 & 0 & 1 \\
-0 & 0 & 1 & 0 \\
-0 & 1 & 0 & 0
-\end{bmatrix}
-\begin{bmatrix} 0 \\ 0 \\ 0 \\ 1 \end{bmatrix}
-=
-\begin{bmatrix} 0 \\ 1 \\ 0 \\ 0 \end{bmatrix}
-= \ket{01}.
-\end{equation}
-Since the control $q_0$ is in state $\ket{1}$, the target $q_1$ is flipped from $1$ to $0$, while $q_0$ is unchanged. As shown in Section~\ref{sec:entanglement}, it is precisely this conditional action that allows CNOT to create entanglement, which single-qubit gates alone cannot do.
+\paragraph{The CNOT gate.} As introduced in Section~\ref{sec:entanglement}, the CNOT gate flips its target qubit if and only if its control qubit is in state $\ket{1}$ (Eq.~\eqref{eq:cnot_operation}). Its matrix representation depends on the ordering of the basis. Under the little-endian convention, the two-qubit basis state $\ket{q_1 q_0}$ corresponds to the basis vector with index $2q_1 + q_0$, so that with $q_0$ as the control and $q_1$ as the target the CNOT matrix is that of Eq.~\eqref{eq:cnot_01}. It leaves $\ket{00}$ and $\ket{10}$, the states with $q_0 = 0$, unchanged and exchanges $\ket{01}$ and $\ket{11}$, the states with $q_0 = 1$; for example, $\mathrm{CNOT}_{q_0 \to q_1}\ket{11} = \ket{01}$. As shown in Section~\ref{sec:entanglement}, it is precisely this conditional action that allows CNOT to create entanglement, which single-qubit gates alone cannot do.
 
-\paragraph{Universality.} Rotation and CNOT gates together form a universal gate set, playing a role analogous to that of the NAND and NOR gates in classical logic. Up to a global phase, any single-qubit unitary can be written as a product of rotation gates, for instance as $R_z(\alpha) R_y(\beta) R_z(\gamma)$~\cite[Sec.~4.2]{nielsen2010quantum}, and any multi-qubit unitary can be decomposed exactly into single-qubit gates and CNOT gates~\cite{barenco1995elementary}. Such a decomposition may, however, require a number of gates that grows exponentially with the number of qubits for a general unitary. Universality therefore guarantees that the building blocks of a QNN are sufficient in principle, but not that every unitary can be realized by a shallow circuit.
+\paragraph{Universality.} Rotation and CNOT gates together form a universal gate set, playing a role analogous to that of the NAND gate in classical logic. Up to a global phase, any single-qubit unitary can be written as a product of rotation gates, for instance as $R_z(\alpha) R_y(\beta) R_z(\gamma)$~\cite[Sec.~4.2]{nielsen2010quantum}, and any multi-qubit unitary can be decomposed exactly into single-qubit gates and CNOT gates~\cite{barenco1995elementary}. Such a decomposition may, however, require a number of gates that grows exponentially with the number of qubits for a general unitary. Universality therefore guarantees that the building blocks of a QNN are sufficient in principle, but not that every unitary can be realized by a shallow circuit.
 
 \paragraph{From gates to layers.} The structure of a QNN mirrors the input, hidden, and output layers of a classical neural network:
 \begin{itemize}
@@ -747,7 +599,7 @@ Although the matrix appears complicated, it follows a simple rule. Each factor $
 \end{equation}
 where $d_H(\mathbf{b}, \mathbf{b}')$ is the Hamming distance between $\mathbf{b}$ and $\mathbf{b}'$, that is, the number of qubits whose state differs between the two basis states. Each qubit that is left unchanged contributes a cosine, and each qubit that is flipped contributes a sine together with a factor $-i$.
 
-\paragraph{Feature scaling.} Because the encoding depends on the features only through trigonometric functions, the range of the input values matters. The encoding gate is periodic: $R_x(x + 2\pi) = -R_x(x)$, so inputs that differ by $2\pi$ produce states that differ only by a global phase and are physically indistinguishable. In addition, the computational-basis measurement probabilities $P(0) = \cos^2(x/2) = \frac{1}{2}(1 + \cos x)$ and $P(1) = \sin^2(x/2)$ are symmetric about $x = \pi$, so the inputs $x$ and $2\pi - x$ yield identical statistics when the qubit is measured directly. Unscaled features with a wide range would therefore be mapped onto overlapping, and possibly indistinguishable, encodings.
+\paragraph{Feature scaling.} Because the encoding depends on the features only through trigonometric functions, the range of the input values matters. The encoding gate is periodic up to a sign: $R_x(x + 2\pi) = -R_x(x)$, so inputs that differ by $2\pi$ produce states that differ only by a global phase and are physically indistinguishable. In addition, the computational-basis measurement probabilities $P(0) = \cos^2(x/2) = \frac{1}{2}(1 + \cos x)$ and $P(1) = \sin^2(x/2)$ are symmetric about $x = \pi$, so the inputs $x$ and $2\pi - x$ yield identical statistics when the qubit is measured directly. Unscaled features with a wide range would therefore be mapped onto overlapping, and possibly indistinguishable, encodings.
 
 A common remedy is to rescale each feature to the interval $[0, \pi]$ before encoding, for example by min--max normalization,
 \begin{equation}
@@ -889,7 +741,7 @@ Following the little-endian convention, the two-qubit state is $\ket{q_1 q_0} = 
 \begin{matrix} \leftarrow \ket{00} \\ \leftarrow \ket{01} \\ \leftarrow \ket{10} \\ \leftarrow \ket{11} \end{matrix}
 \label{eq:stateof2}
 \end{equation}
-We now apply a CNOT gate with $q_0$ as the control and $q_1$ as the target, using the matrix of Eq.~\eqref{eq:cnot_dissection}:
+We now apply a CNOT gate with $q_0$ as the control and $q_1$ as the target, using the matrix of Eq.~\eqref{eq:cnot_01}:
 \begin{equation}
 \mathrm{CNOT}_{q_0 \to q_1} \ket{q_1 q_0} =
 \begin{bmatrix}
@@ -1253,44 +1105,37 @@ Two fundamental tools in Fourier analysis are the \textit{Fourier series} and th
 A Fourier series represents a periodic function as an infinite sum of sinusoidal components with different frequencies, amplitudes, and phases.
 
 For a periodic function $f(x)$ with period $T$, its Fourier series can be expressed in complex exponential form as
-
 \begin{equation}
     f(x)=\sum_{k=-\infty}^{\infty}
-    c_k e^{ik\omega_0 x}
+    c_k e^{ik\omega_0 x},
     \label{eq:fourier_series}
 \end{equation}
-
 where $\omega_0=2\pi/T$ is the fundamental angular frequency, $k\in\mathbb{Z}$ is the harmonic index, and $c_k$ denotes the Fourier coefficient associated with frequency $k\omega_0$.
 
 Each Fourier coefficient can be calculated by projecting the original function onto the corresponding complex exponential basis function:
-
 \begin{equation}
     c_k=\frac{1}{T}\int_0^T
-    f(x)e^{-ik\omega_0 x}\,dx
+    f(x)e^{-ik\omega_0 x}\,dx.
     \label{eq:fourier_coefficients}
 \end{equation}
 
 These coefficients describe the contribution of each frequency component to the original function. In particular, $|c_k|$ determines the amplitude of the corresponding component, while the argument of $c_k$ determines its phase shift.
 
 By Euler's formula,
-
 \begin{equation}
     e^{i\omega x}
-    =\cos(\omega x)+i\sin(\omega x)
+    =\cos(\omega x)+i\sin(\omega x),
 \end{equation}
-
 so the complex exponential representation is equivalent to expressing a real-valued periodic function as a sum of sine and cosine functions.
 
 Importantly, different frequencies capture different levels of variation in a function. Low-frequency components describe slowly varying patterns, whereas high-frequency components represent rapid oscillations and fine-grained details.
 
 In practical applications, Fourier series are often approximated using a finite number of frequency components. More generally, a finite trigonometric expansion can be written as
-
 \begin{equation}
     f(x)=\sum_{\omega\in\Omega}
-    c_{\omega}e^{i\omega x}
+    c_{\omega}e^{i\omega x},
     \label{eq:finite_fourier_series}
 \end{equation}
-
 where $\Omega$ is a finite set of frequencies. Unlike in a conventional Fourier series, the frequencies in this generalized representation are not necessarily integer multiples of a common fundamental frequency.
 
 \textbf{Fourier Transform}
@@ -1298,59 +1143,25 @@ where $\Omega$ is a finite set of frequencies. Unlike in a conventional Fourier 
 While Fourier series decompose periodic functions into discrete harmonics, the Fourier transform extends frequency-domain analysis to nonperiodic functions.
 
 For a sufficiently well-behaved function $f(x)$, the continuous Fourier transform is defined as
-
 \begin{equation}
     \hat{f}(\omega)
     =\int_{-\infty}^{\infty}
-    f(x)e^{-i\omega x}\,dx
+    f(x)e^{-i\omega x}\,dx,
     \label{eq:fourier_transform}
 \end{equation}
-
 where $\omega\in\mathbb{R}$ represents the angular frequency and $\hat{f}(\omega)$ describes the frequency-domain representation of $f(x)$.
 
 The original function can be reconstructed using the inverse Fourier transform:
-
 \begin{equation}
     f(x)=\frac{1}{2\pi}
     \int_{-\infty}^{\infty}
-    \hat{f}(\omega)e^{i\omega x}\,d\omega
+    \hat{f}(\omega)e^{i\omega x}\,d\omega.
     \label{eq:inverse_fourier_transform}
 \end{equation}
 
 The key distinction is that the Fourier series uses a discrete set of frequencies, whereas the Fourier transform is defined over a continuous frequency variable. Nevertheless, both share the same fundamental principle: a function can be understood through its frequency components and their corresponding coefficients.
 
-From a function-approximation perspective, the frequency spectrum reveals which oscillatory patterns are present in a function. This perspective is particularly useful when studying the expressive power of machine learning models.
-
-\subsection{Connection to Quantum Neural Networks}
-The significance of Fourier analysis becomes apparent when examining the mathematical representation of Quantum Neural Networks (QNNs).
-
-As discussed previously, the output of a variational QNN is typically defined through the expectation value of an observable:
-
-\begin{equation}
-    f_{\theta}(x)=
-    \langle 0|
-    U^{\dagger}(x,\theta)
-    \mathcal{O}
-    U(x,\theta)
-    |0\rangle
-\end{equation}
-
-For the finite-dimensional quantum circuits with data-encoding operations considered in this paper, this expectation-value function can be expressed as a finite Fourier series \cite{schuld2021effect}:
-
-\begin{equation}
-    f_{\theta}(x)=
-    \sum_{\omega\in\Omega}
-    c_{\omega}(\theta)e^{i\omega x}
-    \label{eq:qnn_fourier_representation}
-\end{equation}
-
-Here, $\Omega$ denotes the set of accessible frequencies, while $c_{\omega}(\theta)$ represents the Fourier coefficients controlled by the trainable circuit parameters.
-
-Unlike in conventional Fourier approximations, where the selected frequencies may be chosen or optimized for a particular task, the accessible frequencies of a QNN with a fixed data-encoding scheme are determined by its encoding operations and circuit architecture. The trainable parameters primarily control the corresponding Fourier coefficients, subject to constraints imposed by the circuit \cite{schuld2021effect}.
-
-Therefore, Fourier analysis provides a natural framework for investigating two fundamental aspects of QNN expressivity: which frequencies a quantum circuit can represent, and how flexibly it can adjust their coefficients.
-
-In Sections~\ref{sec:qnn_finite_fourier} and~\ref{sec:freq_expansion}, we examine how these properties emerge from quantum data encoding and how circuit depth and width influence the accessible frequency spectrum.
+From a function-approximation perspective, the frequency spectrum reveals which oscillatory patterns are present in a function, and this is the perspective we adopt for QNNs. As previewed in Section~\ref{sec:intro_fourier} and in the three-qubit example of Section~\ref{sec:cnot_propagation}, the output of a QNN takes the form of the finite expansion in Eq.~\eqref{eq:finite_fourier_series}, with a frequency set $\Omega$ fixed by the data encoding and coefficients $c_\omega(\boldsymbol{\theta})$ controlled by the trainable parameters~\cite{schuld2021effect}. Unlike in conventional Fourier approximations, the frequencies are therefore not chosen or optimized for a particular task, and Fourier analysis provides a natural framework for two fundamental aspects of QNN expressivity: which frequencies a circuit can represent, and how flexibly it can adjust their coefficients. Section~\ref{sec:qnn_finite_fourier} derives this representation, and Section~\ref{sec:freq_expansion} examines how the encoding strategy determines the accessible spectrum.
 
 \subsection{Quantum Neural Networks as Finite Fourier Series}
 \label{sec:qnn_finite_fourier}
@@ -1364,7 +1175,7 @@ This subsection presents a detailed derivation of a result due to Schuld, Sweke,
 U(x) = W^{(L+1)} S(x)\, W^{(L)} \cdots W^{(2)} S(x)\, W^{(1)},
 \label{eq:circuit}
 \end{equation}
-where each $W^{(l)}$ is a unitary that does not depend on $x$. These blocks may contain trainable parameterized gates, such as $R_X(\theta)$, as well as fixed gates, such as the Hadamard gate. The gate $S(x)$ encodes the classical input $x$ into the quantum state and is repeated $L$ times. We assume that $S(x)$ is generated by a Hermitian operator $H$, referred to as the \emph{encoding Hamiltonian}:
+where each $W^{(l)}$ is a unitary that does not depend on $x$. These blocks may contain trainable parameterized gates, such as $R_x(\theta)$, as well as fixed gates, such as the Hadamard gate. The gate $S(x)$ encodes the classical input $x$ into the quantum state and is repeated $L$ times. We assume that $S(x)$ is generated by a Hermitian operator $H$, referred to as the \emph{encoding Hamiltonian}:
 \begin{equation}
 S(x) = e^{-ixH}.
 \label{eq:encoding}
@@ -1377,7 +1188,7 @@ S(x) = e^{-ixH}.
 \label{fig:qc_fourier}
 \end{figure}
 
-For example, encoding with the single-qubit rotation $R_X(x)$ corresponds to
+For example, encoding with the single-qubit rotation $R_x(x)$ corresponds to
 \begin{equation}
 H = \frac{1}{2}X = \frac{1}{2}\begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}.
 \end{equation}
@@ -1388,16 +1199,16 @@ e^{-i\frac{x}{2}X}
 &= \sum_{n=0}^{\infty} \frac{1}{n!}\left(-\frac{ix}{2}\right)^{n} X^{n} \\
 &= \left[\sum_{k=0}^{\infty} \frac{(-1)^k}{(2k)!}\left(\frac{x}{2}\right)^{2k}\right] I
  - i\left[\sum_{k=0}^{\infty} \frac{(-1)^k}{(2k+1)!}\left(\frac{x}{2}\right)^{2k+1}\right] X \\
-&= \cos\!\left(\frac{x}{2}\right) I - i\sin\!\left(\frac{x}{2}\right) X = R_X(x).
+&= \cos\!\left(\frac{x}{2}\right) I - i\sin\!\left(\frac{x}{2}\right) X = R_x(x).
 \end{aligned}
 \end{equation}
 
-The output of the model is the expectation value of a Hermitian observable $M$ (which need not be unitary) with respect to the final state:
+The output of the model is the expectation value of a Hermitian observable $O$ (which need not be unitary) with respect to the final state:
 \begin{equation}
-f(x) = \bra{\psi(x)} M \ket{\psi(x)}, \qquad \ket{\psi(x)} = U(x)\ket{0}.
+f(x) = \bra{\psi(x)} O \ket{\psi(x)}, \qquad \ket{\psi(x)} = U(x)\ket{0}.
 \label{eq:output}
 \end{equation}
-The trainable parameters $\theta$ enter only through the blocks $W^{(l)}$; for brevity, we suppress the dependence on $\theta$ throughout.
+The trainable parameters $\boldsymbol{\theta}$ enter only through the blocks $W^{(l)}$; for brevity, we suppress the dependence on $\theta$ throughout.
 
 \paragraph{Step 1: Diagonalizing the encoding gate.} Because $H$ is Hermitian, the spectral theorem guarantees the decomposition
 \begin{equation}
@@ -1521,19 +1332,19 @@ The multi-indices $(1,2)$ and $(2,1)$ yield the same eigenvalue sum, so the corr
 \end{equation}
 the expectation value becomes
 \begin{equation}
-f(x) = \sum_{m=1}^{d}\sum_{n=1}^{d} \psi_m^*(x)\, M_{mn}\, \psi_n(x).
+f(x) = \sum_{m=1}^{d}\sum_{n=1}^{d} \psi_m^*(x)\, O_{mn}\, \psi_n(x).
 \label{eq:expectation_sum}
 \end{equation}
 For a single qubit ($d = 2$), for instance,
 \begin{equation}
 \begin{aligned}
 f(x) &= \begin{bmatrix} \psi_1^* & \psi_2^* \end{bmatrix}
-\begin{bmatrix} M_{11} & M_{12} \\ M_{21} & M_{22} \end{bmatrix}
+\begin{bmatrix} O_{11} & O_{12} \\ O_{21} & O_{22} \end{bmatrix}
 \begin{bmatrix} \psi_1 \\ \psi_2 \end{bmatrix} \\
-&= \psi_1^* M_{11} \psi_1 + \psi_1^* M_{12} \psi_2 + \psi_2^* M_{21} \psi_1 + \psi_2^* M_{22} \psi_2.
+&= \psi_1^* O_{11} \psi_1 + \psi_1^* O_{12} \psi_2 + \psi_2^* O_{21} \psi_1 + \psi_2^* O_{22} \psi_2.
 \end{aligned}
 \end{equation}
-The off-diagonal entries of $M$ couple different amplitudes through cross terms. Even when $M$ is diagonal (e.g., $M = Z$), the output contains the products $\psi_m^* \psi_m$ and therefore remains quadratic in the amplitudes.
+The off-diagonal entries of $O$ couple different amplitudes through cross terms. Even when $O$ is diagonal (e.g., $O = Z$), the output contains the products $\psi_m^* \psi_m$ and therefore remains quadratic in the amplitudes.
 
 To evaluate Eq.~\eqref{eq:expectation_sum}, we require the complex conjugate of Eq.~\eqref{eq:fourier_representation}. Because the eigenvalue sums $\Lambda_{\mathbf{k}}$ are real,
 \begin{equation}
@@ -1542,17 +1353,17 @@ To evaluate Eq.~\eqref{eq:expectation_sum}, we require the complex conjugate of 
 Conjugation has two effects: each coefficient is replaced by its complex conjugate, and the sign of the exponent changes from negative to positive. We also rename the summation multi-index to $\mathbf{k}$; it ranges over the same set $[d]^L$ as $\mathbf{j}$, but the two sums are independent. Substituting both expansions into Eq.~\eqref{eq:expectation_sum} gives
 \begin{equation}
 \begin{aligned}
-f(x) &= \sum_{m,n} \left( \sum_{\mathbf{k}} A_{m,\mathbf{k}}^*\, e^{ix\Lambda_{\mathbf{k}}} \right) M_{mn} \left( \sum_{\mathbf{j}} A_{n,\mathbf{j}}\, e^{-ix\Lambda_{\mathbf{j}}} \right) \\
-&= \sum_{m,n} \sum_{\mathbf{k},\mathbf{j}} A_{m,\mathbf{k}}^*\, M_{mn}\, A_{n,\mathbf{j}}\; e^{ix\Lambda_{\mathbf{k}}} e^{-ix\Lambda_{\mathbf{j}}}.
+f(x) &= \sum_{m,n} \left( \sum_{\mathbf{k}} A_{m,\mathbf{k}}^*\, e^{ix\Lambda_{\mathbf{k}}} \right) O_{mn} \left( \sum_{\mathbf{j}} A_{n,\mathbf{j}}\, e^{-ix\Lambda_{\mathbf{j}}} \right) \\
+&= \sum_{m,n} \sum_{\mathbf{k},\mathbf{j}} A_{m,\mathbf{k}}^*\, O_{mn}\, A_{n,\mathbf{j}}\; e^{ix\Lambda_{\mathbf{k}}} e^{-ix\Lambda_{\mathbf{j}}}.
 \end{aligned}
 \end{equation}
 Using $e^{ix\Lambda_{\mathbf{k}}} e^{-ix\Lambda_{\mathbf{j}}} = e^{ix(\Lambda_{\mathbf{k}}-\Lambda_{\mathbf{j}})}$ and exchanging the order of summation, we obtain
 \begin{equation}
-f(x) = \sum_{\mathbf{k},\mathbf{j} \in [d]^L} \left( \sum_{m,n} A_{m,\mathbf{k}}^*\, M_{mn}\, A_{n,\mathbf{j}} \right) e^{ix(\Lambda_{\mathbf{k}}-\Lambda_{\mathbf{j}})}.
+f(x) = \sum_{\mathbf{k},\mathbf{j} \in [d]^L} \left( \sum_{m,n} A_{m,\mathbf{k}}^*\, O_{mn}\, A_{n,\mathbf{j}} \right) e^{ix(\Lambda_{\mathbf{k}}-\Lambda_{\mathbf{j}})}.
 \end{equation}
 Defining the input-independent coefficients
 \begin{equation}
-a_{\mathbf{k},\mathbf{j}} = \sum_{m,n} A_{m,\mathbf{k}}^*\, M_{mn}\, A_{n,\mathbf{j}},
+a_{\mathbf{k},\mathbf{j}} = \sum_{m,n} A_{m,\mathbf{k}}^*\, O_{mn}\, A_{n,\mathbf{j}},
 \label{eq:pair_coefficients}
 \end{equation}
 the model output becomes
@@ -1589,9 +1400,9 @@ and arrive at the Fourier representation of the QNN:
 \end{equation}
 Since $\Omega$ contains at most $d^{2L}$ elements, this is a finite sum. When the eigenvalue differences are commensurate, as for the Pauli encodings discussed below, all frequencies are integer multiples of a fundamental frequency and Eq.~\eqref{eq:qnn_fourier} is a truncated Fourier series in the usual sense; in general, it is a finite sum of complex exponentials.
 
-The representation has two further properties. First, the spectrum is symmetric and contains zero: if $\omega = \Lambda_{\mathbf{k}} - \Lambda_{\mathbf{j}} \in \Omega$, then $-\omega = \Lambda_{\mathbf{j}} - \Lambda_{\mathbf{k}} \in \Omega$, and $\mathbf{k} = \mathbf{j}$ gives $\omega = 0$. Second, because $M$ is Hermitian ($M_{mn}^* = M_{nm}$), Eq.~\eqref{eq:pair_coefficients} implies
+The representation has two further properties. First, the spectrum is symmetric and contains zero: if $\omega = \Lambda_{\mathbf{k}} - \Lambda_{\mathbf{j}} \in \Omega$, then $-\omega = \Lambda_{\mathbf{j}} - \Lambda_{\mathbf{k}} \in \Omega$, and $\mathbf{k} = \mathbf{j}$ gives $\omega = 0$. Second, because $O$ is Hermitian ($O_{mn}^* = O_{nm}$), Eq.~\eqref{eq:pair_coefficients} implies
 \begin{equation}
-a_{\mathbf{k},\mathbf{j}}^* = \sum_{m,n} A_{m,\mathbf{k}}\, M_{mn}^*\, A_{n,\mathbf{j}}^* = \sum_{m,n} A_{n,\mathbf{j}}^*\, M_{nm}\, A_{m,\mathbf{k}} = a_{\mathbf{j},\mathbf{k}},
+a_{\mathbf{k},\mathbf{j}}^* = \sum_{m,n} A_{m,\mathbf{k}}\, O_{mn}^*\, A_{n,\mathbf{j}}^* = \sum_{m,n} A_{n,\mathbf{j}}^*\, O_{nm}\, A_{m,\mathbf{k}} = a_{\mathbf{j},\mathbf{k}},
 \end{equation}
 and summing over all pairs with frequency $\omega$ gives $c_{-\omega} = c_\omega^*$. Consequently, $f(x)$ is real-valued, as an expectation value of a Hermitian observable must be, and can equivalently be written as
 \begin{equation}
@@ -1600,21 +1411,17 @@ f(x) = c_0 + \sum_{\omega \in \Omega,\, \omega > 0} 2\,|c_\omega| \cos\!\left(\o
 
 \paragraph{Roles of the encoding and trainable blocks.} The blocks $W^{(l)}$ do not appear in the frequency spectrum~\eqref{eq:spectrum}, which is determined entirely by the eigenvalues of the encoding Hamiltonian and the number of encoding layers $L$. This is because the blocks are independent of $x$: they enter only through the coefficients $A_{m,\mathbf{j}}$ in Eq.~\eqref{eq:coefficients}, and hence only through $a_{\mathbf{k},\mathbf{j}}$ and $c_\omega$, while leaving the exponential factors $e^{i\omega x}$ unchanged. Training therefore adjusts the amplitudes and phases of a fixed set of frequencies but cannot introduce frequencies outside $\Omega$. The extent to which the coefficients themselves can be controlled depends on the expressivity of the trainable blocks. If different encoding Hamiltonians $H^{(l)}$ are used in different layers, the same derivation applies with $\Lambda_{\mathbf{j}} = \sum_{l} \lambda^{(l)}_{j_l}$, where $\lambda^{(l)}_{j}$ are the eigenvalues of $H^{(l)}$.
 
-\paragraph{Example: Pauli-rotation encoding.} For single-qubit encoding with $R_X(x)$, we have $H = \frac{1}{2}X$ with eigenvalues $\pm\frac{1}{2}$. Each eigenvalue sum $\Lambda_{\mathbf{j}}$ is a sum of $L$ terms equal to $\pm\frac{1}{2}$ and therefore takes values in $\{-\frac{L}{2}, -\frac{L}{2}+1, \ldots, \frac{L}{2}\}$. Their differences are the integers from $-L$ to $L$, so that
+\paragraph{Example: Pauli-rotation encoding.} For single-qubit encoding with $R_x(x)$, we have $H = \frac{1}{2}X$ with eigenvalues $\pm\frac{1}{2}$. Each eigenvalue sum $\Lambda_{\mathbf{j}}$ is a sum of $L$ terms equal to $\pm\frac{1}{2}$ and therefore takes values in $\{-\frac{L}{2}, -\frac{L}{2}+1, \ldots, \frac{L}{2}\}$. Their differences are the integers from $-L$ to $L$, so that
 \begin{equation}
 \Omega = \{-L, \ldots, -1, 0, 1, \ldots, L\}, \qquad
 f(x) = \sum_{\omega=-L}^{L} c_\omega\, e^{i\omega x}.
 \end{equation}
-A model that encodes $x$ $L$ times through a single-qubit Pauli rotation is thus a truncated Fourier series of degree $L$. In particular, with a single encoding layer ($L = 1$), the model reduces to $f(x) = c_0 + 2|c_1|\cos(x + \arg c_1)$, a single sinusoid, irrespective of how expressive the trainable blocks are. Accessing higher frequencies requires encoding the input repeatedly, either sequentially (data re-uploading, larger $L$) or in parallel; for instance, applying $R_X(x)$ simultaneously to $N$ qubits gives $H = \frac{1}{2}\sum_{q=1}^{N} X_q$, whose eigenvalues range over $\{-\frac{N}{2}, \ldots, \frac{N}{2}\}$, so a single such layer already yields the spectrum $\{-N, \ldots, N\}$.
+A model that encodes $x$ $L$ times through a single-qubit Pauli rotation is thus a truncated Fourier series of degree $L$. In particular, with a single encoding layer ($L = 1$), the model reduces to $f(x) = c_0 + 2|c_1|\cos(x + \arg c_1)$, a single sinusoid, irrespective of how expressive the trainable blocks are. Accessing higher frequencies requires encoding the input repeatedly, either sequentially (data re-uploading, larger $L$) or in parallel; for instance, applying $R_x(x)$ simultaneously to $N$ qubits gives $H = \frac{1}{2}\sum_{q=1}^{N} X_q$, whose eigenvalues range over $\{-\frac{N}{2}, \ldots, \frac{N}{2}\}$, so a single such layer already yields the spectrum $\{-N, \ldots, N\}$.
 
 \subsection{Expressivity and Frequency Expansion}
 \label{sec:freq_expansion}
 
-Section~\ref{sec:qnn_finite_fourier} established that a QNN computes a finite Fourier series,
-\begin{equation}
-f(x) = \sum_{\omega \in \Omega} c_\omega\, e^{i\omega x},
-\end{equation}
-in which the frequency spectrum $\Omega$ is fixed by the eigenvalues of the encoding Hamiltonians and the number of encoding gates, while the trainable blocks determine only the coefficients $c_\omega$. A direct consequence is that the model can represent only functions whose frequency content lies within $\Omega$: no choice of trainable parameters can produce a frequency outside this set. A general target function, however, may contain many frequency components, some of them high. For a QNN to act as a universal function approximator, two conditions must therefore hold: (i) the spectrum $\Omega$ must be rich enough to contain the frequencies required by the target, and (ii) the trainable blocks must be expressive enough to realize the required coefficients $c_\omega$. Schuld et al.~\cite{schuld2021effect} showed that, when both conditions are met and the spectrum is allowed to grow, a QNN can approximate any square-integrable function on a bounded interval arbitrarily well. This subsection addresses condition~(i).
+Section~\ref{sec:qnn_finite_fourier} established that a QNN computes the finite Fourier series of Eq.~\eqref{eq:qnn_fourier}, in which the frequency spectrum $\Omega$ is fixed by the eigenvalues of the encoding Hamiltonians and the number of encoding gates, while the trainable blocks determine only the coefficients $c_\omega$. A direct consequence is that the model can represent only functions whose frequency content lies within $\Omega$: no choice of trainable parameters can produce a frequency outside this set. A general target function, however, may contain many frequency components, some of them high. For a QNN to act as a universal function approximator, two conditions must therefore hold: (i) the spectrum $\Omega$ must be rich enough to contain the frequencies required by the target, and (ii) the trainable blocks must be expressive enough to realize the required coefficients $c_\omega$. Schuld et al.~\cite{schuld2021effect} showed that, when both conditions are met and the spectrum is allowed to grow, a QNN can approximate any square-integrable function on a bounded interval arbitrarily well. This subsection addresses condition~(i).
 
 Because $\Omega$ consists of differences of eigenvalue sums, it can be enlarged only by enlarging the set of eigenvalue sums. We examine three strategies for doing so:
 \begin{enumerate}
@@ -1629,13 +1436,13 @@ Throughout this subsection, the encoding gates are single-qubit Pauli rotations.
 
 \paragraph{One qubit.} Consider first a single encoding qubit with
 \begin{equation}
-S(x) = R_X(x) = e^{-ixH}, \qquad H = \frac{1}{2}X = \frac{1}{2}\begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}.
+S(x) = R_x(x) = e^{-ixH}, \qquad H = \frac{1}{2}X = \frac{1}{2}\begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}.
 \end{equation}
 The eigenvalues of $H$ are $\operatorname{spec}(H) = \{-\frac{1}{2}, \frac{1}{2}\}$, and their pairwise differences give the spectrum $\Omega = \{-1, 0, 1\}$. By the conjugate symmetry $c_{-\omega} = c_\omega^*$ established in Section~\ref{sec:qnn_finite_fourier}, the model therefore reduces to a single sinusoid, $f(x) = c_0 + 2|c_1|\cos(x + \arg c_1)$.
 
-\paragraph{Two qubits.} Suppose now that $x$ is encoded once on each of two qubits. Let $X_q$ denote the Pauli-$X$ operator acting on qubit $q$ (and the identity on the other qubit), so that $X_1 = X \otimes I$ and $X_2 = I \otimes X$. The encoding gate is
+\paragraph{Two qubits.} Suppose now that $x$ is encoded once on each of two qubits. Let $X_q$ denote the Pauli-$X$ operator acting on encoding qubit $q$ (and the identity on the other qubit). Following the little-endian convention of Section~\ref{sec:quantum_basics}, qubit~$1$ is the rightmost tensor factor, so that $X_1 = I \otimes X$ and $X_2 = X \otimes I$. The encoding gate is
 \begin{equation}
-S(x) = R_X(x) \otimes R_X(x) = e^{-i\frac{x}{2}X_1}\, e^{-i\frac{x}{2}X_2} = e^{-ixH}, \qquad
+S(x) = R_x(x) \otimes R_x(x) = e^{-i\frac{x}{2}X_1}\, e^{-i\frac{x}{2}X_2} = e^{-ixH}, \qquad
 H = \frac{1}{2}\left(X_1 + X_2\right).
 \end{equation}
 The first equality uses $e^{A} \otimes e^{B} = (e^{A} \otimes I)(I \otimes e^{B})$ together with $e^{A} \otimes I = e^{A \otimes I}$; the second holds because $X_1$ and $X_2$ commute, so that $e^{A}e^{B} = e^{A+B}$. Since $X_1$ and $X_2$ commute, they are simultaneously diagonalized by the product basis $\{\ket{+}, \ket{-}\}^{\otimes 2}$, on which $X_q$ takes the value $\epsilon_q \in \{-1, +1\}$. The eigenvalues of $H$ are therefore $\frac{1}{2}(\epsilon_1 + \epsilon_2)$, namely $-1$, $0$ (twice), and $1$. The set of distinct eigenvalues is $\{-1, 0, 1\}$, and its pairwise differences give the enlarged spectrum
@@ -1658,7 +1465,7 @@ where $\lambda_k$ has multiplicity $\binom{N}{k}$. Consecutive eigenvalues diffe
 \end{equation}
 Encoding on $N$ qubits thus gives access to $2N+1$ integer frequencies. Because the spectrum is symmetric and $c_{-\omega} = c_\omega^*$, only the $N+1$ non-negative frequencies $\{0, 1, \ldots, N\}$ are independent; the model is a real trigonometric polynomial of degree $N$. The number of accessible frequencies grows linearly with the number of encoding qubits.
 
-\paragraph{Example.} Figure~\ref{fig:5-qubit} shows a five-qubit QNN. The unscaled input $x$ is encoded once on each qubit through a Pauli rotation, and the circuit begins directly with this encoding layer ($W^{(1)} = I$, which does not affect the spectrum). The encoding layer is followed by two trainable layers. Each trainable layer applies parameterized single-qubit rotations $R_X$, $R_Y$, and $R_Z$ to every qubit, followed by a ring of CNOT gates that couples each qubit to its neighbor and the last qubit back to the first, thereby generating entanglement across the register. By Eq.~\eqref{eq:parallel_spectrum} with $N = 5$, the accessible frequencies are $\{0, \pm1, \pm2, \pm3, \pm4, \pm5\}$. Which of these frequencies carry non-zero coefficients in practice depends on the trainable layers.
+\paragraph{Example.} Figure~\ref{fig:5-qubit} shows a five-qubit QNN. The unscaled input $x$ is encoded once on each qubit through a Pauli rotation, and the circuit begins directly with this encoding layer ($W^{(1)} = I$, which does not affect the spectrum). The encoding layer is followed by two trainable layers. Each trainable layer applies parameterized single-qubit rotations $R_x$, $R_y$, and $R_z$ to every qubit, followed by a ring of CNOT gates that couples each qubit to its neighbor and the last qubit back to the first, thereby generating entanglement across the register. By Eq.~\eqref{eq:parallel_spectrum} with $N = 5$, the accessible frequencies are $\{0, \pm1, \pm2, \pm3, \pm4, \pm5\}$. Which of these frequencies carry non-zero coefficients in practice depends on the trainable layers.
 
 \begin{figure}[htbp]
 \centering
@@ -1675,7 +1482,7 @@ Parallel encoding requires one qubit per encoding gate. When the number of avail
 U(x) = W^{(L+1)} S^{(L)}(x)\, W^{(L)} \cdots W^{(2)} S^{(1)}(x)\, W^{(1)},
 \label{eq:L-encoding}
 \end{equation}
-with model output $f(x) = \bra{0} U^{\dagger}(x)\, M\, U(x) \ket{0}$. Here $S^{(l)}(x) = e^{-ixH_l}$ denotes the $l$-th encoding gate; in this subsection all encoding gates are identical, $S^{(l)}(x) = R_X(x)$ with $H_l = \frac{1}{2}X$. We allow the encoding Hamiltonians to depend on $l$ in anticipation of Section~\ref{sec:input_scaling}.
+with model output $f(x) = \bra{0} U^{\dagger}(x)\, O\, U(x) \ket{0}$. Here $S^{(l)}(x) = e^{-ixH_l}$ denotes the $l$-th encoding gate; in this subsection all encoding gates are identical, $S^{(l)}(x) = R_x(x)$ with $H_l = \frac{1}{2}X$. We allow the encoding Hamiltonians to depend on $l$ in anticipation of Section~\ref{sec:input_scaling}.
 
 As noted in Section~\ref{sec:qnn_finite_fourier}, the derivation of the Fourier representation carries over to layer-dependent encoding Hamiltonians. Each eigenvalue sum then takes one eigenvalue from each layer, and we denote the set of all such sums by
 \begin{equation}
@@ -1709,11 +1516,11 @@ and by Eq.~\eqref{eq:spectrum_from_sums},
 \subsubsection{Accessing High Frequencies through Input Scaling}
 \label{sec:input_scaling}
 
-In the encodings considered so far, the spectrum consists of consecutive integers up to the total number of encoding gates. Many applications, however, require high-frequency components to be captured. A target function containing the frequency $\omega = 1000$ would then require 1000 encoding qubits, or 1000 re-uploading layers. This cost can be avoided by multiplying the input $x$ by a constant coefficient before it is encoded. Scaling the input rescales the encoding Hamiltonian, since $R_X(ax) = e^{-ix\frac{a}{2}X}$ corresponds to $H = \frac{a}{2}X$ with eigenvalues $\pm\frac{a}{2}$. The scaling coefficients may be fixed in advance or treated as trainable parameters; in the latter case, the spectrum itself becomes trainable.
+In the encodings considered so far, the spectrum consists of consecutive integers up to the total number of encoding gates. Many applications, however, require high-frequency components to be captured. A target function containing the frequency $\omega = 1000$ would then require 1000 encoding qubits, or 1000 re-uploading layers. This cost can be avoided by multiplying the input $x$ by a constant coefficient before it is encoded. Scaling the input rescales the encoding Hamiltonian, since $R_x(ax) = e^{-ix\frac{a}{2}X}$ corresponds to $H = \frac{a}{2}X$ with eigenvalues $\pm\frac{a}{2}$. The scaling coefficients may be fixed in advance or treated as trainable parameters; in the latter case, the spectrum itself becomes trainable.
 
 \paragraph{Two qubits.} Consider a two-qubit QNN in which the input to the first qubit is scaled by $a \in \mathbb{R}$ and the input to the second qubit by $b \in \mathbb{R}$. The encoding gate is
 \begin{equation}
-S(x) = R_X(ax) \otimes R_X(bx) = e^{-ixH}, \qquad
+S(x) = R_x(bx) \otimes R_x(ax) = e^{-ixH}, \qquad
 H = \frac{1}{2}\left(a X_1 + b X_2\right),
 \end{equation}
 where the second equality follows exactly as in Section~\ref{sec:parallel_encoding}. In the product basis $\{\ket{+},\ket{-}\}^{\otimes 2}$, the eigenvalues of $H$ are $\frac{1}{2}(\epsilon_1 a + \epsilon_2 b)$ with $\epsilon_1, \epsilon_2 \in \{-1, +1\}$:
@@ -1745,7 +1552,7 @@ where $\nu_q = \frac{1}{2}(\epsilon_q - \epsilon_q')$ as in the two-qubit case. 
 
 \paragraph{Single qubit with scaled re-uploading.} High frequencies can also be accessed with a single qubit by assigning each re-uploading layer in Eq.~\eqref{eq:L-encoding} its own coefficient. The $l$-th encoding gate is then
 \begin{equation}
-S^{(l)}(x) = R_X(s_l x) = e^{-ixH_l}, \qquad H_l = \frac{s_l}{2}X, \qquad
+S^{(l)}(x) = R_x(s_l x) = e^{-ixH_l}, \qquad H_l = \frac{s_l}{2}X, \qquad
 \operatorname{spec}(H_l) = \left\{ -\frac{s_l}{2}, \frac{s_l}{2} \right\},
 \end{equation}
 where $s_l \in \mathbb{R}$ is the scaling coefficient of the $l$-th layer. The set of eigenvalue sums is
@@ -1760,7 +1567,7 @@ This expression has the same form as Eq.~\eqref{eq:scaled_parallel_spectrum} wit
 
 \paragraph{Example.} With two re-uploading layers and coefficients $s_1 = 1$ and $s_2 = 1000$, the circuit
 \begin{equation}
-U(x) = W^{(3)}\, R_X(1000x)\, W^{(2)}\, R_X(x)\, W^{(1)}
+U(x) = W^{(3)}\, R_x(1000x)\, W^{(2)}\, R_x(x)\, W^{(1)}
 \end{equation}
 has the spectrum
 \begin{equation}
@@ -1776,22 +1583,43 @@ A single qubit can therefore represent both the frequency $\omega = 1$ and the f
 \label{tab:encoding_strategies}
 \small
 \begin{tabular}{llll}
-\hline
+\toprule
 Strategy & Encoding & Spectrum $\Omega$ & Resource cost \\
-\hline
+\midrule
 Parallel & $N$ qubits, once each & $\{-N, \ldots, N\}$ & $N$ qubits \\
 Serial (re-uploading) & 1 qubit, $L$ layers & $\{-L, \ldots, L\}$ & depth $L$ \\
 Scaled parallel & $N$ qubits, inputs $a_q x$ & $\{\sum_q \nu_q a_q\}$ & $N$ qubits \\
 Scaled serial & 1 qubit, inputs $s_l x$ & $\{\sum_l \nu_l s_l\}$ & depth $L$ \\
-\hline
+\bottomrule
 \end{tabular}
 \end{table}
 
 
 % \subsection{Frequency Pinching}
-% \subsection{Training and Barren Plateu}
 
-% Requires \usepackage{array} in the preamble (for the table column format).
+\subsection{Training and Barren Plateaus}
+\label{sec:training}
+
+The preceding subsections characterized which functions a QNN can represent. Whether training can find a good function within this class is a separate question, which we discuss briefly here.
+
+\paragraph{The hybrid training loop.} A QNN is trained in the same way as a classical network. Given a dataset $\mathcal{D} = \{(\mathbf{x}_i, y_i)\}_{i=1}^{N}$, a loss $\mathcal{L}(\boldsymbol{\theta})$, such as the mean squared error of Eq.~\eqref{eq:mlp_training}, is minimized by gradient descent, $\boldsymbol{\theta} \leftarrow \boldsymbol{\theta} - \eta \nabla_{\boldsymbol{\theta}} \mathcal{L}(\boldsymbol{\theta})$, with learning rate $\eta$. The quantum device evaluates the model outputs and their derivatives, and a classical computer updates the parameters~\cite{cerezo2021variational}. By the chain rule, the loss gradient requires the derivatives $\partial f_{\boldsymbol{\theta}}(\mathbf{x}_i)/\partial \theta_k$ of the circuit output. On hardware, these cannot be obtained by backpropagation, which requires access to intermediate states that cannot be read out without measurement (Section~\ref{sec:measurement}).
+
+\paragraph{The parameter-shift rule.} The Fourier analysis of Section~\ref{sec:qnn_finite_fourier} provides these derivatives directly. Consider a parameter $\theta_k$ that enters a single gate $R_P(\theta_k) = e^{-i\theta_k P/2}$, with $P \in \{X, Y, Z\}$, and hold the input and all other parameters fixed. The circuit then has the form of Eq.~\eqref{eq:circuit} with $\theta_k$ in place of $x$, a single encoding layer ($L = 1$), and Hamiltonian $H = \frac{1}{2}P$ with eigenvalues $\pm\frac{1}{2}$. By the result of Section~\ref{sec:qnn_finite_fourier}, the output is therefore a single sinusoid in $\theta_k$,
+\begin{equation}
+f(\theta_k) = a + b\cos\theta_k + c\sin\theta_k,
+\end{equation}
+where $a$, $b$, and $c$ depend on the input and on the remaining parameters. Evaluating this function at $\theta_k \pm \frac{\pi}{2}$ and subtracting gives
+\begin{equation}
+\frac{\partial f}{\partial \theta_k} = \frac{1}{2}\left[ f\!\left(\theta_k + \frac{\pi}{2}\right) - f\!\left(\theta_k - \frac{\pi}{2}\right) \right].
+\label{eq:parameter_shift}
+\end{equation}
+Unlike a finite-difference approximation, this expression is exact: the derivative is obtained from two evaluations of the same circuit with one angle shifted by $\pm\frac{\pi}{2}$~\cite{mitarai2018quantum, schuld2019evaluating}. When a parameter enters several gates, the rule is applied to each gate and the results are summed. Applied to the encoding gates, the same rule yields exact derivatives with respect to the input $x$, which Section~\ref{sec:app_scientific} uses to solve differential equations. The cost, however, differs from that of backpropagation. A model with $p$ parameters requires $2p$ circuit evaluations per data point for a single gradient, each estimated from many shots (Section~\ref{sec:measurement}), whereas backpropagation obtains all $p$ derivatives at a cost comparable to a single forward pass.
+
+\paragraph{Barren plateaus.} Exact gradients are useful only if they are large enough to be estimated. McClean et al.\ showed that, for sufficiently random parameterized circuits, the gradient has zero mean and a variance that vanishes exponentially with the number of qubits~\cite{mcclean2018barren}. The loss landscape is then almost flat almost everywhere, a phenomenon known as a \emph{barren plateau}. Because each gradient component is estimated with a standard error of order $1/\sqrt{N}$ from $N$ shots (Section~\ref{sec:measurement}), resolving an exponentially small gradient requires exponentially many shots, and training stalls. The effect also depends on the cost function: global observables, which act on all qubits, can produce barren plateaus even in shallow circuits, whereas local observables avoid them for sufficiently shallow circuits~\cite{cerezo2021cost}. Hardware noise can induce barren plateaus of its own, independently of how the parameters are initialized~\cite{wang2021noise}.
+
+Common mitigation strategies restrict the circuit, for example through shallow and structured architectures, local observables, or initializations that make the circuit close to the identity at the start of training~\cite{grant2019initialization}. Such restrictions, however, also limit which Fourier coefficients the circuit can reach (Section~\ref{sec:app_limitations}), and the structure that allows a circuit to avoid barren plateaus may also allow it to be simulated classically~\cite{cerezo2025does}. Trainability and expressivity therefore cannot be designed independently: a QNN must be expressive enough to represent the target, yet structured enough to be trained.
+
+
 \section{Applications of Quantum Neural Networks}
 \label{sec:applications}
 
@@ -1824,7 +1652,7 @@ The following subsections examine application domains in roughly decreasing orde
 
 An implicit neural representation (INR) replaces a discrete signal, such as a grid of pixels or a sequence of audio samples, with a continuous function learned by a neural network. The network maps coordinates to signal values: $(x, y) \mapsto$ RGB for an image, $t \mapsto$ amplitude for an audio clip, $(x, y, z) \mapsto$ signed distance for a 3D shape~\cite{park2019deepsdf}, or position and viewing direction to color and density in neural radiance fields~\cite{mildenhall2020nerf}.
 
-INRs satisfy the first three criteria almost ideally: the input dimension is small ($D = 1$ to $5$), and the quality of an INR is judged precisely by how well it reproduces the signal's spectral content. This is also where classical networks struggle most visibly, since spectral bias causes ReLU multilayer perceptrons to produce blurry reconstructions that miss fine detail~\cite{rahaman2019spectral}. The leading classical remedies are themselves Fourier constructions: Fourier feature mappings pass the coordinates through sinusoids before an MLP~\cite{tancik2020fourier}, and SIREN uses sinusoidal activations throughout~\cite{sitzmann2020implicit}. A QNN provides this structure natively, with a spectrum designed through the encoding.
+INRs satisfy the first two criteria almost ideally, and the third whenever the signal is smooth: the input dimension is small ($D = 1$ to $5$), and the quality of an INR is judged precisely by how well it reproduces the signal's spectral content. This is also where classical networks struggle most visibly, since spectral bias causes ReLU multilayer perceptrons to produce blurry reconstructions that miss fine detail~\cite{rahaman2019spectral}. The leading classical remedies are themselves Fourier constructions: Fourier feature mappings pass the coordinates through sinusoids before an MLP~\cite{tancik2020fourier}, and SIREN uses sinusoidal activations throughout~\cite{sitzmann2020implicit}. A QNN provides this structure natively, with a spectrum designed through the encoding.
 
 This connection has been explored directly. Zhao et al.\ proposed the Quantum Implicit Representation Network (QIREN), which combines data re-uploading circuits with classical layers, and reported that it outperforms classical INR baselines on image and sound representation, particularly in modeling high-frequency components, while using fewer parameters; they also explored image super-resolution and image generation~\cite{zhao2024quantum}. Because these results were obtained with classical simulation of small circuits, they establish representational promise rather than a hardware advantage.
 
@@ -1873,28 +1701,37 @@ When the data are themselves quantum states, for instance the output of a quantu
 \label{tab:applications}
 \small
 \begin{tabular}{>{\raggedright\arraybackslash}p{2.8cm}>{\raggedright\arraybackslash}p{1.8cm}>{\raggedright\arraybackslash}p{3.5cm}>{\raggedright\arraybackslash}p{1.4cm}>{\raggedright\arraybackslash}p{3.9cm}}
-\hline
+\toprule
 Domain & Input dim. & Spectral structure & Fit & Main obstacle \\
-\hline
+\midrule
 Implicit neural representations & 1--5 & Rich but structured; edges are problematic & High & Number of coordinates; Gibbs oscillations at edges \\
 Audio and time series & 1--few & Known periodicities and harmonics & High & Broadband noise and non-stationarity \\
 Differential equations & 1--4 & Smooth or oscillatory solutions & High & Multivariate spectrum growth in higher dimensions \\
 Computer vision & $10^2$--$10^6$ & Weakly related to the target & Low & Encoding cost; classical baselines are strong \\
 Tabular data and finance & $10$--$10^3$ & Mostly unstructured, except cyclic features & Medium & Large, imbalanced datasets \\
 Quantum-native data & n/a & Outside the Fourier framework & Highest & Access to quantum data sources \\
-\hline
+\bottomrule
 \end{tabular}
 \end{table}
 
 \paragraph{Data loading and measurement cost.} Many proposed quantum speedups assume that classical data can be loaded into quantum states efficiently, an assumption that often dominates the true cost~\cite{aaronson2015read}. At the output, estimating an expectation value to precision $\epsilon$ requires on the order of $1/\epsilon^2$ circuit executions, so every prediction carries a sampling overhead that classical networks do not incur.
 
-\paragraph{Trainability and noise.} Barren plateaus make gradients vanish exponentially in the number of qubits for sufficiently random circuits~\cite{mcclean2018barren}, and hardware noise can induce barren plateaus of its own~\cite{wang2021noise}.
+\paragraph{Trainability and noise.} As discussed in Section~\ref{sec:training}, barren plateaus make gradients vanish exponentially in the number of qubits for sufficiently random circuits~\cite{mcclean2018barren}, and hardware noise can induce barren plateaus of its own~\cite{wang2021noise}. Since the parameter-shift rule requires two circuit evaluations per parameter, the sampling overhead also grows with the number of parameters.
 
 \paragraph{Constrained expressivity.} A large spectrum does not imply that all coefficients are freely adjustable. Mhiri et al.\ showed that the variance of a Fourier coefficient depends on the redundancy of its frequency, that is, on how many pairs of eigenvalue sums produce it, and that some coefficients can vanish exponentially as the number of qubits grows~\cite{mhiri2025constrained}. For uniform Pauli encodings, redundancy is highest at low frequencies, which suggests that QNNs can exhibit a form of spectral bias of their own. Exponential encodings~\cite{shin2023exponential, kordzanganeh2023exponentially} reduce the number of gates needed for a given spectrum but also reduce redundancy, a trade-off that should be assessed explicitly.
 
 \paragraph{Classical surrogates and dequantization.} The Fourier structure that makes QNNs interpretable also makes them vulnerable to classical approximation. If the spectrum is known, a classical model can fit the same function class, either by constructing a classical surrogate from the quantum model~\cite{schreiber2023classical} or by sampling frequencies with random Fourier features~\cite{landman2023classically}. Sweke et al.\ characterized the conditions under which random Fourier features efficiently dequantize variational QML for regression~\cite{sweke2025potential}. Consequently, the applications most worth pursuing are those in which the relevant spectrum is hard to sample classically or the data are quantum-native.
 
 \paragraph{Outlook.} Table~\ref{tab:applications} summarizes the analysis. The domains with the best fit share low-dimensional inputs, structured spectral content, and moderate data volume: INRs, periodic signal modeling, and spectral solvers for differential equations are the most promising classical-data applications, and quantum-native data the most promising overall. For high-dimensional classical data, QNNs are best viewed as specialized components within hybrid architectures. The Fourier perspective thus offers more than a description of what QNNs compute; it provides a principled way to decide where they should be applied.
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+This white paper has developed quantum neural networks from first principles, with the aim of making their behavior verifiable step by step for readers from either deep learning or quantum computing. Working through a three-qubit circuit explicitly, we showed that angle encoding produces a product state whose amplitudes are products of half-angle sines and cosines, that a trainable rotation about the same axis as the encoding acts as a bias rather than a weight, that CNOT gates permute amplitudes and thereby carry information from control to target qubits, and that measurement turns the quantum state into a real-valued output through an expectation value.
+
+These observations combine into the central result of the paper: the output of a QNN with Hamiltonian-generated encodings is a finite Fourier series whose frequencies are fixed by the eigenvalues of the encoding Hamiltonians and whose coefficients are set by the trainable parameters. Expressivity is therefore governed primarily by the encoding strategy. Parallel encoding and data re-uploading yield identical spectra for the same number of encoding gates and differ only in whether they consume qubits or circuit depth, while input scaling relocates frequencies without adding gates, subject to a budget of at most $3^N$ frequencies for $N$ encoding gates. The same Fourier structure yields exact gradients through the parameter-shift rule, although barren plateaus and sampling costs remain serious obstacles to training at scale.
+
+Returning to the question posed in the Introduction, a predetermined spectrum is both a limitation and an advantage. It prevents a QNN from representing any frequency outside $\Omega$, but it also gives the designer explicit, interpretable control over the spectral inductive bias of the model, including a built-in band limit. This makes QNNs best suited to low-dimensional problems with known or structured spectral content, such as implicit neural representations, periodic signals, and differential equations, and, most promisingly, to quantum-native data. The same structure, however, exposes QNNs to classical surrogates and dequantization by random Fourier features. Establishing a practical advantage on classical data will therefore require tasks whose relevant spectrum is hard to reproduce classically, together with hardware that can execute the necessary circuits reliably. We hope that the explicit derivations presented here provide a foundation for evaluating such claims.
 
 \bibliographystyle{unsrt}
 \bibliography{reference}
